@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('penyanyi_lagu', function (Blueprint $table) {
             $table->id();
             $table->foreignId('penyanyi_id')->constrained('penyanyi','id')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('lagu','id')->onDelete('cascade');
+            $table->foreignId('lagu_id')->constrained('lagu','id')->onDelete('cascade');
             $table->timestamps();
         });
     }
