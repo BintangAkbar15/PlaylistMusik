@@ -13,4 +13,12 @@ class playlist_lagu extends Model
         'playlist_id',
         'lagu_id',
     ];
+    public function penyanyi()
+    {
+        return $this->belongsToMany(Penyanyi::class, 'penyanyi', 'penyanyi_id', 'playlist_id');
+    }
+    public function playlist()
+    {
+        return $this->belongsToMany(Playlist::class, 'playlists', 'playlist_id', 'penyanyi_id');
+    }
 }

@@ -9,7 +9,16 @@ class lagu_genre extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'lagu_id',
         'genre_id',
     ];
+
+    public function lagu()
+    {
+        return $this->belongsToMany(Lagu::class, 'lagu', 'lagu_id', 'genre_id');
+    }
+    public function genre()
+    {
+        return $this->belongsToMany(Genre::class, 'genres', 'genre_id', 'lagu_id');
+    }
 }

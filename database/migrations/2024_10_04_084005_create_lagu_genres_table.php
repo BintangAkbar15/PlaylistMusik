@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lagu_genres', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('lagu','id')->onDelete('cascade');
+            $table->foreignId('lagu_id')->constrained('lagu','id')->onDelete('cascade');
             $table->foreignId('genre_id')->constrained('genres','id')->onDelete('cascade');
             $table->timestamps();
         });
