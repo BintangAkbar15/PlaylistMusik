@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('audio');
             $table->string('thumb');
             $table->string('slug',50);
+            $table->string('dilihat');
             $table->timestamps();
         });
     }
