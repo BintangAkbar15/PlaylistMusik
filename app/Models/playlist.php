@@ -9,4 +9,8 @@ class playlist extends Model
 {
     /** @use HasFactory<\Database\Factories\PlaylistFactory> */
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'user_id',
+    ];
 }

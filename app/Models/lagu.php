@@ -9,4 +9,10 @@ class lagu extends Model
 {
     /** @use HasFactory<\Database\Factories\LaguFactory> */
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'audio',
+        'thumb',
+        'slug',
+    ];
 }

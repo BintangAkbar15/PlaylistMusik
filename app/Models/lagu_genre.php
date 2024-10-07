@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class lagu_genre extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'genre_id',
+    ];
 }

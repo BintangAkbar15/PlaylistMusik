@@ -9,4 +9,10 @@ class penyanyi extends Model
 {
     /** @use HasFactory<\Database\Factories\PenyanyiFactory> */
     use HasFactory;
+    protected $table = 'penyanyi';
+    protected $fillable = [
+        'name',
+        'slug',
+        'thumb',
+    ];
 }
