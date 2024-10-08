@@ -1,20 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Mazer Admin Dashboard</title>
-    
-    
-    
-    <link rel="shortcut icon" href="{{ asset('dist/assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/iconly.css') }}">
-</head>
-
-<body>
+<x-layout>
     <script src="{{ asset('dist/assets/static/js/initTheme.js') }}"></script>
     <div id="app">
         <div id="sidebar">
@@ -22,7 +6,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
+                            <a href="index.html"><img src="{{ asset('img/logo-bara-fm.png') }}" alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -57,20 +41,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
+                <div class="sidebar-menu d-flex flex-column" style="height: 85vh">
+                    <ul class="menu h-100 overflow-y-scroll">
                         <li class="sidebar-title">Menu</li>
-                
+                        
                         <li class="sidebar-item">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-
-                        <li class="sidebar-item  has-sub">
+                
+                        <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
+                                <i class="bi bi-music-note-beamed"></i>
                                 <span>Lagu</span>
                             </a>
                             <ul class="submenu">    
@@ -82,8 +66,49 @@
                                 </li>
                             </ul>
                         </li>
+                
+                        <li class="sidebar-item has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-music-note-list"></i>
+                                <span>Genre</span>
+                            </a>
+                            <ul class="submenu">    
+                                <li class="submenu-item">
+                                    <a href="#" class="submenu-link">Kelola Genre</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#" class="submenu-link">Tambah Genre</a>
+                                </li>
+                            </ul>
+                        </li>
+                
+                        <li class="sidebar-item has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-fill"></i>
+                                <span>Artist</span>
+                            </a>
+                            <ul class="submenu">    
+                                <li class="submenu-item">
+                                    <a href="#" class="submenu-link">Kelola Artist</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#" class="submenu-link">Tambah Artist</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                
+                    <!-- Log out at the bottom -->
+                    <ul class="menu mt-auto">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link text-danger">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Log out</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
+                
             </div>
         </div>
         <div id="main" class='layout-navbar navbar-fixed'>
@@ -185,65 +210,33 @@
                     </div>
                 </nav>
             </header>
-            <div id="main-content">   
-                <div class="page-heading">
-                    <div class="page-title">
-                        <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Vertical Layout with Navbar</h3>
-                                <p class="text-subtitle text-muted">Navbar will appear on the top of the page.</p>
-                            </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
-                                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Layout Vertical Navbar</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+            <div class="col-12 pb-5 d-flex flex-column align-items-center">
+                <h2 class="mt-2 fw-bold col-11 text-start">Report</h2>
+                <div class="col-12 d-flex justify-content-evenly pt-5">
+                    <div style="height: 250px; width: 250px;" class="bg-light rounded">
+    
                     </div>
-                </form>
-            </div>
-            <h2 class="mt-5 fw-bold col-11 text-start">Report</h2>
-            <div class="col-12 d-flex justify-content-evenly pt-5">
-                <div style="height: 250px; width: 250px;" class="bg-light rounded">
-
+                    <div style="height: 250px; width: 250px;" class="bg-light rounded">
+    
+                    </div>
+                    <div style="height: 250px; width: 250px;" class="bg-light rounded">
+    
+                    </div>
                 </div>
-                <div style="height: 250px; width: 250px;" class="bg-light rounded">
-
+                <h2 class="mt-5 fw-bold col-11 text-start">Top search</h2>
+                <div class="col-11 mt-3 gap-3 d-flex flex-column align-items-center justify-content-start overflow-y-scroll" style="max-height: 30vh">
+                    <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                    <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                    <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                    <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                    <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                    <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                    <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
                 </div>
-                <div style="height: 250px; width: 250px;" class="bg-light rounded">
-
-                </div>
-            </div>
-            <h2 class="mt-5 fw-bold col-11 text-start">Top search</h2>
-            <div class="col-11 mt-3 gap-3 d-flex flex-column align-items-center justify-content-start overflow-y-scroll" style="max-height: 30vh">
-                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
-                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
-                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
-                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
-                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
-                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
-                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
-            </div>
-            <h2 class="mt-5 fw-bold col-11 text-start">View report</h2>
-            <div class="col-11 bg-secondary mt-2" style="height: 50vh"></div>
+                <h2 class="mt-5 fw-bold col-11 text-start">View report</h2>
+                <div class="col-11 bg-secondary mt-2" style="height: 50vh"></div>
+            </div> 
         </div>
         
     </div>
-    <script src="{{ asset('dist/assets/static/js/components/dark.js') }}"></script>
-    <script src="{{ asset('dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    
-    
-    <script src="{{ asset('dist/assets/compiled/js/app.j') }}"></script>
-    
-
-    
-<!-- Need: Apexcharts -->
-<script src="{{ asset('dist/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ asset('dist/assets/static/js/pages/dashboard.js') }}"></script>
-
-</body>
-
-</html>
+</x-layout>
