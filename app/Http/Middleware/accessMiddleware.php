@@ -14,7 +14,7 @@ class accessMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,$is_admin): Response
+    public function handle(Request $request, Closure $next, $is_admin): Response
     {
         if(Auth::user()->is_admin == $is_admin){
             return $next($request);
