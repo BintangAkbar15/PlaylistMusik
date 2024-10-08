@@ -25,25 +25,23 @@
 <div class="row h-100">
     <div class="col-lg-5 col-12">
         <div id="auth-left">
-            <div class="auth-logo">
-                <a href="index.html" class="d-flex gap-3">
-                    <img src="{{ asset('img/logo.png') }}" alt="Logo">
-                    <h3 for="fw-bold">Bara FM</h3>
-                </a>
-            </div>
-            <h2 class="">Log in.</h1>
+            <a href="index.html" class="d-flex gap-3">
+                <img src="{{ asset('img/logo.png') }}" width="40px" alt="Logo">
+                <h3 for="fw-bold">Bara FM</h3>
+            </a>
+            <h2 class="mt-5">Log in.</h1>
             <p class="mb-3">Log in for enjoy your save music.</p>
 
             <form action="{{ route('login.submit') }}" method="post">
                 @csrf
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" name="name" placeholder="Username">
+                    <input type="text" class="form-control form-control-md" name="name" placeholder="Username">
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" placeholder="Password" name="password" id="password-field">
+                    <input type="password" class="form-control form-control-md" placeholder="Password" name="password" id="password-field">
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
@@ -56,7 +54,7 @@
                 </div>
                 <button class="btn btn-primary btn-block btn-md shadow-lg mt-5">Log in</button>
             </form>
-            <div class="text-center mt-5 text-lg fs-4">
+            <div class="text-center mt-5 text-lg fs-6">
                 <p class="text-gray-600">Don't have an account? <a href="{{ route('register.tampil') }}" class="font-bold">Sign
                         up</a>.</p>
                 <p><a class="font-bold" href="#">Forgot password?</a>.</p>

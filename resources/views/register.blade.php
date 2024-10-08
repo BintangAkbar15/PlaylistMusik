@@ -22,40 +22,40 @@
                 <img src="{{ asset('img/logo.png') }}" width="40px" alt="Logo">
                 <h3 for="fw-bold">Bara FM</h3>
             </a>
-            <h1 class="mt-5">Sign Up</h1>
+            <h1 class="mt-3">Sign Up</h1>
             <p class="mb-5">Input your data to register to our website.</p>
 
             <form action="{{ route('regis.submit') }}" method="post">
                 @csrf
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" name="email" placeholder="Email">
+                    <input type="text" class="form-control form-control-md" name="email" placeholder="Email">
                     <div class="form-control-icon">
                         <i class="bi bi-envelope"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" name="name" placeholder="Username">
+                    <input type="text" class="form-control form-control-md" name="name" placeholder="Username">
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" name="password" placeholder="Password">
+                    <input type="password" class="form-control form-control-md" name="password" placeholder="Password">
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" name="c_password" placeholder="Confirm Password">
+                    <input type="password" class="form-control form-control-md" name="c_password" placeholder="Confirm Password">
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
                 </div>
                 <button class="btn btn-primary btn-block btn-md shadow-lg mt-2">Sign Up</button>
             </form>
-            <div class="text-center mt-5 text-lg fs-4">
-                <p class='text-gray-600'>Already have an account? <a href="{{ route('login.tampil') }}" class="font-bold">Log
-                        in</a>.</p>
+            <div class="text-center mt-3 text-lg fs-6">
+                <p class='text-gray-600'>Already have an account? <a href="{{ route('login.tampil') }}" class="font-bold">Log in</a>.</p>
+                <p class='text-gray-600'>Or <a href="{{ route('login.tampil') }}" class="font-bold">Regist With Phone Number</a>.</p>
             </div>
         </div>
     </div>
