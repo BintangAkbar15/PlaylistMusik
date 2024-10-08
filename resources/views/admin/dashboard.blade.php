@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Mazer Admin Dashboard</title>
-    
-    <link rel="shortcut icon" href="{{ asset('dist/assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/iconly.css') }}">
-</head>
-
-<body>
+<x-layout>
     <script src="{{ asset('dist/assets/static/js/initTheme.js') }}"></script>
     <div id="app">
         <div id="sidebar">
@@ -164,7 +150,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
                                     <li>
-                                        <h6 class="dropdown-header">Hello, John!</h6>
+                                        <h6 class="dropdown-header">Hello, {{ Auth::user()->name }}!</h6>
                                     </li>
                                     <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
                                             Profile</a></li>
@@ -228,18 +214,5 @@
             <h2 class="mt-5 fw-bold col-11 text-start">View report</h2>
             <div class="col-11 bg-secondary mt-2" style="height: 50vh"></div>
         </div>
-        
     </div>
-    <script src="{{ asset('dist/assets/static/js/components/dark.js') }}"></script>
-    <script src="{{ asset('dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    
-    
-    <script src="{{ asset('dist/assets/compiled/js/app.js') }}"></script>
-    
-<!-- Need: Apexcharts -->
-<script src="{{ asset('dist/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ asset('dist/assets/static/js/pages/dashboard.js') }}"></script>
-
-</body>
-
-</html>
+</x-layout>
