@@ -1,1 +1,3 @@
-<h1>ini punyanya admin</h1>
+<x-layout>
+    <h5>ini admin weh</h5>
+</x-layout>
