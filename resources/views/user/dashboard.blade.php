@@ -17,8 +17,7 @@
         </div>
         <div class="col-7 bg-warning d-flex flex-column">
             <div class="col-12 bg-light" style="height: 90%">
-                <button id="top-center" class="btn btn-outline-primary btn-block btn-lg">Top
-                    Center</button>
+                <button id="top-center" class="btn btn-outline-primary btn-block btn-lg">{{session('success')}}</button>
             </div>
             <div class="col-12 bg-success" style="height: 10%">
 
@@ -31,7 +30,7 @@
         <script>
             document.getElementById("top-center").addEventListener("click", function() {
                 Toastify({
-                    text: "This is a top-center fixed toast!",
+                    text: "{{ session('success') }}",
                     duration: 3000,
                     close: true,     
                     gravity: "top", 
