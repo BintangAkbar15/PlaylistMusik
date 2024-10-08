@@ -28,8 +28,3 @@ Route::middleware(['auth','access:0'])->group(function(){
 Route::get('admin/login', function () {
     return view('admin.login');
 })->name('adminLogin');
-
-
-Route::get('admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('adminDasboard');
