@@ -17,7 +17,7 @@
         
 <div class="row h-100">
     <div class="col-lg-5 col-12">
-        <div id="auth-left">
+        <div id="auth-left" class="py-5">
             <a href="index.html" class="d-flex gap-3">
                 <img src="{{ asset('img/logo.png') }}" width="40px" alt="Logo">
                 <h3 for="fw-bold">Bara FM</h3>
