@@ -15,6 +15,10 @@ class AuthController extends Controller
 
         if(Auth::attempt($data)){
             $request->session()->regenerate();
+            $data = Auth::user()->is_admin == true ? true : false;
+            if($data == true){
+                return redirect()->route('adminDashboard');
+            }
             return redirect()->route('userDashboard');
         }else{
             return back()->with('error',$data);
