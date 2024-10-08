@@ -18,12 +18,9 @@ Route::middleware('guest')->group(function(){
     Route::post('/login',[AuthController::class,'submitLogin'])->name('login.submit');
 });
 
-
-Route::middleware(['auth','access:0'])->group(function(){
-    Route::get('user/dashboard', function () {
-        return view('user.dashboard');
-    })->name('userDashboard');
-});
+Route::get('user/dashboard', function () {
+    return view('user.dashboard');
+})->name('userDashboard');
 
 Route::get('admin/login', function () {
     return view('admin.login');
