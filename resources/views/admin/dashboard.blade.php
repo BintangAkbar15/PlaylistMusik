@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Mazer Admin Dashboard</title>
     
-    
-    
     <link rel="shortcut icon" href="{{ asset('dist/assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
@@ -236,9 +234,7 @@
     <script src="{{ asset('dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     
     
-    <script src="{{ asset('dist/assets/compiled/js/app.j') }}"></script>
-    
-
+    <script src="{{ asset('dist/assets/compiled/js/app.js') }}"></script>
     
 <!-- Need: Apexcharts -->
 <script src="{{ asset('dist/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>

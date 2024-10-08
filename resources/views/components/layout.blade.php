@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/auth.css') }}">
+        
     </head>
     <body class="max-h-100 d-flex col-12">
         {{ $slot }}
