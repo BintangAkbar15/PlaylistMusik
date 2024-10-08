@@ -28,13 +28,13 @@
             <form action="{{ route('login.submit') }}" method="post">
                 @csrf
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-md" name="name" placeholder="Username">
+                    <input type="text" class="form-control form-control-md" name="name" placeholder="Username" required>
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-md" placeholder="Password" name="password" id="password-field">
+                    <input type="password" class="form-control form-control-md" placeholder="Password" name="password" id="password-field" required>
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
