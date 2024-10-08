@@ -11,13 +11,6 @@
     <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/auth.css') }}">
 </head>
-@if (session('error'))
-@foreach (session('error')  as $ayam)
-    <div class="alert alert-danger">
-        <h2>{{ $ayam }}</h2>
-    </div>
-@endforeach
-@endif
 <body>
     <script src="{{ asset('dist/assets/static/js/initTheme.js') }}"></script>
     <div id="auth">

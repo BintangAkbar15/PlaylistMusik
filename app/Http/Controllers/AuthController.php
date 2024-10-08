@@ -21,7 +21,7 @@ class AuthController extends Controller
             }
             return redirect()->route('userDashboard');
         }else{
-            return back()->with('error',$data);
+            return back()->with('error','Username/Password salah');
         }
     }
 
