@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Dashboard - Bara FM</title>
     
-        <link rel="shortcut icon" href="{{ asset('dist/assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">  
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/iconly.css') }}">
