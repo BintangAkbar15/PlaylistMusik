@@ -17,7 +17,8 @@
         </div>
         <div class="col-7 bg-warning d-flex flex-column">
             <div class="col-12 bg-light" style="height: 90%">
-
+                <button id="top-center" class="btn btn-outline-primary btn-block btn-lg">Top
+                    Center</button>
             </div>
             <div class="col-12 bg-success" style="height: 10%">
 
@@ -26,5 +27,33 @@
         <div class="col-3 bg-danger vh-100">
             
         </div>
+        <script src="{{ asset('dist/assets/extensions/toastify-js/src/toastify.js') }}"></script>
+        <script>
+            document.getElementById("top-center").addEventListener("click", function() {
+                Toastify({
+                    text: "This is a top-center fixed toast!",
+                    duration: 3000,
+                    close: true,     
+                    gravity: "top", 
+                    backgroundColor: "#dc3545",  
+                    stopOnFocus: true,
+                    className: "p-3 position-fixed",  
+                    style: { 
+                        top: "10px",
+                        color: "#fff",  
+                        borderRadius: "5px",  
+                    },
+                    onClick: function() {}, 
+                }).showToast();
+                const closeButtons = document.querySelectorAll('.toastify .toast-close');
+                closeButtons.forEach(function(button) {
+                    button.style.backgroundColor = 'transparent';  
+                    button.style.border = 'none';  
+                    button.style.color = '#fff';
+                    button.style.marginstart = 50;
+                });
+            });
+
+        </script>
     </body>
 </html>
