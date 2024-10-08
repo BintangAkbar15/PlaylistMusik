@@ -41,13 +41,40 @@
                         </div>
                     </div>
                 </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                
+                        <li class="sidebar-item">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Lagu</span>
+                            </a>
+                            <ul class="submenu">    
+                                <li class="submenu-item">
+                                    <a href="#" class="submenu-link">Kelola Lagu</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#" class="submenu-link">Tambah Lagu</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div id="main" class='layout-navbar navbar-fixed'>
             <header>
                 <nav class="navbar navbar-expand navbar-light navbar-top">
                     <div class="container-fluid">
-                        <a href="#" class="burger-btn d-block">
+                        <a href="#" class="burger-btn d-block d-xl-none">
                             <i class="bi bi-justify fs-3"></i>
                         </a>
 
@@ -111,12 +138,12 @@
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <h6 class="mb-0 text-gray-600">John Ducky</h6>
+                                            <h6 class="mb-0 text-gray-600">{{ Auth::user()->name }}</h6>
                                             <p class="mb-0 text-sm text-gray-600">Administrator</p>
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
-                                                <img src="./assets/compiled/jpg/1.jpg">
+                                                <img src="{{ asset('dist/assets/compiled/jpg/5.jpg') }}">
                                             </div>
                                         </div>
                                     </div>
