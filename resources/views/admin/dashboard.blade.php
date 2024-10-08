@@ -1,4 +1,20 @@
-<x-layout>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mazer Admin Dashboard</title>
+    
+    
+    
+    <link rel="shortcut icon" href="{{ asset('dist/assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/iconly.css') }}">
+</head>
+
+<body>
     <script src="{{ asset('dist/assets/static/js/initTheme.js') }}"></script>
     <div id="app">
         <div id="sidebar">
@@ -187,47 +203,47 @@
                             </div>
                         </div>
                     </div>
-                    <section class="section">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">About Vertical Navbar</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>Vertical Navbar is a layout option that you can use with Mazer. </p>
+                </form>
+            </div>
+            <h2 class="mt-5 fw-bold col-11 text-start">Report</h2>
+            <div class="col-12 d-flex justify-content-evenly pt-5">
+                <div style="height: 250px; width: 250px;" class="bg-light rounded">
 
-                                <p>In case you want the navbar to be sticky on top while scrolling, add <code>.navbar-fixed</code> class alongside with <code>.layout-navbar</code> class.</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Dummy Text</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis tincidunt tempus. Duis vitae facilisis enim, at rutrum lacus. Nam at nisl ut ex egestas placerat sodales id quam. Aenean sit amet nibh quis lacus pellentesque venenatis vitae at justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse venenatis tincidunt odio ut rutrum. Maecenas ut urna venenatis, dapibus tortor sed, ultrices justo. Phasellus scelerisque, nibh quis gravida venenatis, nibh mi lacinia est, et porta purus nisi eget nibh. Fusce pretium vestibulum sagittis. Donec sodales velit cursus convallis sollicitudin. Nunc vel scelerisque elit, eget facilisis tellus. Donec id molestie ipsum. Nunc tincidunt tellus sed felis vulputate euismod.
-                                </p>
-                                <p>
-                                    Proin accumsan nec arcu sit amet volutpat. Proin non risus luctus, tempus quam quis, volutpat orci. Phasellus commodo arcu dui, ut convallis quam sodales maximus. Aenean sollicitudin massa a quam fermentum, et efficitur metus convallis. Curabitur nec laoreet ipsum, eu congue sem. Nunc pellentesque quis erat at gravida. Vestibulum dapibus efficitur felis, vel luctus libero congue eget. Donec mollis pellentesque arcu, eu commodo nunc porta sit amet. In commodo augue id mauris tempor, sed dignissim nulla facilisis. Ut non mattis justo, ut placerat justo. Vestibulum scelerisque cursus facilisis. Suspendisse velit justo, scelerisque ac ultrices eu, consectetur ac odio.
-                                </p>                
-                                <p>
-                                    In pharetra quam vel lobortis fermentum. Nulla vel risus ut sapien porttitor volutpat eu ac lorem. Vestibulum porta elit magna, ut ultrices sem fermentum ut. Vestibulum blandit eros ut imperdiet porttitor. Pellentesque tempus nunc sed augue auctor eleifend. Sed nisi sem, lobortis eget faucibus placerat, hendrerit vitae elit. Vestibulum elit orci, pretium vel libero at, imperdiet congue lectus. Praesent rutrum id turpis non aliquam. Cras dignissim, metus vitae aliquam faucibus, elit augue dignissim nulla, bibendum consectetur leo libero a tortor. Vestibulum non tincidunt nibh. Ut imperdiet elit vel vehicula ultricies. Nulla maximus justo sit amet fringilla laoreet. Aliquam malesuada diam in augue mattis aliquam. Pellentesque id eros dignissim, dapibus sem ac, molestie dolor. Mauris purus lacus, tempor sit amet vestibulum vitae, ultrices eu urna. 
-                                </p>
-                            </div>
-                        </div>
-                    </section>
+                </div>
+                <div style="height: 250px; width: 250px;" class="bg-light rounded">
+
+                </div>
+                <div style="height: 250px; width: 250px;" class="bg-light rounded">
+
                 </div>
             </div>
-            <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p>2023 &copy; Mazer</p>
-                    </div>
-                    <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                            by <a href="https://saugi.me">Saugi</a></p>
-                    </div>
-                </div>
-            </footer>
+            <h2 class="mt-5 fw-bold col-11 text-start">Top search</h2>
+            <div class="col-11 mt-3 gap-3 d-flex flex-column align-items-center justify-content-start overflow-y-scroll" style="max-height: 30vh">
+                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+                <div class="bg-secondary col-12 rounded" style="height: 7vh">a</div>
+            </div>
+            <h2 class="mt-5 fw-bold col-11 text-start">View report</h2>
+            <div class="col-11 bg-secondary mt-2" style="height: 50vh"></div>
         </div>
+        
     </div>
-</x-layout>
+    <script src="{{ asset('dist/assets/static/js/components/dark.js') }}"></script>
+    <script src="{{ asset('dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    
+    
+    <script src="{{ asset('dist/assets/compiled/js/app.j') }}"></script>
+    
+
+    
+<!-- Need: Apexcharts -->
+<script src="{{ asset('dist/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ asset('dist/assets/static/js/pages/dashboard.js') }}"></script>
+
+</body>
+
+</html>
