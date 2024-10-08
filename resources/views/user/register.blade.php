@@ -55,7 +55,7 @@
             </form>
             <div class="text-center mt-3 text-lg fs-6">
                 <p class='text-gray-600'>Already have an account? <a href="{{ route('login.tampil') }}" class="font-bold">Log in</a>.</p>
-                <p class='text-gray-600'>Or <a href="{{ route('login.tampil') }}" class="font-bold">Regist With Phone Number</a>.</p>
+                <p class='text-gray-600'>Or <a href="{{ route('login.tampil') }}" class="font-bold">Sign Up With Phone Number</a>.</p>
             </div>
         </div>
     </div>
