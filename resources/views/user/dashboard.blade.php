@@ -27,32 +27,34 @@
             
         </div>
         <script src="{{ asset('dist/assets/extensions/toastify-js/src/toastify.js') }}"></script>
-        <script>
-            document.getElementById("top-center").addEventListener("click", function() {
-                Toastify({
-                    text: "{{ session('success') }}",
-                    duration: 3000,
-                    close: true,     
-                    gravity: "top", 
-                    backgroundColor: "#dc3545",  
-                    stopOnFocus: true,
-                    className: "p-3 position-fixed",  
-                    style: { 
-                        top: "10px",
-                        color: "#fff",  
-                        borderRadius: "5px",  
-                    },
-                    onClick: function() {}, 
-                }).showToast();
-                const closeButtons = document.querySelectorAll('.toastify .toast-close');
-                closeButtons.forEach(function(button) {
-                    button.style.backgroundColor = 'transparent';  
-                    button.style.border = 'none';  
-                    button.style.color = '#fff';
-                    button.style.marginstart = 50;
+        @if (session('success'))
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Toastify({
+                        text: "{{ session('success') }}",
+                        duration: 3000,
+                        close: true,     
+                        gravity: "top", 
+                        backgroundColor: "#dc3545",  
+                        stopOnFocus: true,
+                        className: "p-3 position-fixed",  
+                        style: { 
+                            top: "10px",
+                            color: "#fff",  
+                            borderRadius: "5px",  
+                        },
+                        onClick: function() {}, 
+                    }).showToast();
+                    const closeButtons = document.querySelectorAll('.toastify .toast-close');
+                    closeButtons.forEach(function(button) {
+                        button.style.backgroundColor = 'transparent';  
+                        button.style.border = 'none';  
+                        button.style.color = '#fff';
+                        button.style.marginstart = 50;
+                    });
                 });
-            });
 
-        </script>
+            </script>
+        @endif
     </body>
 </html>

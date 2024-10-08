@@ -13,6 +13,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/register',[AuthController::class,'submitRegis'])->name('regis.submit');
     
     Route::get('/login', function () {
+        if(Auth::check()){
+            if(Auth::user()->is_admin){
+                return view('admin.dashboard');
+            }
+            return view('user.dashboard');
+        }
         return view('user.login');
     })->name('login.tampil');
     
