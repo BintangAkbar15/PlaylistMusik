@@ -9,12 +9,16 @@
         <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">  
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/app-dark.css') }}">
-        <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/auth.css') }}">
+        <link rel="stylesheet" href="{{ asset('dist/assets/compiled/css/iconly.css') }}">
+        
     </head>
-    <body >
+    <body>
         {{ $slot }}
-        <script src="{{ asset("dist/assets/static/js/components/dark.js") }}"></script>
+        
+        <script src="{{ asset('dist/assets/static/js/components/dark.js') }}"></script>
         <script src="{{ asset('dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
         <script src="{{ asset('dist/assets/compiled/js/app.js') }}"></script>
+        <script src="{{ asset('dist/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
+        <script src="{{ asset('dist/assets/static/js/pages/dashboard.js') }}"></script>
     </body>
 </html>

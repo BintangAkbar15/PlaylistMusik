@@ -36,4 +36,5 @@ Route::middleware('auth')->group(function(){
             return view('admin.dashboard');
         })->name('adminDashboard');
     });
+    Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
