@@ -17,6 +17,7 @@
                         <th colspan="2">Action</th>
                     </tr>
                 </x-slot>
+                @forelse ($lagu as $item)
                 <tr>
                     <td>1</td>
                     <td>Ab2</td>
@@ -28,7 +29,27 @@
                     <td>Edit</td>
                     <td>Delete</td>
                 </tr>
+                @empty
+                    
+                @endforelse
             </x-datatable>
         </div>
     </div>
+    <script>
+        const deleteModal = document.getElementById('danger');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            // Button yang memicu modal
+            const button = event.relatedTarget;
+            // Ambil data dari button (data-nis)
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            document.querySelector('strong').innerHTML = name;
+            // Update form action dan value nis di dalam modal
+            const form = document.getElementById('deleteForm');
+            const idInput = document.getElementById('idToDelete').value = id;
+                console.log(idInput)
+            // Set action URL sesuai id
+            form.action = `/admin/lagu/delete/${id}`;
+        });
+    </script>
 </x-layout>

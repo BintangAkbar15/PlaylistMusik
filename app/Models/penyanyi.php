@@ -14,6 +14,8 @@ class penyanyi extends Model
         'name',
         'slug',
         'thumb',
+        'negara',
+        'debut',
     ];
     public function pgenre()
     {
