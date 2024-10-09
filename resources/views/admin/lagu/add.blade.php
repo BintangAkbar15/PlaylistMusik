@@ -4,7 +4,7 @@
         <div id="main" class='layout-navbar navbar-fixed'>
             <x-header></x-header>
             <div class="col-12 d-flex flex-column align-items-center">
-                <div class="col-md-6 col-12">
+                <div class="col-md-10 col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Add Music</h4>
