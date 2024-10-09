@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\genre;
+use App\Models\penyanyi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -55,6 +57,12 @@ Route::middleware('auth')->group(function(){
             return view('admin.genre.add');
         })->name('genre.add');
 
+        Route::get('/admin/genre/edit/{genre:slug}', function(genre $genre){
+            $gen = genre::find($genre['id']);
+            return view('admin.genre.edit',['id'=>$genre->id,'data'=>$gen]);
+        })->name('genre.edit');
+
+        Route::post('/admin/genre/edit/{id}', [genreController::class,'update'])->name('genre.editNew');
         Route::post('/admin/genre/tambah', [genreController::class,'store'])->name('genre.addNew');
 
         Route::get('/admin/genre/delete/{id}', [genreController::class,'destroy'])->name('genre.delete');
@@ -77,9 +85,16 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/admin/penyanyi/tambah', [penyanyiController::class,'store'])->name('penyanyi.addNew');
 
+        Route::post('/admin/penyanyi/edit/{id}', [penyanyiController::class,'update'])->name('penyanyi.editNew');
+
         Route::get('/admin/penyanyi/tambah', function(){
             return view('admin.penyanyi.add');
         })->name('penyanyi.add');
+
+        Route::get('/admin/penyanyi/edit/{penyanyi:slug}', function(penyanyi $penyanyi){
+            $singer = penyanyi::find($penyanyi['id']);
+            return view('admin.penyanyi.edit',['id'=>$penyanyi->id,'data'=>$singer]);
+        })->name('penyanyi.edit');
         //end penyanyi section
 
         Route::get('/admin/log', function(){

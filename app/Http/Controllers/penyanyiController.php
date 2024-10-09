@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\penyanyi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class penyanyiController extends Controller
 {
@@ -50,23 +51,21 @@ class penyanyiController extends Controller
     function index(){
         return view('admin.penyanyi.kelola',['data'=>penyanyi::all()]);
     }
-    function update(Request $request,string $id){
+    
+    function update(Request $request,string $id,penyanyi $penyanyi){
+        $slug = $this->createSlug($request->input('name'));
         $validate = $request->validate([
             'name' =>'required',
             'negara'=>'required',
             'debut'=>'required',
-            'thumb' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'thumb' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]); 
-        $validate['thumb'] = $request->file('thumb')->store('artist-images');
-        $slug = $this->createSlug($request->input('name'));
-        $data = [
-            'name'=>$request->input('name'),
-            'thumb'=>$request->input('thumb'),
-            'negara'=>$request->input('negara'),
-            'debut'=>$request->input('debut'),
-            'slug'=>$slug,
-        ];
-        penyanyi::where('id',$id)->update($data);
+        if($request->hasFile('thumb')){
+            Storage::delete('public/'.$penyanyi->thumb);
+            $thumbPath = $request->file('thumb')->store('artist-images');
+        }
+        
+        penyanyi::where('id',$id)->update($validate);
         return redirect()->route('kelola.penyanyi')->with('success','penyanyi Berhasil Diubah');
     }
     function destroy(string $id){

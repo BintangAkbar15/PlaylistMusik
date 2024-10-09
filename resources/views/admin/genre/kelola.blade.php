@@ -21,7 +21,7 @@
                     <td>{{ $item->color }}</td>
                     <td>{{ $item->slug }}</td>
                     <td>
-                        <button class="btn btn-outline-warning">Ubah</button>
+                        <a href="{{ route('genre.edit',$item->slug) }}" class="btn btn-outline-warning">Ubah</a>
                         <button type="button" class="btn btn-outline-danger" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-bs-toggle="modal" data-bs-target="#danger">Hapus</button>
                         <!--Danger theme Modal -->
                         <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
