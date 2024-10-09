@@ -2,13 +2,18 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                jQuery Datatable
+                {{ $title }}
             </h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table" id="table1">
-                    {{ $slot }}
+                    <thead>
+                            {{ $theader }}
+                    </thead>
+                    <tbody>
+                        {{ $slot }}
+                    </tbody>
                 </table>
             </div>
         </div>

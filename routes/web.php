@@ -54,6 +54,12 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/tambah', function(){
             return view('admin.genre.add');
         })->name('genre.add');
+        
+        Route::get('/admin/log', function(){
+            return view('log');
+        })->name('log.user');
+
+
     });
 
     //Logout

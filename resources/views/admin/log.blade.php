@@ -11,7 +11,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>City</th>
-                        <th>action</th>
+                        <th>Status</th>
                     </tr>
                 </x-slot>
                 <tr>

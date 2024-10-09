@@ -43,9 +43,16 @@
                 <li class="sidebar-title">Menu</li>
         
                 <li class="sidebar-item">
-                    <a href="#" class='sidebar-link'>
+                    <a href="{{ route('adminDashboard') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="{{ route('log.user') }}" class='sidebar-link'>
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>Log User</span>
                     </a>
                 </li>
 
