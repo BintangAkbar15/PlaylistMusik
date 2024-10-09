@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="sidebar-menu d-flex flex-column" style="height: 85vh">
-            <ul class="menu h-100 overflow-y-scroll">
+            <ul class="menu h-100 overflow-y-auto">
                 <li class="sidebar-title">Menu</li>
                 
                 <li class="sidebar-item">
@@ -66,7 +66,7 @@
         
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-music-note-list"></i>
+                        <i class="fa-solid fa-record-vinyl"></i>
                         <span>Genre</span>
                     </a>
                     <ul class="submenu">    
