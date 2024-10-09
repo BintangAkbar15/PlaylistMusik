@@ -31,13 +31,13 @@
                                                    <label class="mb-2" for="file-audio">Genre</label>
                                                     <div class="position-relative">
                                                         <div class="container-fluid gap-2 bg-secondary rounded d-flex p-3 flex-wrap">
-                                                            <div class="tag-congainer bg-dark d-flex align-items-center">
+                                                            <div class="tag-congainer bg-dark d-flex align-items-center" id="container-tag">
                                                                 <div class="tag p-2 rounded d-flex align-items-center">
                                                                     <span>halo</span>
                                                                     <i class="fa-solid fa-x ms-2"></i>
                                                                 </div>
                                                             </div>
-                                                            <input class="flex-grow-1" style="border: none; background: none; outline: none; max-width: 5vw;" onfocus="this.style.outline='none';" onblur="this.style.outline='none';" />
+                                                            <input class="flex-grow-1" style="border: none; background: none; outline: none; min-width: 5vw;" onfocus="this.style.outline='none';" onblur="this.style.outline='none';" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -88,4 +88,9 @@
             </div>
         </div>
     </div>
+
+    <script>
+        let container = document.getElementById('container-tag');
+        console.log(container)
+    </script>
 </x-layout>
