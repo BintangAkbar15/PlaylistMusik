@@ -1,80 +1,56 @@
 <x-layout>
-    <div class="col-md-6 col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Vertical Form with Icons</h4>
-            </div>
-            <div class="card-content">
-                <div class="card-body">
-                    <form class="form form-vertical">
-                        <div class="form-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group has-icon-left">
-                                        <label for="first-name-icon">First Name</label>
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control"
-                                                placeholder="Input with icon left" id="first-name-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-person"></i>
+    <div id="app">
+        <x-sidebar></x-sidebar>
+        <div id="main" class='layout-navbar navbar-fixed'>
+            <x-header></x-header>
+            <div class="col-12 pb-5 d-flex flex-column align-items-center mt-5">
+                <div class="col-md-6 col-12">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $item)
+                        <div class="alert">{{$item}}</div>
+                    @endforeach
+                @endif
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Edit Genre</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form class="form form-vertical" action="{{ route('genre.addNew') }}" method="POST">
+                                    @csrf
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group has-icon-left">
+                                                    <label class="mb-2" for="genre-name">Genre Name</label>
+                                                    <div class="position-relative">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Genre" name="name" id="first-name-icon">
+                                                        <div class="form-control-icon">
+                                                            <i class="fa-solid fa-record-vinyl"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group has-icon-left">
+                                                    <label class="mb-2" for="Color-id-icon">Color</label>
+                                                    <div class="position-relative">
+                                                        <input type="color" name="color" id="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                                <button type="reset"
+                                                    class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-
-                                    <div class="form-group has-icon-left">
-                                        <label for="email-id-icon">Email</label>
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Email"
-                                                id="email-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-envelope"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group has-icon-left">
-                                        <label for="mobile-id-icon">Mobile</label>
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Mobile"
-                                                id="mobile-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-phone"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group has-icon-left">
-                                        <label for="password-id-icon">Password</label>
-                                        <div class="position-relative">
-                                            <input type="password" class="form-control" placeholder="Password"
-                                                id="password-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-lock"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class='form-check'>
-                                        <div class="checkbox mt-2">
-                                            <input type="checkbox" id="remember-me-v" class='form-check-input'
-                                                checked>
-                                            <label for="remember-me-v">Remember Me</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset"
-                                        class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                                </div>
+                                </form>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

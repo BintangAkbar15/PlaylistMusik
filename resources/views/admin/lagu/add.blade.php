@@ -30,14 +30,11 @@
                                                 <div class="form-group has-icon-left">
                                                    <label class="mb-2" for="file-audio">Genre</label>
                                                     <div class="position-relative">
-                                                        <div class="container-fluid gap-2 bg-secondary rounded d-flex p-3 flex-wrap">
-                                                            <div class="tag-congainer bg-dark d-flex align-items-center">
-                                                                <div class="tag p-2 rounded d-flex align-items-center">
-                                                                    <span>halo</span>
-                                                                    <i class="fa-solid fa-x ms-2"></i>
-                                                                </div>
+                                                        <div class="container-fluid gap-2 bg-secondary rounded d-flex p-3 flex-wrap-reverse">
+                                                            <div class="tag-congainer d-flex align-items-center flex-wrap gap-2" id="container-tag">
+                                                                
                                                             </div>
-                                                            <input class="flex-grow-1" style="border: none; background: none; outline: none; max-width: 5vw;" onfocus="this.style.outline='none';" onblur="this.style.outline='none';" />
+                                                            <input id="tag-input" class="flex-grow-1" style="border: none; background: none; outline: none; min-width: 5vw;" onfocus="this.style.outline='none';" onblur="this.style.outline='none';" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -88,4 +85,60 @@
             </div>
         </div>
     </div>
+
+    <script>
+        let container = document.getElementById('container-tag')
+        let inputtag = document.getElementById('tag-input')
+
+        var tagray = []
+
+        function createTag(label){
+            const div = document.createElement('div');
+            div.setAttribute('class', 'tag p-2 rounded d-flex align-items-center bg-dark');
+            const span = document.createElement('span');
+            span.innerHTML = label;
+            span.style.cursor = 'default';
+            const closeBtn = document.createElement('i')
+            closeBtn.setAttribute('class', 'fa-solid fa-x ms-2');
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.setAttribute('data-item', label);
+
+            div.appendChild(span)
+            div.appendChild(closeBtn)
+
+            return div;
+        }
+
+        function reset(){
+            document.querySelectorAll('.tag').forEach(function(tag){
+                tag.parentElement.removeChild(tag);
+            })
+        }
+
+        function addtag(){
+            reset();
+            tagray.slice().reverse().forEach(function(tag){
+                const input = createTag(tag);
+                container.prepend(input)               
+            });
+        }
+
+        inputtag.addEventListener('keyup', function(e){
+            if(e.key == ' '){
+                tagray.push(inputtag.value)
+                addtag();
+                inputtag.value = '';
+            }
+        })
+
+        document.addEventListener('click', function(e){
+            if(e.target.tagName === 'I'){
+                const value = e.target.getAttribute('data-item')
+                const index = tagray.indexOf(value);
+                tagray = [ ...tagray.slice(0, index), ...tagray.slice(index + 1)];
+                
+                addtag();
+            }   
+        })
+    </script>
 </x-layout>
