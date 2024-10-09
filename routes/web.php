@@ -46,3 +46,27 @@ Route::middleware('auth')->group(function(){
     });
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
+
+Route::get('/admin/genre/add', function(){
+    return view('admin.genre.add');
+})->name('admin.genre.add');
+
+Route::get('/admin/genre', function(){
+    return view('admin.genre.kelola');
+})->name('admin.genre');
+
+Route::get('/admin/lagu/add', function(){
+    return view('admin.lagu.add');
+})->name('admin.lagu.add');
+
+Route::get('/admin/lagu', function(){
+    return view('admin.lagu.kelola');
+})->name('admin.lagu');
+
+Route::get('/admin/artis/add', function(){
+    return view('admin.penyanyi.add');
+})->name('admin.artis.add');
+
+Route::get('/admin/artis', function(){
+    return view('admin.penyanyi.kelola');
+})->name('admin.artis');

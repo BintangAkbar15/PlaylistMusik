@@ -7,21 +7,22 @@
                 <x-slot:title>Kelola Genre</x-slot:t>
                 <x-slot:theader>
                     <tr>
+                        <th>No</th>
+                        <th>Id</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>City</th>
-                        <th>action</th>
+                        <th>Color</th>
+                        <th>Slug</th>
+                        <th colspan="2">action</th>
                     </tr>
                 </x-slot>
                 <tr>
-                    <td>Graiden</td>
-                    <td>vehicula.aliquet@semconsequat.co.uk</td>
-                    <td>076 4820 8838</td>
-                    <td>Offenburg</td>
-                    <td>
-                        <span class="badge bg-success">Active</span>
-                    </td>
+                    <td>1</td>
+                    <td>921736</td>
+                    <td>Jazz</td>
+                    <td>blue</td>
+                    <td>/blue/red/yellow</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
                 </tr>
             </x-datatable>
         </div>

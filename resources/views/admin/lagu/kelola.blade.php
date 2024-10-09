@@ -7,21 +7,26 @@
                 <x-slot:title>Kelola Lagu</x-slot:t>
                 <x-slot:theader>
                     <tr>
+                        <th>No</th>
+                        <th>Id</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>City</th>
-                        <th>action</th>
+                        <th>Audio Legnth</th>
+                        <th>Artist</th>
+                        <th>Photo</th>
+                        <th>Slug</th>
+                        <th colspan="2">Action</th>
                     </tr>
                 </x-slot>
                 <tr>
-                    <td>Graiden</td>
-                    <td>vehicula.aliquet@semconsequat.co.uk</td>
-                    <td>076 4820 8838</td>
-                    <td>Offenburg</td>
-                    <td>
-                        <span class="badge bg-success">Active</span>
-                    </td>
+                    <td>1</td>
+                    <td>Ab2</td>
+                    <td>appocalypse</td>
+                    <td>4:50</td>
+                    <td>Cigarettes After Sex</td>
+                    <td>ini.png</td>
+                    <td>sad/kumenangis/dark/satanic</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
                 </tr>
             </x-datatable>
         </div>

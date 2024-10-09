@@ -43,7 +43,7 @@
                 <li class="sidebar-title">Menu</li>
                 
                 <li class="sidebar-item">
-                    <a href="#" class='sidebar-link'>
+                    <a href="{{ route('adminDashboard') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -56,10 +56,10 @@
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Kelola Lagu</a>
+                            <a href="{{ route('admin.lagu') }}" class="submenu-link">Kelola Lagu</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Lagu</a>
+                            <a href="{{ route('admin.lagu.add') }}" class="submenu-link">Tambah Lagu</a>
                         </li>
                     </ul>
                 </li>
@@ -71,10 +71,10 @@
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Kelola Genre</a>
+                            <a href="{{ route('admin.genre') }}" class="submenu-link">Kelola Genre</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Genre</a>
+                            <a href="{{ route('admin.genre.add') }}" class="submenu-link">Tambah Genre</a>
                         </li>
                     </ul>
                 </li>
@@ -86,10 +86,10 @@
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Kelola Artist</a>
+                            <a href="{{ route('admin.artis') }}" class="submenu-link">Kelola Artist</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Artist</a>
+                            <a href="{{ route('admin.artis.add') }}" class="submenu-link">Tambah Artist</a>
                         </li>
                     </ul>
                 </li>
