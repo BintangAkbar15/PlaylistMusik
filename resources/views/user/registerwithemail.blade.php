@@ -22,7 +22,7 @@
                 <img src="{{ asset('img/logo.png') }}" width="40px" alt="Logo">
                 <h3 for="fw-bold">Bara FM</h3>
             </a>
-            <h1 class="mt-3">Sign Up</h1>
+            <h1 class="mt-3">Sign Up Email</h1>
             <p class="mb-5">Input your data to register to our website.</p>
 
             <form action="{{ route('regis.submit') }}" method="post">
@@ -51,11 +51,17 @@
                         <i class="bi bi-shield-lock"></i>
                     </div>
                 </div>
+                <div class="form-check form-check-md d-flex align-items-end mb-4" id="container-showpass">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="showpass">
+                    <label class="form-check-label text-gray-600" for="showpass">
+                        Show Password
+                    </label>
+                </div>
                 <button class="btn btn-primary btn-block btn-md shadow-lg mt-2">Sign Up</button>
             </form>
             <div class="text-center mt-3 text-lg fs-6">
                 <p class='text-gray-600'>Already have an account? <a href="{{ route('login.tampil') }}" class="font-bold">Log in</a>.</p>
-                <p class='text-gray-600'>Or <a href="{{ route('login.tampil') }}" class="font-bold">Register With Phone Number</a>.</p>
+                <p class='text-gray-600'>Or <a href="{{ route('register.phone.tampil') }}" class="font-bold">Register With Phone Number</a>.</p>
             </div>
         </div>
     </div>

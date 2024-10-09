@@ -48,7 +48,7 @@
                 <button class="btn btn-primary btn-block btn-md shadow-lg mt-5">Log in</button>
             </form>
             <div class="text-center mt-5 text-lg fs-6">
-                <p class="text-gray-600">Don't have an account? <a href="{{ route('register.tampil') }}" class="font-bold">Sign
+                <p class="text-gray-600">Don't have an account? <a href="{{ route('register.email.tampil') }}" class="font-bold">Sign
                         up</a>.</p>
                 <p><a class="font-bold" href="#">Forgot password?</a>.</p>
             </div>

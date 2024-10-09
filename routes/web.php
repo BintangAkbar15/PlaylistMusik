@@ -6,9 +6,9 @@ use App\Http\Controllers\AuthController;
 
 
 Route::middleware('guest')->group(function () {
-    Route::get('/register', function () {
-        return view('user.register');
-    })->name('register.tampil');
+    Route::get('/sign/email', function () {
+        return view('user.registerwithemail');
+    })->name('register.email.tampil');
     
     Route::post('/register',[AuthController::class,'submitRegis'])->name('regis.submit');
     
@@ -38,3 +38,7 @@ Route::middleware('auth')->group(function(){
     });
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
+
+Route::get('/sign/phone', function(){
+    return view('user.registerwithphonenum');
+})->name('register.phone.tampil');

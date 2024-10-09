@@ -1,11 +1,14 @@
 let checkbox = document.getElementById('showpass');
 let seepass = document.getElementById('password-field');
-document.getElementById('container-showpass').addEventListener('click', function(){
-    checkbox.checked != checkbox.checked
-    
-    if(checkbox.checked == 1){
+let seecpass = document.getElementById('c_password-field');
+
+document.getElementById('container-showpass').addEventListener('click', function() {
+    // Directly check the state of the checkbox
+    if(checkbox.checked) {
         seepass.setAttribute('type', 'text');
-    }else{
+        seecpass.setAttribute('type', 'text');
+    } else {
         seepass.setAttribute('type', 'password');
+        seecpass.setAttribute('type', 'password');
     }
-})
+});
