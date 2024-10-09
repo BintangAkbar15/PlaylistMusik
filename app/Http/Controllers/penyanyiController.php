@@ -28,7 +28,7 @@ class penyanyiController extends Controller
         return redirect()->route('kelola.penyanyi')->with('success','penyanyi Berhasil Ditambahkan');
     }
     function index(){
-        return view('admin.penyanyi.kelola',['penyanyi'=>penyanyi::all()]);
+        return view('admin.penyanyi.kelola',['data'=>penyanyi::all()]);
     }
     function update(Request $request,string $id){
         $request->validate([

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\laguController;
+use App\Http\Controllers\genreController;
 
 
 Route::middleware('guest')->group(function () {
@@ -40,20 +41,22 @@ Route::middleware('auth')->group(function(){
             return view('user.dashboard');
         })->name('userDashboard');
     });
-    
+
     Route::middleware('access:true')->group(function(){
         Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
         })->name('adminDashboard');
 
         //genre section
-        Route::get('/admin/genre', function(){
-            return view('admin.genre.kelola');
-        })->name('kelola.genre');
-
+        Route::get('/admin/genre', [genreController::class,'index'])->name('kelola.genre');
+        
         Route::get('/admin/genre/tambah', function(){
             return view('admin.genre.add');
         })->name('genre.add');
+
+        Route::post('/admin/genre/tambah', [genreController::class,'store'])->name('genre.addNew');
+
+        Route::get('/admin/genre/delete/{id}', [genreController::class,'destroy'])->name('genre.delete');
         //end genre section
 
         //lagu section
@@ -86,27 +89,3 @@ Route::middleware('auth')->group(function(){
     //Logout
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
-
-Route::get('/admin/genre/add', function(){
-    return view('admin.genre.add');
-})->name('admin.genre.add');
-
-Route::get('/admin/genre', function(){
-    return view('admin.genre.kelola');
-})->name('admin.genre');
-
-Route::get('/admin/lagu/add', function(){
-    return view('admin.lagu.add');
-})->name('admin.lagu.add');
-
-Route::get('/admin/lagu', function(){
-    return view('admin.lagu.kelola');
-})->name('admin.lagu');
-
-Route::get('/admin/artis/add', function(){
-    return view('admin.penyanyi.add');
-})->name('admin.artis.add');
-
-Route::get('/admin/artis', function(){
-    return view('admin.penyanyi.kelola');
-})->name('admin.artis');
