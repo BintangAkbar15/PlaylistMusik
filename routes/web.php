@@ -7,12 +7,18 @@ use App\Http\Controllers\AuthController;
 //Jika sebagai user
 Route::middleware('guest')->group(function () {
     //menampilkan bagian register user
-    Route::get('/register', function () {
-        return view('user.register');
-    })->name('register.tampil');
+    Route::get('/register/email', function () {
+        return view('user.emailregister');
+    })->name('register.email.tampil');
+    
+        
+    Route::get('/register/phone', function(){
+        return view('user.phoneregister');
+    })->name('register.phone.tampil');
     
     //submit register
-    Route::post('/register',[AuthController::class,'submitRegis'])->name('regis.submit');
+    Route::post('/register',[AuthController::class,'submitRegisEmail'])->name('regis.email.submit');
+    Route::post('/register',[AuthController::class,'submitRegisPhone'])->name('regis.phone.submit');
     
     //menampilkan bagian login
     Route::get('/login', function () {
@@ -87,7 +93,3 @@ Route::middleware('auth')->group(function(){
     //Logout
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
-
-Route::get('/sign/phone', function(){
-    return view('user.registerwithphonenum');
-})->name('register.phone.tampil');

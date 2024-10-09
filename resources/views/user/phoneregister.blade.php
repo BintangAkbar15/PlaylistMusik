@@ -12,6 +12,14 @@
 </head>
 
 <body>
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $item)
+            <div class="alert alert-danger">
+                {{ $item }}
+            </div>
+        @endforeach
+    @endif
     <script src="{{ asset('dist/assets/static/js/initTheme.js') }}"></script>
     <div id="auth">
         <div class="row h-100">
@@ -24,10 +32,10 @@
                     <h1 class="mt-3">Sign Up Phone</h1>
                     <p class="mb-5">Input your data to register to our website.</p>
 
-                    <form action="{{ route('regis.submit') }}" method="post">
+                    <form action="{{ route('regis.phone.submit') }}" method="post">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="tel" id="phone" class="form-control" placeholder="123-456-7890">
+                            <input type="tel" id="phone" class="form-control" name="telp" placeholder="123-456-7890">
                             <div class="form-control-icon">
                                 <i class="bi bi-telephone"></i>
                             </div>

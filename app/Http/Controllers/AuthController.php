@@ -30,17 +30,39 @@ class AuthController extends Controller
         return redirect()->route('login.tampil');
     }
 
-    function submitRegis(Request $request){
+    function submitRegisEmail(Request $request){
         $request->validate([
             'name'=>'required|min:3|max:100',
-            'email'=>'required|email',
-            'password'=>'required|min:8'
+            'email'=>'required|email|unique:users',
+            'password'=>'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/'
         ]);
 
         if(request('password') === request('c_password')){
             $data = [
                 'name'=>request('name'),
                 'email'=>request('email'),
+                'password'=>request('password')
+            ];
+    
+            User::create($data);
+            return redirect()->route('login.tampil')->with('success','akun anda berhasil dibuat');
+        }
+        else{
+            return redirect()->route('register.tampil')->with('error','password dan konfirmasinya harus sama');
+        }
+    }
+
+    function submitRegisPhone(Request $request){
+        $request->validate([
+            'name'=>'required|min:3|max:100',
+            'telp'=>'required|numeric|regex:/^08[0-9]{9,10}$/',
+            'password'=>'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/'
+        ]);
+
+        if(request('password') === request('c_password')){
+            $data = [
+                'name'=>request('name'),
+                'telp'=>request('telp'),
                 'password'=>request('password')
             ];
     
