@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="index.html"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
+                    <a href="index.html"><img src="{{ asset('img/logo-bara-fm.png') }}" alt="Logo" srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -38,79 +38,73 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-menu">
-            <ul class="menu">
+        <div class="sidebar-menu d-flex flex-column" style="height: 85vh">
+            <ul class="menu h-100 overflow-y-scroll">
                 <li class="sidebar-title">Menu</li>
-        
+                
                 <li class="sidebar-item">
-                    <a href="{{ route('adminDashboard') }}" class='sidebar-link'>
+                    <a href="#" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item">
-                    <a href="{{ route('log.user') }}" class='sidebar-link'>
-                        <i class="bi bi-door-closed-fill"></i>
-                        <span>Log User</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item  has-sub">
+        
+                <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-music-fill"></i>
+                        <i class="bi bi-music-note-beamed"></i>
                         <span>Lagu</span>
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="{{ route('kelola.lagu') }}" class="submenu-link">Kelola Lagu</a>
+                            <a href="#" class="submenu-link">Kelola Lagu</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="{{ route('lagu.add') }}" class="submenu-link">Tambah Lagu</a>
+                            <a href="#" class="submenu-link">Tambah Lagu</a>
                         </li>
                     </ul>
                 </li>
-
-                <li class="sidebar-item  has-sub">
+        
+                <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-person-video"></i>
+                        <i class="bi bi-music-note-list"></i>
                         <span>Genre</span>
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="{{ route('kelola.genre') }}" class="submenu-link">Kelola Genre</a>
+                            <a href="#" class="submenu-link">Kelola Genre</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="{{ route('genre.add') }}" class="submenu-link">Tambah Genre</a>
+                            <a href="#" class="submenu-link">Tambah Genre</a>
                         </li>
                     </ul>
                 </li>
-
-                <li class="sidebar-item  has-sub">
+        
+                <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-mic-fill"></i>
-                        <span>Penyanyi</span>
+                        <i class="bi bi-person-fill"></i>
+                        <span>Artist</span>
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="{{ route('kelola.penyanyi') }}" class="submenu-link">Kelola Penyanyi</a>
+                            <a href="#" class="submenu-link">Kelola Artist</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="{{ route('penyanyi.add') }}" class="submenu-link">Tambah Penyanyi</a>
+                            <a href="#" class="submenu-link">Tambah Artist</a>
                         </li>
                     </ul>
                 </li>
-
+            </ul>
+        
+            <!-- Log out at the bottom -->
+            <ul class="menu mt-auto">
                 <li class="sidebar-item">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class='sidebar-link btn w-100'>
-                            <i class="bi bi-door-open-fill"></i>
-                            <span>Logout</span>
-                        </button>
-                    </form>
+                    <a href="#" class="sidebar-link text-danger">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Log out</span>
+                    </a>
                 </li>
             </ul>
         </div>
+        
     </div>
 </div>
