@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\laguController;
 
-//Jika sebagai user
+
 Route::middleware('guest')->group(function () {
     //menampilkan bagian register user
     Route::get('/register/email', function () {
@@ -21,7 +21,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/register',[AuthController::class,'submitRegisEmail'])->name('regis.email.submit');
     Route::post('/register',[AuthController::class,'submitRegisPhone'])->name('regis.phone.submit');
     
-    //menampilkan bagian login
     Route::get('/login', function () {
         if(Auth::check()){
             if(Auth::user()->is_admin){
@@ -32,25 +31,17 @@ Route::middleware('guest')->group(function () {
         return view('user.login');
     })->name('login.tampil');
     
-    //submit login
     Route::post('/login',[AuthController::class,'submitLogin'])->name('login.submit');
 });
 
-
-//Jika Sudah Terautentikasi
 Route::middleware('auth')->group(function(){
-    //Rute User
     Route::middleware('access:false')->group(function(){
-        //dashboard user
         Route::get('/', function () {
             return view('user.dashboard');
         })->name('userDashboard');
     });
-
-    //Rute Admin
     Route::middleware('access:true')->group(function(){
-        //dashboard admin
-        Route::get('/admin', function () {
+        Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
         })->name('adminDashboard');
 
@@ -92,5 +83,6 @@ Route::middleware('auth')->group(function(){
     });
 
     //Logout
+    });
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });

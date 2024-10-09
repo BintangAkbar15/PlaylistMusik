@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/BintangAkbar15/PlaylistMusik/issues"
   },
-  "homepage": "https://github.com/BintangAkbar15/PlaylistMusik#readme"
+  "homepage": "https://github.com/BintangAkbar15/PlaylistMusik#readme",
+  "dependencies": {
+    "chart.js": "^4.4.4"
+  }
 }
