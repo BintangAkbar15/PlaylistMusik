@@ -4,7 +4,7 @@
         <div id="main" class='layout-navbar navbar-fixed'>
             <x-header></x-header>
             <x-datatable>
-                <x-slot:title>Kelola Genre</x-slot:t>
+                <x-slot:title>Log User</x-slot:t>
                 <x-slot:theader>
                     <tr>
                         <th>Name</th>

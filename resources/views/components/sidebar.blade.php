@@ -51,7 +51,7 @@
 
                 <li class="sidebar-item">
                     <a href="{{ route('log.user') }}" class='sidebar-link'>
-                        <i class="bi bi-box-arrow-in-right"></i>
+                        <i class="bi bi-door-closed-fill"></i>
                         <span>Log User</span>
                     </a>
                 </li>
@@ -63,10 +63,10 @@
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Kelola Lagu</a>
+                            <a href="{{ route('kelola.lagu') }}" class="submenu-link">Kelola Lagu</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Lagu</a>
+                            <a href="{{ route('lagu.add') }}" class="submenu-link">Tambah Lagu</a>
                         </li>
                     </ul>
                 </li>
@@ -93,10 +93,10 @@
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Kelola Penyanyi</a>
+                            <a href="{{ route('kelola.penyanyi') }}" class="submenu-link">Kelola Penyanyi</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Penyanyi</a>
+                            <a href="{{ route('penyanyi.add') }}" class="submenu-link">Tambah Penyanyi</a>
                         </li>
                     </ul>
                 </li>

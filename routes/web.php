@@ -47,14 +47,36 @@ Route::middleware('auth')->group(function(){
             return view('admin.dashboard');
         })->name('adminDashboard');
 
+        //genre section
         Route::get('/admin/genre', function(){
             return view('admin.genre.kelola');
         })->name('kelola.genre');
 
-        Route::get('/admin/tambah', function(){
+        Route::get('/admin/genre/tambah', function(){
             return view('admin.genre.add');
         })->name('genre.add');
-        
+        //end genre section
+
+        //lagu section
+        Route::get('/admin/lagu', function(){
+            return view('admin.lagu.kelola');
+        })->name('kelola.lagu');
+
+        Route::get('/admin/lagu/tambah', function(){
+            return view('admin.lagu.add');
+        })->name('lagu.add');
+        //end lagu section
+
+        //penyanyi section
+        Route::get('/admin/penyanyi', function(){
+            return view('admin.penyanyi.kelola');
+        })->name('kelola.penyanyi');
+
+        Route::get('/admin/penyanyi/tambah', function(){
+            return view('admin.penyanyi.add');
+        })->name('penyanyi.add');
+        //end penyanyi section
+
         Route::get('/admin/log', function(){
             return view('log');
         })->name('log.user');
