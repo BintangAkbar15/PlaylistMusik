@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function(){
             return view('user.dashboard');
         })->name('userDashboard');
     });
+    
     Route::middleware('access:true')->group(function(){
         Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
@@ -83,6 +84,5 @@ Route::middleware('auth')->group(function(){
     });
 
     //Logout
-    });
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
