@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\laguController;
 
 //Jika sebagai user
 Route::middleware('guest')->group(function () {
@@ -64,9 +65,9 @@ Route::middleware('auth')->group(function(){
         //end genre section
 
         //lagu section
-        Route::get('/admin/lagu', function(){
-            return view('admin.lagu.kelola');
-        })->name('kelola.lagu');
+        Route::get('/admin/lagu', [laguController::class,'index'])->name('kelola.lagu');
+        
+        Route::get('/admin/lagu/delete/{id}', [laguController::class,'destroy'])->name('delete.lagu');
 
         Route::get('/admin/lagu/tambah', function(){
             return view('admin.lagu.add');
