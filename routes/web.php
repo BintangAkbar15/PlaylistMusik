@@ -34,6 +34,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function(){
     //Rute User
     Route::middleware('access:false')->group(function(){
+        //dashboard user
         Route::get('/', function () {
             return view('user.dashboard');
         })->name('userDashboard');
@@ -41,9 +42,18 @@ Route::middleware('auth')->group(function(){
 
     //Rute Admin
     Route::middleware('access:true')->group(function(){
-        Route::get('/admin/dashboard', function () {
+        //dashboard admin
+        Route::get('/admin', function () {
             return view('admin.dashboard');
         })->name('adminDashboard');
+
+        Route::get('/admin/genre', function(){
+            return view('admin.genre.kelola');
+        })->name('kelola.genre');
+
+        Route::get('/admin/tambah', function(){
+            return view('admin.genre.add');
+        })->name('genre.add');
     });
 
     //Logout

@@ -71,10 +71,10 @@
                     </a>
                     <ul class="submenu">    
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Kelola Genre</a>
+                            <a href="{{ route('kelola.genre') }}" class="submenu-link">Kelola Genre</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Genre</a>
+                            <a href="{{ route('genre.add') }}" class="submenu-link">Tambah Genre</a>
                         </li>
                     </ul>
                 </li>
