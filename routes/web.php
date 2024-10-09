@@ -6,11 +6,19 @@ use App\Http\Controllers\AuthController;
 
 
 Route::middleware('guest')->group(function () {
-    Route::get('/sign/email', function () {
-        return view('user.registerwithemail');
+    //menampilkan bagian register user
+    Route::get('/register/email', function () {
+        return view('user.emailregister');
     })->name('register.email.tampil');
     
-    Route::post('/register',[AuthController::class,'submitRegis'])->name('regis.submit');
+        
+    Route::get('/register/phone', function(){
+        return view('user.phoneregister');
+    })->name('register.phone.tampil');
+    
+    //submit register
+    Route::post('/register',[AuthController::class,'submitRegisEmail'])->name('regis.email.submit');
+    Route::post('/register',[AuthController::class,'submitRegisPhone'])->name('regis.phone.submit');
     
     Route::get('/login', function () {
         if(Auth::check()){
@@ -38,7 +46,3 @@ Route::middleware('auth')->group(function(){
     });
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
-
-Route::get('/sign/phone', function(){
-    return view('user.registerwithphonenum');
-})->name('register.phone.tampil');
