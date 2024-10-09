@@ -14,10 +14,7 @@ class genre extends Model
         'slug',
         'color',
     ];
-    public function pgenre()
-    {
-        return $this->belongsToMany(Penyanyi::class, 'penyanyi_genre', 'genre_id','penyanyi_id');
-    }
+    
     public function lgenre()
     {
         return $this->belongsToMany(Lagu::class, 'lagu_genre', 'genre_id','lagu_id');

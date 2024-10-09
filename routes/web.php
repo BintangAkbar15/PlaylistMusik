@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\laguController;
 use App\Http\Controllers\genreController;
+use App\Http\Controllers\penyanyiController;
 
 
 Route::middleware('guest')->group(function () {
@@ -70,9 +71,11 @@ Route::middleware('auth')->group(function(){
         //end lagu section
 
         //penyanyi section
-        Route::get('/admin/penyanyi', function(){
-            return view('admin.penyanyi.kelola');
-        })->name('kelola.penyanyi');
+        Route::get('/admin/penyanyi', [penyanyiCOntroller::class,'index'])->name('kelola.penyanyi');
+        
+        Route::get('/admin/penyanyi/delete/{id}', [penyanyiCOntroller::class,'destroy'])->name('penyanyi.delete');
+
+        Route::post('/admin/penyanyi/tambah', [penyanyiController::class,'store'])->name('penyanyi.addNew');
 
         Route::get('/admin/penyanyi/tambah', function(){
             return view('admin.penyanyi.add');

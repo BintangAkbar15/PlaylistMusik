@@ -7,22 +7,42 @@ use Illuminate\Http\Request;
 
 class penyanyiController extends Controller
 {
+    function createSlug($string) {
+        // Tambahkan strip sebelum huruf besar yang tidak di awal string
+        $string = preg_replace('/([a-z])([A-Z])/', '$1-$2', $string);
+        // Ubah ke huruf kecil
+        $string = strtolower($string);
+        // Hapus karakter selain huruf, angka, dan spasi
+        $string = preg_replace('/[^a-z0-9\s]/', '', $string);
+        // Ganti satu atau lebih spasi dengan strip
+        $string = preg_replace('/\s+/', '-', $string);
+        // Hapus strip di awal atau akhir (jika ada)
+        $string = trim($string, '-');
+        
+        return $string;
+    }
+
     function store(Request $request){
         $request->validate([
             'name' =>'required',
-            'thumb' =>'required|extensions:jpg, jpeg, png, gif, bmp, tiff, webp, svg, heic, raw, psd',
+            'thumb' =>'required|image|mimes:jpg,jpeg,png,gif,bmp,tiff,webp,svg,heic,raw,psd|max:5012',
             'negara'=>'required',
             'debut'=>'required',
-            'slug'=>'required',
         ],[
 
         ]);
+        $thumbPath = $request->file('thumb')->store('artist-images');
+
+        // Membuat slug berdasarkan nama
+        $slug = $this->createSlug($request->input('name'));
+
+        // Menyusun data yang akan disimpan
         $data = [
-            'name'=>$request->input('name'),
-            'thumb'=>$request->input('thumb'),
-            'negara'=>$request->input('negara'),
-            'debut'=>$request->input('debut'),
-            'slug'=>$request->input('slug'),
+            'name' => $request->input('name'),
+            'thumb' => $thumbPath, // Menggunakan path yang benar
+            'negara' => $request->input('negara'),
+            'debut' => $request->input('debut'),
+            'slug' => $slug,
         ];
         penyanyi::create($data);
         return redirect()->route('kelola.penyanyi')->with('success','penyanyi Berhasil Ditambahkan');
@@ -31,21 +51,20 @@ class penyanyiController extends Controller
         return view('admin.penyanyi.kelola',['data'=>penyanyi::all()]);
     }
     function update(Request $request,string $id){
-        $request->validate([
+        $validate = $request->validate([
             'name' =>'required',
-            'thumb' =>'required|extensions:jpg, jpeg, png, gif, bmp, tiff, webp, svg, heic, raw, psd',
             'negara'=>'required',
             'debut'=>'required',
-            'slug'=>'required',
-        ],[
-
-        ]);
+            'thumb' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]); 
+        $validate['thumb'] = $request->file('thumb')->store('artist-images');
+        $slug = $this->createSlug($request->input('name'));
         $data = [
             'name'=>$request->input('name'),
             'thumb'=>$request->input('thumb'),
             'negara'=>$request->input('negara'),
             'debut'=>$request->input('debut'),
-            'slug'=>$request->input('slug'),
+            'slug'=>$slug,
         ];
         penyanyi::where('id',$id)->update($data);
         return redirect()->route('kelola.penyanyi')->with('success','penyanyi Berhasil Diubah');
