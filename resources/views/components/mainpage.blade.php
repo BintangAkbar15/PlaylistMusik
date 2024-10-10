@@ -4,7 +4,7 @@
             <div class="col-12 d-flex" style="height: 76vh; margin-top: 8.5vh">
                 <x-playlistpage></x-playlistpage>
                 <div class="col-12 p-1 col-md-9 col-lg-7">
-                    <div class="col-12 rounded bg-secondary bg-opacity-25 h-100">
+                    <div class="col-12 rounded bg-opacity-25 h-100" style="background: linear-gradient(to bottom, rgb(103, 103, 255),rgba(88, 88, 88, 0.508),rgba(88, 88, 88, 0.255))">
                         {{ $slot }}
                     </div>
                 </div>
