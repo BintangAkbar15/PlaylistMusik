@@ -13,6 +13,8 @@ class lagu_genre extends Model
         'genre_id',
     ];
 
+    protected $table = 'lagu_genres';
+
     public function lagu()
     {
         return $this->belongsToMany(Lagu::class, 'lagu', 'lagu_id', 'genre_id');

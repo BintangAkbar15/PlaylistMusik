@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\lagu;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class genre extends Model
 {
@@ -17,6 +18,6 @@ class genre extends Model
     
     public function lgenre()
     {
-        return $this->belongsToMany(Lagu::class, 'lagu_genre', 'genre_id','lagu_id');
+        return $this->belongsToMany(lagu::class, 'lagu_genres', 'genre_id','lagu_id');
     }
 }

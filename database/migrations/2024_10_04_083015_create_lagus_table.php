@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name',100);
             $table->string('audio');
+            $table->string('audio_length');
             $table->string('thumb');
             $table->string('slug',50);
-            $table->string('dilihat');
+            $table->string('dilihat')->default('0');
             $table->timestamps();
         });
     }

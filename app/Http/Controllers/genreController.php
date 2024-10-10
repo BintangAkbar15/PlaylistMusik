@@ -25,8 +25,8 @@ class genreController extends Controller
 
     function store(Request $request){
         $request->validate([
-            'name' =>'required',
-            'color'=>'required',
+            'name' =>'required|unique:genres',
+            'color'=>'required|unique:genres',
         ],[
         
         ]);
@@ -45,8 +45,8 @@ class genreController extends Controller
     }
     function update(Request $request,string $id){
         $request->validate([
-            'name' =>'required',
-            'color'=>'required',
+            'name' =>'required|unique:genres',
+            'color'=>'required|unique:genres',
         ],[
         
         ]);

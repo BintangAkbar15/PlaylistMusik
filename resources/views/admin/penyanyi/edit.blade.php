@@ -26,7 +26,7 @@
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="artist-name">Artist Name</label>
                                                     <div class="position-relative">
-                                                        <input type="text" value="{{ $data->name }}" class="form-control"
+                                                        <input required type="text" value="{{ $data->name }}" class="form-control"
                                                             placeholder="artist" name="name" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-person-fill"></i>
@@ -38,7 +38,7 @@
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Debut-year">Debut Year</label>
                                                     <div class="position-relative">
-                                                        <input type="text" value="{{ $data->debut }}" class="form-control"
+                                                        <input required type="text" value="{{ $data->debut }}" class="form-control"
                                                             placeholder="Debut" name="debut" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-calendar-date"></i>
@@ -50,7 +50,7 @@
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="region">Region</label>
                                                     <div class="position-relative">
-                                                        <input type="text" name="negara" value="{{ $data->negara }}" class="form-control"
+                                                        <input required type="text" name="negara" value="{{ $data->negara }}" class="form-control"
                                                             placeholder="region" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-globe-americas"></i>
@@ -65,7 +65,7 @@
                                                         <div style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
                                                             <i class="fa-regular fa-image" style="font-size: 40px"></i>
                                                         </div>
-                                                        <input type="file" name="thumb" id="thumb" value="{{ $data->thumb }}" class="ms-5">
+                                                        <input required type="file" name="thumb" id="thumb" value="{{ $data->thumb }}" class="ms-5">
                                                     </div>
                                                 </div>
                                             </div>

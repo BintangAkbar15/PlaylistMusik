@@ -19,12 +19,12 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->audio }}</td>
+                    <td>{{ gmdate("i:s", $item->audio_length) }}</td>
                     <td>Artist</td>
-                    <td>{{ $item->thumb }}</td>
+                    <td><img src="{{ url('storage/'. $item->thumb ) }}" alt="{{ $item->name }}" width="100" height="100"></td>
                     <td>{{ $item->dilihat }} kali</td>
                     <td>
-                        <button class="btn btn-outline-warning">Ubah</button>
+                        <a href="{{  }}" class="btn btn-outline-warning">Ubah</a>
                         <button type="button" class="btn btn-outline-danger" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-bs-toggle="modal" data-bs-target="#danger">Hapus</button>
                         <!--Danger theme Modal -->
                         <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name',100);
             $table->string('slug',50);
             $table->string('debut',10);
-            $table->string('thumb');
-            $table->string('negara');
+            $table->string('thumb')->nullable();
+            $table->string('negara')->nullable();
             $table->timestamps();
         });
     }

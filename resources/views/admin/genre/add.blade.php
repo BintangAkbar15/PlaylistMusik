@@ -24,7 +24,7 @@
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="genre-name">Genre Name</label>
                                                     <div class="position-relative">
-                                                        <input type="text" class="form-control"
+                                                        <input required type="text" class="form-control"
                                                             placeholder="Genre" name="name" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="fa-solid fa-record-vinyl"></i>
@@ -36,7 +36,7 @@
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Color-id-icon">Color</label>
                                                     <div class="position-relative">
-                                                        <input type="color" name="color" id="">
+                                                        <input required type="color" name="color" id="">
                                                     </div>
                                                 </div>
                                             </div>

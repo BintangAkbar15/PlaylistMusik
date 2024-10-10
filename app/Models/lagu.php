@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\genre;
+use App\Models\penyanyi;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class lagu extends Model
 {
@@ -14,17 +16,18 @@ class lagu extends Model
     protected $fillable = [
         'name',
         'audio',
+        'audio_length',
         'thumb',
         'slug',
     ];
     
     public function plagu()
     {
-        return $this->belongsToMany(Penyanyi::class, 'penyanyi_lagu', 'lagu_id','penyanyi_id');
+        return $this->belongsToMany(penyanyi::class, 'penyanyi_lagu', 'lagu_id','penyanyi_id');
     }
     public function lgenre()
     {
-        return $this->belongsToMany(Genre::class, 'lagu_genre', 'lagu_id','genre_id');
+        return $this->belongsToMany(genre::class, 'lagu_genres', 'lagu_id','genre_id');
     }
     public function playlagu()
     {

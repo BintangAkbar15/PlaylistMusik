@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function(){
         })->name('genre.edit');
 
         Route::post('/admin/genre/edit/{id}', [genreController::class,'update'])->name('genre.editNew');
+
         Route::post('/admin/genre/tambah', [genreController::class,'store'])->name('genre.addNew');
 
         Route::get('/admin/genre/delete/{id}', [genreController::class,'destroy'])->name('genre.delete');
@@ -73,8 +74,14 @@ Route::middleware('auth')->group(function(){
         
         Route::get('/admin/lagu/delete/{id}', [laguController::class,'destroy'])->name('delete.lagu');
 
+        Route::post('/admin/lagu/tambah', [laguController::class,'store'])->name('lagu.addNew');
+
+        Route::post('/admin/lagu/genre/add', [laguController::class,'storeGenre'])->name('lagu.add.genre');
+
+        Route::post('/admin/lagu/penyanyi/add', [laguController::class,'storePenyanyi'])->name('lagu.add.penyanyi');
+
         Route::get('/admin/lagu/tambah', function(){
-            return view('admin.lagu.add',['data'=>genre::all()]);
+            return view('admin.lagu.add',['data'=>genre::all(),'penyanyi'=>penyanyi::all()]);
         })->name('lagu.add');
         //end lagu section
 
