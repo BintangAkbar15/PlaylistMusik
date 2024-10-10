@@ -1,6 +1,6 @@
 <x-layout>
     <div id="app">
-        {{-- <x-sidebar></x-sidebar> --}}
+        <x-sidebar></x-sidebar>
         @if ($errors->any())
             @foreach ($errors->all() as $item)
                 <div class="alert alert-danger">
@@ -13,8 +13,21 @@
             <div class="col-12 d-flex flex-column align-items-center">
                 <div class="col-md-6 col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Edit Artist</h4>
+                        <div class="card-header d-flex align-items-center justify-content-between col-auto">
+                            <div>
+                                <a href="{{ route('kelola.penyanyi') }}" class="fs-3 fw-bold">
+                                    <i class="bi bi-arrow-left me-2"></i>
+                                </a>
+                                <label class="card-title fs-3 pe-none">Edit Artist</label>
+                            </div>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{ route('adminDashboard') }}">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('kelola.penyanyi') }}">Artist</a></li>
+                                    <li class="breadcrumb-item active">Artist-name</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                                </ol>
+                            </nav>
                         </div>
                         <div class="card-content">
                             <div class="card-body">

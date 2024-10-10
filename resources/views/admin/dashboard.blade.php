@@ -4,7 +4,12 @@
         <x-sidebar></x-sidebar>
         <div id="main" class='layout-navbar navbar-fixed'>
             <x-header></x-header>
-            <div class="col-12 pb-5 d-flex flex-column align-items-center">
+            <div class="container d-flex justify-content-center">
+                <div class="col-11 border-bottom">
+                    <h2>Dashboard</h2>
+                </div>
+            </div>
+            <div class="col-12 mt-3 pb-5 d-flex flex-column align-items-center">
                 <h2 class="mt-2 fw-bold col-11 text-start">Report</h2>
                 <div class="col-12 d-flex justify-content-evenly pt-5">
                     <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
@@ -30,7 +35,19 @@
                         <label style="font-size: 17px">Sampai Menutup Mata - Mahahili</label>
                     </div>
                 </div>
-                <h2 class="mt-5 fw-bold col-11 text-start">View report</h2>
+                <div class="container mt-5 d-flex flex-column gap-3 align-items-center">
+                    <div class="col-11">
+                        <label for="" class="fs-5">Range :</label>
+                    </div>
+                    <div class="col-11 d-flex gap-3">
+                        <label for="" class="fs-5">From :</label>
+                        <input type="date" name="" id="">
+                        <label for="" class="fs-5">To :</label>
+                        <input type="date" name="" id="">
+                        <input type="submit" class="btn btn-success" value="Search">
+                    </div>
+                </div>
+                <h2 class="mt-3 fw-bold col-11 text-start">View report</h2>
                 <div class="col-11 bg-light my-3">
                     <div class="col-12 align-items-center justify-content-center d-flex p-5">
                         <canvas id="myChart"></canvas>

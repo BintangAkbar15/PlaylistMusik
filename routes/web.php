@@ -108,3 +108,10 @@ Route::middleware('auth')->group(function(){
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
 
+Route::get('/admin/lagu/edit', function(){
+    return view('admin.lagu.edit');
+})->name('lagu.edit');
+
+Route::get('/admin/penyanyi/edit', function(){
+    return view('admin.penyanyi.edit');
+})->name('lagu.edit');

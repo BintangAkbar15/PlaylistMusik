@@ -11,8 +11,21 @@
                     @endforeach
                 @endif
                     <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Edit Genre</h4>
+                        <div class="card-header d-flex align-items-center justify-content-between col-auto">
+                            <div>
+                                <a href="{{ route('kelola.genre') }}" class="fs-3 fw-bold">
+                                    <i class="bi bi-arrow-left me-2"></i>
+                                </a>
+                                <label class="card-title fs-3 pe-none">Edit Genre</label>
+                            </div>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{ route('adminDashboard') }}">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('kelola.genre') }}">Genre</a></li>
+                                    <li class="breadcrumb-item active">Genre-name</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                                </ol>
+                            </nav>
                         </div>
                         <div class="card-content">
                             <div class="card-body">
