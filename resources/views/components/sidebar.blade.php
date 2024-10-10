@@ -74,10 +74,13 @@
             <!-- Log out at the bottom -->
             <ul class="menu mt-auto">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link text-danger">
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Log out</span>
-                    </a>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button class="sidebar-link btn text-danger">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Log out</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
