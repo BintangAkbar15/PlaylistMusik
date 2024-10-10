@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/lagu/delete/{id}', [laguController::class,'destroy'])->name('delete.lagu');
 
         Route::get('/admin/lagu/tambah', function(){
-            return view('admin.lagu.add');
+            return view('admin.lagu.add',['data'=>genre::all()]);
         })->name('lagu.add');
         //end lagu section
 
