@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\log;
+use App\Models\lagu;
+use App\Models\User;
 use App\Models\genre;
 use App\Models\penyanyi;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +50,8 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('access:true')->group(function(){
         Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
+            $data = [lagu::all()->count(), User::where('is_admin',0)->get()->count(),log::all()->count()];
+            return view('admin.dashboard',['data'=>$data]);
         })->name('adminDashboard');
 
         //genre section
@@ -76,13 +80,23 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/admin/lagu/tambah', [laguController::class,'store'])->name('lagu.addNew');
 
+        Route::post('/admin/lagu/edit/new/{id}', [laguController::class,'update'])->name('lagu.editNew');
+
+        //menambahkan genre dari lagu
         Route::post('/admin/lagu/genre/add', [laguController::class,'storeGenre'])->name('lagu.add.genre');
 
+        //menambahkan penyanyi dari lagu
         Route::post('/admin/lagu/penyanyi/add', [laguController::class,'storePenyanyi'])->name('lagu.add.penyanyi');
 
         Route::get('/admin/lagu/tambah', function(){
             return view('admin.lagu.add',['data'=>genre::all(),'penyanyi'=>penyanyi::all()]);
         })->name('lagu.add');
+
+        Route::get('/admin/lagu/edit/{lagu:name}', function(lagu $lagu){
+            $lag = lagu::with(['lgenre','plagu'])->find($lagu['id']);
+            return view('admin.lagu.edit',['lagu'=>$lag,'data'=>genre::all(),'penyanyi'=>penyanyi::all()]);
+        })->name('lagu.edit');
+        
         //end lagu section
 
         //penyanyi section
@@ -114,11 +128,3 @@ Route::middleware('auth')->group(function(){
     //Logout
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
-
-Route::get('/admin/lagu/edit', function(){
-    return view('admin.lagu.edit');
-})->name('lagu.edit');
-
-Route::get('/admin/penyanyi/edit', function(){
-    return view('admin.penyanyi.edit');
-})->name('lagu.edit');

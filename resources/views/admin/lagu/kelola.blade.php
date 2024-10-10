@@ -18,20 +18,22 @@
                             <li class="breadcrumb-item active pe-none">Lagu</li>
                         </ol>
                     </nav>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                          <label for="" class="col-form-label">Search : </label>
+                    <form action="{{ route('kelola.lagu') }}" method="get">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                              <label for="" class="col-form-label">Search : </label>
+                            </div>
+                            <div class="col-auto">
+                              <input type="text" name="search-field" class="form-control" aria-describedby="passwordHelpInline">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-secondary" type="submit">Cari</button>
+                            </div>
+                            <div class="col-auto">
+                                <a class="btn btn-success" name="add" href="{{ route('lagu.add') }}">Add</a>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                          <input type="text" name="search-field" class="form-control" aria-describedby="passwordHelpInline">
-                        </div>
-                        <div class="col-auto">
-                          <input type="submit" value="submit" name="submit">
-                        </div>
-                        <div class="col-auto">
-                            <a class="btn btn-success" name="add" href="{{ route('lagu.add') }}">Add</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <x-datatable>
@@ -51,11 +53,11 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ gmdate("i:s", $item->audio_length) }}</td>
-                    <td>Artist</td>
+                    <td>{{ $item->plagu[$loop->iteration-1]->name }}</td>
                     <td><img src="{{ url('storage/'. $item->thumb ) }}" alt="{{ $item->name }}" width="100" height="100"></td>
                     <td>{{ $item->dilihat }} kali</td>
                     <td>
-                        <a href="{{  }}" class="btn btn-outline-warning">Ubah</a>
+                        <a href="{{ route('lagu.edit',$item->slug) }}" class="btn btn-outline-warning">Ubah</a>
                         <button type="button" class="btn btn-outline-danger" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-bs-toggle="modal" data-bs-target="#danger">Hapus</button>
                         <!--Danger theme Modal -->
                         <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"

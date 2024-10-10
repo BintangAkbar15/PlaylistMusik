@@ -31,7 +31,6 @@
                                 @endif
                                 <form class="form form-vertical" action="{{ route('lagu.addNew') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <input required type="hidden" name='track' id="track">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -49,11 +48,11 @@
                                             <div class="col-12">
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="file-audio">Genre</label>
-                                                    <select class="form-select" id="multiple-select-field" name="genre" data-placeholder="Pilih Genre" multiple>
+                                                    <select class="form-select" id="multiple-select-field" name="genre[]" data-placeholder="Pilih Genre" multiple>
                                                         @forelse ($data as $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @empty
-                                                            <option disabled>No Data Found</option>
+
                                                         @endforelse
                                                     </select>
                                                 </div>
@@ -63,13 +62,14 @@
                                                    <label class="mb-2" for="file-audio">File Audio</label>
                                                     <div class="position-relative">
                                                         <input required type="file" name="audio" value="{{ request('audio') }}" id="audio-input required">
+                                                        <input required type="text" name='track' id="track">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Artist-name">Artist</label>
-                                                    <select class="form-select" id="single-select-clear-field" data-placeholder="Pilih Artist">
+                                                    <select class="form-select" id="single-select-clear-field" name="penyanyi" data-placeholder="Pilih Artist">
                                                         @forelse ($penyanyi as $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @empty

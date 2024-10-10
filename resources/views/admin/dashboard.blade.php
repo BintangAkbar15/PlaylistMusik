@@ -15,17 +15,17 @@
                     <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
                         <i class="fa-solid fa-right-to-bracket" style="font-size:80px"></i>
                         <label class="h5">User Login</label>
-                        <h3 class="text-bold">9,000</h3>
+                        <h3 class="text-bold">{{ $data[2] }}</h3>
                     </div>
                     <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
                         <i class="fa-brands fa-itunes-note" style="font-size:80px"></i>
                         <label class="h5">Available song</label>
-                        <h3 class="text-bold">1,000,000</h3>
+                        <h3 class="text-bold">{{ $data[0] }}</h3>
                     </div>
                     <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
                         <i class="fa-solid fa-users" style="font-size:80px"></i>
                         <label class="h5">User Account</label>
-                        <h3 class="text-bold">999,902,123</h3>
+                        <h3 class="text-bold">{{ $data[1] }}</h3>
                     </div>
                 </div>
                 <h2 class="mt-5 fw-bold col-11 text-start">Top search</h2>

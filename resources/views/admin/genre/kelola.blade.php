@@ -18,20 +18,22 @@
                             <li class="breadcrumb-item active pe-none">Genre</li>
                         </ol>
                     </nav>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                          <label for="" class="col-form-label">Search : </label>
+                    <form action="{{ route('kelola.genre') }}" method="get">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                              <label for="" class="col-form-label">Search : </label>
+                            </div>
+                            <div class="col-auto">
+                              <input type="text" name="search-field" class="form-control" aria-describedby="passwordHelpInline">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-secondary" type="submit">Cari</button>
+                            </div>
+                            <div class="col-auto">
+                                <a class="btn btn-success" name="add" href="{{ route('genre.add') }}">Add</a>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                          <input type="text" name="search-field" class="form-control" aria-describedby="passwordHelpInline">
-                        </div>
-                        <div class="col-auto">
-                          <input type="submit" value="submit" name="submit">
-                        </div>
-                        <div class="col-auto">
-                            <a class="btn btn-success" name="add" href="{{ route('genre.add') }}">Add</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <x-datatable>

@@ -49,20 +49,51 @@ class penyanyiController extends Controller
         return redirect()->route('kelola.penyanyi')->with('success','penyanyi Berhasil Ditambahkan');
     }
     function index(){
-        return view('admin.penyanyi.kelola',['data'=>penyanyi::all()]);
+        if (request('search-field')){
+            $data = penyanyi::where('name','like','%'.request('search-field').'%')
+                    ->orWhere('negara','like','%'.request('search-field').'%')
+                    ->orWhere('debut','like','%'.request('search-field').'%')->get();
+        }else{
+            $data = penyanyi::all();
+        }
+        return view('admin.penyanyi.kelola',['data'=>$data]);
     }
     
     function update(Request $request,string $id,penyanyi $penyanyi){
         $slug = $this->createSlug($request->input('name'));
+        
+        if($penyanyi->thumb == null){
+            
+        }
         $validate = $request->validate([
             'name' =>'required',
             'negara'=>'required',
             'debut'=>'required',
             'thumb' => 'image|mimes:jpeg,png,jpg,gif,svg',
-        ]); 
+        ]);
+
         if($request->hasFile('thumb')){
             Storage::delete('public/'.$penyanyi->thumb);
             $thumbPath = $request->file('thumb')->store('artist-images');
+        }
+
+        if($penyanyi->thumb == null){
+            if($request->hasFile('thumb')){
+                $thumbPath = $request->file('thumb')->store('artist-images');
+                // Membuat slug berdasarkan nama
+                $slug = $this->createSlug($request->input('name'));
+
+                // Menyusun data yang akan disimpan
+                $data = [
+                    'name' => $request->input('name'),
+                    'thumb' => $thumbPath, // Menggunakan path yang benar
+                    'negara' => $request->input('negara'),
+                    'debut' => $request->input('debut'),
+                    'slug' => $slug,
+                ];
+                penyanyi::where('id',$id)->update($data);
+                return redirect()->route('kelola.penyanyi')->with('success','penyanyi Berhasil Diubah');
+            }
         }
         
         penyanyi::where('id',$id)->update($validate);

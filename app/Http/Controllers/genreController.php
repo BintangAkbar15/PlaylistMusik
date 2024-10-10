@@ -41,7 +41,12 @@ class genreController extends Controller
         return redirect()->route('kelola.genre')->with('success','genre Berhasil Ditambahkan');
     }
     function index(){
-        return view('admin.genre.kelola',['data'=>genre::all()]);
+        if (request('search-field')){
+            $genre = genre::where('name','like','%'.request('search-field').'%')->get();
+        }else{
+            $genre = genre::all();
+        }
+        return view('admin.genre.kelola',['data'=>$genre]);
     }
     function update(Request $request,string $id){
         $request->validate([

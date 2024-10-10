@@ -1,4 +1,5 @@
 <x-layout>
+    {{-- {{ dd($lagu) }} --}}
     <div id="app">
         <x-sidebar></x-sidebar>
         <div id="main" class='layout-navbar navbar-fixed'>
@@ -17,8 +18,7 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ route('adminDashboard') }}">Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="{{ route('kelola.lagu') }}">Lagu</a></li>
-                                    <li class="breadcrumb-item active">lagu-name</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Edit-{{ $lagu->name }}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -30,7 +30,7 @@
                                         <div class="alert">{{$item}}</div>
                                     @endforeach
                                 @endif
-                                <form class="form form-vertical" action="{{ route('lagu.addNew') }}" method="POST" enctype="multipart/form-data">
+                                <form class="form form-vertical" action="{{ route('lagu.editNew',$lagu->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <input required type="hidden" name='track' id="track">
                                     <div class="form-body">
@@ -40,7 +40,7 @@
                                                     <label class="mb-2" for="music-name">Music Name</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="Music" name="name" value="{{ request('name') }}" id="first-name-icon">
+                                                            placeholder="Music" name="name" value="{{ $lagu->name }}" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-music-note-beamed"></i>
                                                         </div>
@@ -50,9 +50,12 @@
                                             <div class="col-12">
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="file-audio">Genre</label>
-                                                    <select class="form-select" id="multiple-select-field" name="genre" data-placeholder="Pilih Genre" multiple>
+                                                    <select class="form-select" id="multiple-select-field" name="genre[]" data-placeholder="Pilih Genre" multiple>
                                                         @forelse ($data as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        <option value="{{ $item->id }}"
+                                                            @if ($lagu->lgenre->contains('id', $item->id)) selected @endif>
+                                                            {{ $item->name }}
+                                                        </option>
                                                         @empty
                                                             <option disabled>No Data Found</option>
                                                         @endforelse
@@ -63,16 +66,19 @@
                                                 <div class="form-group has-icon-left">
                                                    <label class="mb-2" for="file-audio">File Audio</label>
                                                     <div class="position-relative">
-                                                        <input required type="file" name="audio" value="{{ request('audio') }}" id="audio-input required">
+                                                        <input type="file" name="audio" value="{{ $lagu->audio }}" id="audio-input required">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Artist-name">Artist</label>
-                                                    <select class="form-select" id="single-select-clear-field" data-placeholder="Pilih Artist">
+                                                    <select class="form-select" id="single-select-clear-field" name="penyanyi" data-placeholder="Pilih Artist">
                                                         @forelse ($penyanyi as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        <option value="{{ $item->id }}"
+                                                            @if ($lagu->plagu->contains('id', $item->id)) selected @endif>
+                                                            {{ $item->name }}
+                                                        </option>
                                                         @empty
                                                             
                                                         @endforelse
@@ -86,7 +92,7 @@
                                                         <div style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
                                                             <i class="fa-regular fa-image" style="font-size: 40px"></i>
                                                         </div>
-                                                        <input required type="file" name="thumb" id="thumb" class="ms-5">
+                                                        <input type="file" name="thumb" value="{{ $lagu->thumb }}" id="thumb" class="ms-5">
                                                     </div>
                                                 </div>
                                             </div>

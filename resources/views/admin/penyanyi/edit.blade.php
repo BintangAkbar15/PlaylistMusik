@@ -78,7 +78,7 @@
                                                         <div style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
                                                             <i class="fa-regular fa-image" style="font-size: 40px"></i>
                                                         </div>
-                                                        <input required type="file" name="thumb" id="thumb" value="{{ $data->thumb }}" class="ms-5">
+                                                        <input type="file" name="thumb" id="thumb" value="{{ $data->thumb }}" class="ms-5">
                                                     </div>
                                                 </div>
                                             </div>
