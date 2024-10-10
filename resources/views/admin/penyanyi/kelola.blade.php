@@ -6,8 +6,39 @@
         @endif
         <div id="main" class='layout-navbar navbar-fixed'>
             <x-header></x-header>
+            <div class="container d-flex justify-content-center">
+                <div class="row col-11">
+                    <h2 class="pe-none">
+                        Kelola Artist
+                    </h2>
+                </div>
+            </div>
+            <div class="container d-flex justify-content-center">
+                <div class="row col-11 d-flex justify-content-between">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('adminDashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active pe-none">Artist</li>
+                        </ol>
+                    </nav>
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                          <label for="" class="col-form-label">Search : </label>
+                        </div>
+                        <div class="col-auto">
+                          <input type="text" name="search-field" class="form-control" aria-describedby="passwordHelpInline">
+                        </div>
+                        <div class="col-auto">
+                          <input type="submit" value="submit" name="submit">
+                        </div>
+                        <div class="col-auto">
+                            <a class="btn btn-success" name="add" href="{{ route('penyanyi.add') }}">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <x-datatable>
-                <x-slot:title>Kelola Penyanyi</x-slot:t>
+                <x-slot:title>Tabel Penyanyi</x-slot:t>
                 <x-slot:theader>
                     <tr>
                         <th>No</th>

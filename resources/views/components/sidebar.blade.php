@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="index.html"><img src="{{ asset('img/logo-bara-fm.png') }}" alt="Logo" srcset=""></a>
+                    <a href="{{route('adminDashboard')}}"><img src="{{ asset('img/logo-bara-fm.png') }}" alt="Logo" srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -49,59 +49,38 @@
                     </a>
                 </li>
         
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
+                <li class="sidebar-item">
+                    <a href="{{ route('kelola.lagu') }}" class='sidebar-link'>
                         <i class="bi bi-music-note-beamed"></i>
                         <span>Lagu</span>
                     </a>
-                    <ul class="submenu">    
-                        <li class="submenu-item">
-                            <a href="{{ route('kelola.lagu') }}" class="submenu-link">Kelola Lagu</a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('lagu.add') }}" class="submenu-link">Tambah Lagu</a>
-                        </li>
-                    </ul>
                 </li>
         
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
+                <li class="sidebar-item">
+                    <a href="{{ route('kelola.genre') }}" class='sidebar-link'>
                         <i class="fa-solid fa-record-vinyl"></i>
                         <span>Genre</span>
                     </a>
-                    <ul class="submenu">    
-                        <li class="submenu-item">
-                            <a href="{{ route('kelola.genre') }}" class="submenu-link">Kelola Genre</a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('genre.add') }}" class="submenu-link">Tambah Genre</a>
-                        </li>
-                    </ul>
                 </li>
         
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
+                <li class="sidebar-item">
+                    <a href="{{ route('kelola.penyanyi') }}" class='sidebar-link'>
                         <i class="bi bi-person-fill"></i>
                         <span>Artist</span>
                     </a>
-                    <ul class="submenu">    
-                        <li class="submenu-item">
-                            <a href="{{ route('kelola.penyanyi') }}" class="submenu-link">Kelola Artist</a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('penyanyi.add') }}" class="submenu-link">Tambah Artist</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         
             <!-- Log out at the bottom -->
             <ul class="menu mt-auto">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link text-danger">
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Log out</span>
-                    </a>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button class="sidebar-link btn text-danger">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Log out</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
