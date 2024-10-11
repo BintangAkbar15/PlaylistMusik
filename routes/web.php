@@ -43,9 +43,13 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function(){
     Route::middleware('access:false')->group(function(){
-        Route::get('/', function () {
+        Route::get('/user/dashboard', function () {
             return view('user.dashboard');
         })->name('userDashboard');
+
+        Route::get('/user/search', function(){
+            return view('user.search');
+        })->name('user.search');
     });
 
     Route::middleware('access:true')->group(function(){
