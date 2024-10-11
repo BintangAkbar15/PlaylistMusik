@@ -18,7 +18,14 @@
             </div>
         </div>                
         <div class="col-2 d-flex justify-content-center justify-content-md-end align-items-center" style="font-size: 20px">
-            <div class="user-menu d-flex">
+            <div class="user-menu d-flex gap-3">
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button class="sidebar-link btn text-danger">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Log out</span>
+                    </button>
+                </form>  
                 <div class="user-img d-flex align-items-center">
                     <div class="avatar avatar-md">
                         <img src="{{ asset('dist/assets/compiled/jpg/5.jpg') }}" class="img-fluid rounded-circle" alt="User Avatar">
