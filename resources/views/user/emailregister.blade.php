@@ -31,7 +31,7 @@
                     <h1 class="mt-3">Sign Up Email</h1>
                     <p class="mb-5">Input your data to register to our website.</p>
 
-                    <form action="{{ route('regis.phone.submit') }}" method="post">
+                    <form action="{{ route('regis.email.submit') }}" method="post">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" class="form-control form-control-md" name="email" placeholder="Email" required>

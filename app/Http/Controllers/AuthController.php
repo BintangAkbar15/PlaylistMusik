@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\playlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +45,12 @@ class AuthController extends Controller
                 'password'=>request('password')
             ];
     
-            User::create($data);
+            $userId = User::create($data);
+
+            playlist::create([
+                'name'=>'MyPlaylist',
+                'user_id'=>$userId->id,
+            ]);
             return redirect()->route('login.tampil')->with('success','akun anda berhasil dibuat');
         }
         else{
@@ -66,7 +72,12 @@ class AuthController extends Controller
                 'password'=>request('password')
             ];
     
-            User::create($data);
+            $userId = User::create($data);
+
+            playlist::create([
+                'name'=>'MyPlaylist',
+                'user_id'=>$userId->id,
+            ]);
             return redirect()->route('login.tampil')->with('success','akun anda berhasil dibuat');
         }
         else{

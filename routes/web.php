@@ -25,8 +25,9 @@ Route::middleware('guest')->group(function () {
     })->name('register.phone.tampil');
     
     //submit register
-    Route::post('/register',[AuthController::class,'submitRegisEmail'])->name('regis.email.submit');
-    Route::post('/register',[AuthController::class,'submitRegisPhone'])->name('regis.phone.submit');
+    Route::post('/register/email',[AuthController::class,'submitRegisEmail'])->name('regis.email.submit');
+
+    Route::post('/register/phone',[AuthController::class,'submitRegisPhone'])->name('regis.phone.submit');
     
     Route::get('/login', function () {
         if(Auth::check()){

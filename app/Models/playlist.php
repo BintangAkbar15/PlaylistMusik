@@ -13,6 +13,11 @@ class playlist extends Model
         'name',
         'user_id',
     ];
+
+    protected $with =[
+        'playlagu',
+        'user'
+    ];
     public function playlagu()
     {
         return $this->belongsToMany(Lagu::class, 'playlist_lagu', 'playlist_id','lagu_id');

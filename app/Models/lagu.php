@@ -20,6 +20,12 @@ class lagu extends Model
         'thumb',
         'slug',
     ];
+
+    protected $with =[
+        'plagu',
+        'lgenre',
+        'playlagu'
+    ];
     
     public function plagu()
     {
