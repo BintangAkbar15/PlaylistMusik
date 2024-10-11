@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id',100);
+            $table->string('name', 100);
             $table->date('date');
-            $table->string('status',30);
+            // Define the ENUM for status with 'active' and 'inactive'
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
