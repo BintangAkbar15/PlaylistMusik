@@ -1,7 +1,9 @@
 <navbar class="fixed-top bg-dark col-12" style="height: 8vh">
     <div class="col-12 h-100 px-4 d-flex align-items-center justify-content-between">
         <div class="col-3">
-            <img src="{{ url('img/logo-bara-fm.png') }}" class="img-fluid" width="150px" alt="Logo">
+            <a href="{{ route('userDashboard') }}">
+                <img src="{{ url('img/logo-bara-fm.png') }}" class="img-fluid" width="150px" alt="Logo">
+            </a>
         </div>
         <div class="h-100 col-7 d-flex align-items-center justify-content-center">
             <div class="row w-100 align-items-center h-100">

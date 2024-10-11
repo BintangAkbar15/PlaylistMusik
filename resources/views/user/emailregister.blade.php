@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" id="password-field" name="password-field" placeholder="Password" 
+                            <input type="password" class="form-control form-control-md" id="password-field" name="password" placeholder="Password" 
                             @if ($errors->any())
                                 value="{{ old('password') }}"
                             @endif
@@ -66,7 +66,7 @@
                             <label for="" id="passMessage" class="text-danger d-none" style="font-size: 14px"></label>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" id="c_password-field" name="c_password-field" placeholder="Confirm Password" 
+                            <input type="password" class="form-control form-control-md" id="c_password-field" name="c_password" placeholder="Confirm Password" 
                             @if ($errors->any())
                                 value="{{ old('c_password-field') }}"
                             @endif

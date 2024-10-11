@@ -43,6 +43,17 @@
             <div class="col-12 mt-2 overflow-y-auto" style="max-height: 48vh">
                 <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
                     <div class="col-12 col-lg-3">
+                        <div style="height: 55px; width: 55px; background: linear-gradient(to bottom right, rgb(12, 22, 226), white); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);" class="bg-opacity-50 d-flex align-items-center justify-content-center rounded shadow">
+                            <i class="fa-solid fa-heart fs-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
+                        <label for="" class="fs-5 d-none d-lg-block">Liked Songs</label>
+                        <label for="" class="fs-6 d-none d-xl-block">Playlist &#8226 41 Songs</label>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
+                    <div class="col-12 col-lg-3">
                         <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-block d-none" style="max-height: 55px" alt="">
                         <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-none" alt="">
                     </div>
