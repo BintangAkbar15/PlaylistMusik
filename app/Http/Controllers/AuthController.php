@@ -35,7 +35,7 @@ class AuthController extends Controller
         $request->validate([
             'name'=>'required|min:3|max:100',
             'email'=>'required|email|unique:users',
-            'password'=>'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/'
+            'password'=>'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/',
         ]);
 
         if(request('password') === request('c_password')){
