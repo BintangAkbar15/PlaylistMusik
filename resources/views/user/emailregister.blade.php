@@ -46,13 +46,13 @@
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control form-control-md" id="password-field" name="password-field" placeholder="Password" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" name="c_password" placeholder="Confirm Password" required>
+                            <input type="password" class="form-control form-control-md" id="c_password-field" name="c_password-field" placeholder="Confirm Password" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
