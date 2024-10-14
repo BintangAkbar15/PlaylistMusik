@@ -37,6 +37,10 @@ class lagu extends Model
     }
     public function playlagu()
     {
-        return $this->belongsToMany(Playlist::class, 'playlsit_lagu', 'lagu_id','playlist_id');
+        return $this->belongsToMany(playlist::class, 'playlsit_lagu', 'lagu_id','playlist_id');
+    }
+    public function user()
+    {
+        return $this->belongsToMany(playlist::class, 'liked_songs', 'lagu_id','user_id');
     }
 }

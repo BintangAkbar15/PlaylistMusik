@@ -49,19 +49,10 @@
                     </div>
                     <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
                         <label for="" class="fs-5 d-none d-lg-block">Liked Songs</label>
-                        <label for="" class="fs-6 d-none d-xl-block">Playlist &#8226 41 Songs</label>
+                        <label for="" class="fs-6 d-none d-xl-block">Playlist &#8226 {{ $liked }} </label>
                     </div>
                 </div>
-                <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
-                    <div class="col-12 col-lg-3">
-                        <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-block d-none" style="max-height: 55px" alt="">
-                        <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-none" alt="">
-                    </div>
-                    <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
-                        <label for="" class="fs-5 d-none d-lg-block">My Playlist</label>
-                        <label for="" class="fs-6 d-none d-xl-block">Playlist &#8226 41 Songs</label>
-                    </div>
-                </div>
+                {{ $slot }}
             </div>         
         </div>
     </div>

@@ -15,7 +15,7 @@
                     <a href="{{ route('log.user') }}">
                         <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
                             <i class="fa-solid fa-right-to-bracket" style="font-size:80px"></i>
-                            <label class="h5">User Login</label>
+                            <label class="h5">User Log</label>
                             <h3 class="text-bold">{{ $data[2] }}</h3>
                         </div>
                     </a>
