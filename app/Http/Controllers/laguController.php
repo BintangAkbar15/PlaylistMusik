@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 class laguController extends Controller
 {
     //
+
     function createSlug($string) {
         // Tambahkan strip sebelum huruf besar yang tidak di awal string
         $string = preg_replace('/([a-z])([A-Z])/', '$1-$2', $string);

@@ -9,7 +9,7 @@ class log extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'name',
         'date',
         'status',
     ];

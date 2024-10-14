@@ -1,11 +1,4 @@
 <x-layout>
-    @if ($errors->any())
-        @foreach ($errors->all() as $item)
-            <div class="alert alert-danger">
-                {{ $item }}
-            </div>
-        @endforeach
-    @endif
     <div id="app">
         <x-sidebar></x-sidebar>
         <div id="main" class='layout-navbar navbar-fixed'>
@@ -32,6 +25,7 @@
                             <div class="card-body">
                                 <form class="form form-vertical" action="{{ route('penyanyi.addNew') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -39,7 +33,7 @@
                                                     <label class="mb-2" for="artist-name">Artist Name</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="artist" name="name" id="first-name-icon">
+                                                            placeholder="artist" name="name" value="{{ old('name') }}" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-person-fill"></i>
                                                         </div>
@@ -51,7 +45,7 @@
                                                     <label class="mb-2" for="Debut-year">Debut Year</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="Debut" name="debut" id="first-name-icon">
+                                                            placeholder="Debut" value="{{ old('debut') }}" name="debut" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-calendar-date"></i>
                                                         </div>
@@ -63,7 +57,7 @@
                                                     <label class="mb-2" for="region">Region</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="region" name="negara" id="first-name-icon">
+                                                            placeholder="region" name="negara" value="{{ old('negara') }}" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-globe-americas"></i>
                                                         </div>

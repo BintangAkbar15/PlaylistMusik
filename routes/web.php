@@ -63,7 +63,12 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/genre', [genreController::class,'index'])->name('kelola.genre');
         
         Route::get('/admin/genre/tambah', function(){
-            return view('admin.genre.add');
+            do {
+                $color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                $colorExists = genre::where('color', $color)->exists(); // Check if the color exists
+            } while ($colorExists); // Repeat the loop if the color already exists
+
+            return view('admin.genre.add',['color'=>$color]);
         })->name('genre.add');
 
         Route::get('/admin/genre/edit/{genre:slug}', function(genre $genre){
@@ -94,8 +99,14 @@ Route::middleware('auth')->group(function(){
         Route::post('/admin/lagu/penyanyi/add', [laguController::class,'storePenyanyi'])->name('lagu.add.penyanyi');
 
         Route::get('/admin/lagu/tambah', function(){
-            return view('admin.lagu.add',['data'=>genre::all(),'penyanyi'=>penyanyi::all()]);
+            do {
+                $color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                $colorExists = genre::where('color', $color)->exists(); // Check if the color exists
+            } while ($colorExists); // Repeat the loop if the color already exists
+        
+            return view('admin.lagu.add', ['data' => genre::all(),'penyanyi' => penyanyi::all(),'color' => $color]);
         })->name('lagu.add');
+        
 
         Route::get('/admin/lagu/edit/{lagu:name}', function(lagu $lagu){
             $lag = lagu::with(['lgenre','plagu'])->find($lagu['id']);
@@ -124,7 +135,7 @@ Route::middleware('auth')->group(function(){
         //end penyanyi section
 
         Route::get('/admin/log', function(){
-            return view('log');
+            return view('admin.log',['data'=>log::all()]);
         })->name('log.user');
 
 
