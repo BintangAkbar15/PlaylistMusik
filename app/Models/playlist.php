@@ -20,8 +20,9 @@ class playlist extends Model
     ];
     public function playlagu()
     {
-        return $this->belongsToMany(Lagu::class, 'playlist_lagu', 'playlist_id','lagu_id');
+        return $this->belongsToMany(lagu::class, 'playlist_lagu', 'playlist_id', 'lagu_id');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

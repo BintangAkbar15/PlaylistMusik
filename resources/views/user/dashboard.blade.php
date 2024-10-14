@@ -1,8 +1,37 @@
 <x-mainpage>
+    <x-slot:playlist>
+        @forelse ($playlists as $item)
+            <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
+                <div class="col-12 col-lg-3">
+                    <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-block d-none" style="max-height: 55px" alt="">
+                    <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-none" alt="">
+                </div>
+                <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
+                    <label for="" class="fs-5 d-none d-lg-block">{{ $item->name }}</label>
+                    <label for="" class="fs-6 d-none d-xl-block">Playlist &#8226 {{ $jlagu }} {{ $jlagu > 1 ? 'Songs' : 'Song'}}</label>
+                </div>
+            </div>
+        @empty
+            
+        @endforelse
+    </x-slot:playlist>
+    <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
     <div class="px-3 pt-3">
         <div class="col-12 rounded-top p-5 d-flex flex-column" style="height: 200px; background: linear-gradient(to bottom, hsl(35, 100%, 50%), rgb(104, 104, 104)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: white">
-            <h1>Selamat Pagi Andi Setiawan !</h1>
-            <label for="" class="fs-6">Bara FM siap nih setel lagu kesukaan mu untuk menemani pagi mu</label>
+            @php
+                if ($hour >= 5 && $hour < 12) {
+                    $greeting = 'Selamat Pagi';
+                } elseif ($hour >= 12 && $hour < 15) {
+                    $greeting = 'Selamat Siang';
+                } elseif ($hour >= 15 && $hour < 18) {
+                    $greeting = 'Selamat Sore';
+                } else {
+                    $greeting = 'Selamat Malam';
+                }
+            @endphp
+
+            <h1>{{ $greeting }} {{ Auth::user()->name }}</h1>
+            <label for="" class="fs-6">Bara FM siap nih setel lagu kesukaan mu untuk menemani hari mu</label>
         </div>
         <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
             <div class="col-12 d-flex gap-2">

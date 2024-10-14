@@ -1,14 +1,19 @@
 <?php
 
+use Carbon\Carbon;
 use App\Models\log;
 use App\Models\lagu;
 use App\Models\User;
 use App\Models\genre;
 use App\Models\penyanyi;
+use App\Models\playlist;
+use App\Models\likedSong;
+use App\Models\playlist_lagu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\laguController;
+use App\Http\Controllers\userController;
 use App\Http\Controllers\genreController;
 use App\Http\Controllers\penyanyiController;
 
@@ -44,9 +49,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function(){
     Route::middleware('access:false')->group(function(){
-        Route::get('/user/dashboard', function () {
-            return view('user.dashboard');
-        })->name('userDashboard');
+        Route::get('/user/dashboard', [userController::class,'index'])->name('userDashboard');
 
         Route::get('/user/search', function(){
             return view('user.search');

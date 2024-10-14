@@ -21,10 +21,21 @@ class AuthController extends Controller
             if($data == true){
                 return redirect()->route('adminDashboard')->with('success','Login Berhasil');
             }
-            log::where('name',Auth::user()->name)->update([
-                'date'=>now(),
-                'status'=>'active'
-            ]);
+
+            $data = log::where('name',Auth::user()->name)->first();
+            if($data){
+                log::where('name',Auth::user()->name)->update([
+                    'date'=>now(),
+                    'status'=>'active'
+                ]);
+            } 
+            else{
+                log::create([
+                    'name'=>Auth::user()->name,
+                    'date'=>now(),
+                    'status'=>'active'
+                ]);
+            }
             return redirect()->route('userDashboard')->with('success','Login Berhasil');
         }else{
             return back()->with('error','Username/Password salah');
@@ -93,6 +104,12 @@ class AuthController extends Controller
             playlist::create([
                 'name'=>'MyPlaylist',
                 'user_id'=>$userId->id,
+            ]);
+
+            log::create([
+                'name'=>$userId->name,
+                'date'=>now(),
+                'status'=>'inactive'
             ]);
             return redirect()->route('login.tampil')->with('success','Akun berhasil di buat');
         }

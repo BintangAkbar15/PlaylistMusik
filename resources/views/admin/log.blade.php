@@ -55,7 +55,7 @@
                     <td> {{ $item->name }}</td>
                     <td> {{ $item->date }}</td>
                     <td>
-                        <span class="badge bg-success">{{ $item->status }}</span>
+                        <span class="badge {{ $item->status == 'active' ? 'bg-success' : 'bg-danger'}}">{{ $item->status }}</span>
                     </td>
                 </tr>
                 @empty
