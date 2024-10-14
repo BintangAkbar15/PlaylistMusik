@@ -31,7 +31,9 @@
             <i class="fa-solid fa-volume-high me-2 pe-auto"></i>
             <input type="range" id="volume" value='100'>
         </div>
-        <i class="fa-solid fa-up-right-and-down-left-from-center pe-auto" id="maximaze"></i>
+        <a href="">
+            <i class="fa-solid fa-up-right-and-down-left-from-center pe-auto" id="maximaze"></i>
+        </a>
     </div>
     <script src="{{ asset('js/controlmusic.js') }}"></script>
 </footer>  

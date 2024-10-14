@@ -54,6 +54,10 @@ Route::middleware('auth')->group(function(){
         Route::get('/user/search', function(){
             return view('user.search');
         })->name('user.search');
+
+        Route::get('/user/fullscreen/namemusic', function(){
+            return view('user.fullscreen');
+        })->name('fullscreen');
     });
 
     Route::middleware('access:true')->group(function(){

@@ -127,3 +127,13 @@ audio.addEventListener('ended', function() {
 progres.oninput = function() {
     audio.currentTime = progres.value;
 };
+
+repeat.addEventListener('click', function() {
+    if (audio.hasAttribute('loop')) {
+        audio.removeAttribute('loop');
+        repeat.style.color = 'gray'; 
+    } else {
+        audio.setAttribute('loop', '');
+        repeat.style.color = 'white'; 
+    }
+});
