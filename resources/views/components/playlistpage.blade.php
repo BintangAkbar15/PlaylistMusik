@@ -36,7 +36,7 @@
                 </div>
                 <div class="d-flex align-items-center py-2 mt-3 gap-2 d-lg-none">
                     <button class="rounded-circle d-flex p-2 btn btn-light ">
-                        <i class="fa-solid fa-bars"></i>
+                        <i class="fa-`solid` fa-bars"></i>
                     </button>
                 </div>
             </div>
