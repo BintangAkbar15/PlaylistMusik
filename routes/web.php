@@ -151,3 +151,7 @@ Route::middleware('auth')->group(function(){
     //Logout
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
+
+Route::get('/', function(){
+    return view('welcome');
+})->name('landing-page');

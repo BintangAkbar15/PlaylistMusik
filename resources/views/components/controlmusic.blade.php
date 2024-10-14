@@ -11,9 +11,6 @@
             <label for="customRange1" class="me-2 mb-0 text-nowrap" id="progres-time">-:--</label> 
             <input type="range" class="form-range px-4 flex-grow-1" id="customRange1" value="0"> 
             <label for="customRange1" class="ms-2 me-4 me-lg-0 mb-0 text-nowrap" id="end-time">-:--</label> 
-            <audio id="my-audio" class="d-none">
-                <source src="{{ url('data\MP3\ONE PROJECT & mei - caramel ribbon cursetard.mp3') }}" type="audio/mp3">
-            </audio>
         </div>        
         <div class="d-flex align-items-center justify-content-end justify-content-md-center gap-3 gap-md-5" style="height: 12vh; font-size: 30px;">
             <i class="fa-solid fa-shuffle d-none d-md-block pe-auto" id="shuffle"></i> 
@@ -31,9 +28,6 @@
             <i class="fa-solid fa-volume-high me-2 pe-auto"></i>
             <input type="range" id="volume" value='100'>
         </div>
-        <a href="">
             <i class="fa-solid fa-up-right-and-down-left-from-center pe-auto" id="maximaze"></i>
-        </a>
     </div>
-    <script src="{{ asset('js/controlmusic.js') }}"></script>
 </footer>  
