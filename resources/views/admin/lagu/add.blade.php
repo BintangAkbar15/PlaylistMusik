@@ -265,79 +265,6 @@
                     return markup; // Biarkan HTML tampil apa adanya
                 }
             });
-    
-            // Event listener untuk Select2 ketika dibuka
-            $('#multiple-select-field').on('select2:open', function() {
-                // Event listener untuk tombol "Tambah Genre" saat tidak ada hasil
-                let addNewGenreBtn = document.querySelector('#add-new-genre');
-                
-                if (addNewGenreBtn) {
-                    addNewGenreBtn.addEventListener('click', function() {
-                        let newGenre = prompt("Masukkan genre baru:");
-                        if (newGenre) {
-                            // Tambahkan genre baru ke Select2
-                            let newOption = new Option(newGenre, newGenre, true, true);
-                            $('#multiple-select-field').append(newOption).trigger('change');
-    
-                            // Tampilkan genre baru di pilihan
-                            $('#multiple-select-field').trigger('select2:close');
-                        }
-                    });
-                }
-            });
-    
-            $(document).on('submit', '#genre-form', function(event) {
-                event.preventDefault(); // Mencegah form dari refresh
-
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'), // URL yang diambil dari atribut action form
-                    data: $(this).serialize(), // Mengambil data form
-                    success: function(response) {
-                        // Misalkan response berisi genre baru
-                        // Tambahkan genre baru ke Select2
-                        let newOption = new Option(response.name, response.id, true, true);
-                        $('#multiple-select-field').append(newOption).trigger('change');
-                        $('#multiple-select-field').trigger('select2:close');
-                        $('#success').modal('hide'); // Tutup modal setelah berhasil
-                    },
-                    error: function(xhr) {
-                        // Menampilkan pesan kesalahan
-                        alert('Error: ' + xhr.responseText);
-                    }
-                });
-            });
-
-            // Event listener untuk tombol "Tambah penyanyi" saat modal terbuka
-            $(document).on('submit', '#artist-form', function(event) {
-                event.preventDefault(); // Mencegah form dari refresh
-
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'), // URL yang diambil dari atribut action form
-                    data: $(this).serialize(), // Mengambil data form
-                    success: function(response) {
-                        // Misalkan response berisi artis baru
-                        // Tambahkan artis baru ke Select2
-                        let newOption = new Option(response.name, response.id, true, true);
-                        $('#single-select-clear-field').append(newOption).trigger('change');
-                        $('#single-select-clear-field').trigger('select2:close');
-                        $('#success').modal('hide'); // Tutup modal setelah berhasil
-                    },
-                    error: function(xhr) {
-                        // Menampilkan pesan kesalahan
-                        alert('Error: ' + xhr.responseText);
-                    }
-                });
-            });
-
-            // Event listener untuk perubahan pada Select2
-            $('#multiple-select-field').on('change', function() {
-                let selectedItems = document.querySelectorAll('.select2-selection__choice__display');
-                selectedItems.forEach(item => {
-                    console.log(item.innerText); // Menampilkan teks dari setiap item yang dipilih
-                });
-            });
 
             $('#single-select-clear-field').select2({
                 theme: "bootstrap-5",
@@ -354,35 +281,8 @@
                     return markup; // Biarkan HTML tampil apa adanya
                 }
             });
-    
-            // Event listener untuk Select2 ketika dibuka
-            $('#single-select-clear-field').on('select2:open', function() {
-                // Event listener untuk tombol "Tambah Genre" saat tidak ada hasil
-                let addNewGenreBtn = document.querySelector('#add-new-penyanyi');
-                
-                if (addNewGenreBtn) {
-                    addNewGenreBtn.addEventListener('click', function() {
-                        let newGenre = prompt("Masukkan genre baru:");
-                        if (newGenre) {
-                            // Tambahkan genre baru ke Select2
-                            let newOption = new Option(newGenre, newGenre, true, true);
-                            $('#single-select-clear-field').append(newOption).trigger('change');
-    
-                            // Tampilkan genre baru di pilihan
-                            $('#single-select-clear-field').trigger('select2:close');
-                        }
-                    });
-                }
-            });
-    
-            // Event listener untuk perubahan pada Select2
-            $('#single-select-clear-field').on('change', function() {
-                let selectedItems = document.querySelectorAll('.select2-selection__choice__display');
-                selectedItems.forEach(item => {
-                    console.log(item.innerText); // Menampilkan teks dari setiap item yang dipilih
-                });
-            });
         });
+        
         document.getElementById('audio-input required').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
