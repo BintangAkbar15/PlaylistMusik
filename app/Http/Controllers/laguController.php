@@ -9,6 +9,8 @@ use App\Models\lagu_genre;
 use Illuminate\Http\Request;
 use App\Models\penyanyi_lagu;
 use FFMpeg\FFMpeg as FFMpegFacade;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,7 +38,7 @@ class laguController extends Controller
         // Validasi input
         $request->validate([
             'name' => 'required',
-            'audio' => 'required|mimes:mp3,wav,aac,flac,ogg,aiff,wma,alac,opus,amr,m4a',
+            'audio' => 'required|mimes:mp3,wav,aac,flac,ogg,aiff,wma,alac,opus,amr,m4a:max:20000',
             'thumb' => 'required|image|mimes:jpg,jpeg,png,gif,bmp,tiff,webp,svg,heic,raw,psd|max:5012',
             'genre' => 'required|array', // Validasi genre sebagai array
             'genre.*' => 'exists:genres,id', // Pastikan setiap genre ada di database
@@ -62,23 +64,34 @@ class laguController extends Controller
         ];
 
         // Simpan lagu ke database
-        $laguModel = lagu::create($lagu);
-
-        // Simpan genre yang dipilih
-        // Pastikan Anda menggunakan ID dari genre yang dipilih
-        foreach ($request->input('genre') as $genreId) {
-            lagu_genre::create([
-                'lagu_id' => $laguModel->id,
-                'genre_id' => $genreId,
-            ]);
+        try {
+            DB::transaction(function () use ($lagu, $request) {
+                // Simpan lagu ke database
+                $laguModel = lagu::create($lagu);
+        
+                // Simpan genre yang dipilih
+                // foreach ($request->input('genre') as $genreId) {
+                //     lagu_genre::create([
+                //         'lagu_id' => $laguModel->id,
+                //         'genre_id' => $genreId,
+                //     ]);
+                // }
+        
+                // // Simpan penyanyi yang dipilih
+                // penyanyi_lagu::create([
+                //     'penyanyi_id' => $request->input('penyanyi'),
+                //     'lagu_id' => $laguModel->id,
+                // ]);
+            
+            });
+            
+            Log::info('Transaction succeeded, redirecting...');
+            return redirect()->route('kelola.lagu')->with('success', 'Lagu Berhasil Ditambahkan');
+        } catch (\Exception $e) {
+            // Tangani kesalahan
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-
-        penyanyi_lagu::create([
-            'penyanyi_id' => $request->input('penyanyi'),
-            'lagu_id' => $laguModel->id
-        ]);
-
-        return redirect()->route('kelola.lagu')->with('success', 'Lagu Berhasil Ditambahkan');
+        
     }
 
     function storeGenre(Request $request){
