@@ -23,9 +23,14 @@
                         </div>
                         <div class="card-content">
                             <div class="card-body">
+
+                                @if ($errors->any())
+                                    @foreach ($errors->all() as $item)
+                                        <div class="alert">{{$item}}</div>
+                                    @endforeach
+                                @endif
                                 <form class="form form-vertical" action="{{ route('lagu.addNew') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -33,10 +38,7 @@
                                                     <label class="mb-2" for="music-name">Music Name</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                        @if ($errors->any())
-                                                            value="{{ old('name') }}"
-                                                        @endif
-                                                        placeholder="Music" name="name" value="{{ request('name') }}" id="first-name-icon">
+                                                            placeholder="Music" name="name" value="{{ request('name') }}" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-music-note-beamed"></i>
                                                         </div>
@@ -255,7 +257,6 @@
                 width: '100%',
                 placeholder: 'Choose anything',
                 closeOnSelect: false,
-                dropdownParent: $('.form-body'), // Adjust dropdown behavior
                 language: {
                     noResults: function() {
                         return modal;
@@ -265,13 +266,85 @@
                     return markup; // Biarkan HTML tampil apa adanya
                 }
             });
+    
+            // Event listener untuk Select2 ketika dibuka
+            $('#multiple-select-field').on('select2:open', function() {
+                // Event listener untuk tombol "Tambah Genre" saat tidak ada hasil
+                let addNewGenreBtn = document.querySelector('#add-new-genre');
+                
+                if (addNewGenreBtn) {
+                    addNewGenreBtn.addEventListener('click', function() {
+                        let newGenre = prompt("Masukkan genre baru:");
+                        if (newGenre) {
+                            // Tambahkan genre baru ke Select2
+                            let newOption = new Option(newGenre, newGenre, true, true);
+                            $('#multiple-select-field').append(newOption).trigger('change');
+    
+                            // Tampilkan genre baru di pilihan
+                            $('#multiple-select-field').trigger('select2:close');
+                        }
+                    });
+                }
+            });
+    
+            $(document).on('submit', '#genre-form', function(event) {
+                event.preventDefault(); // Mencegah form dari refresh
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'), // URL yang diambil dari atribut action form
+                    data: $(this).serialize(), // Mengambil data form
+                    success: function(response) {
+                        // Misalkan response berisi genre baru
+                        // Tambahkan genre baru ke Select2
+                        let newOption = new Option(response.name, response.id, true, true);
+                        $('#multiple-select-field').append(newOption).trigger('change');
+                        $('#multiple-select-field').trigger('select2:close');
+                        $('#success').modal('hide'); // Tutup modal setelah berhasil
+                    },
+                    error: function(xhr) {
+                        // Menampilkan pesan kesalahan
+                        alert('Error: ' + xhr.responseText);
+                    }
+                });
+            });
+
+            // Event listener untuk tombol "Tambah penyanyi" saat modal terbuka
+            $(document).on('submit', '#artist-form', function(event) {
+                event.preventDefault(); // Mencegah form dari refresh
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'), // URL yang diambil dari atribut action form
+                    data: $(this).serialize(), // Mengambil data form
+                    success: function(response) {
+                        // Misalkan response berisi artis baru
+                        // Tambahkan artis baru ke Select2
+                        let newOption = new Option(response.name, response.id, true, true);
+                        $('#single-select-clear-field').append(newOption).trigger('change');
+                        $('#single-select-clear-field').trigger('select2:close');
+                        $('#success').modal('hide'); // Tutup modal setelah berhasil
+                    },
+                    error: function(xhr) {
+                        // Menampilkan pesan kesalahan
+                        alert('Error: ' + xhr.responseText);
+                    }
+                });
+            });
+
+            // Event listener untuk perubahan pada Select2
+            $('#multiple-select-field').on('change', function() {
+                let selectedItems = document.querySelectorAll('.select2-selection__choice__display');
+                selectedItems.forEach(item => {
+                    console.log(item.innerText); // Menampilkan teks dari setiap item yang dipilih
+                });
+            });
 
             $('#single-select-clear-field').select2({
                 theme: "bootstrap-5",
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 placeholder: $( this ).data( 'placeholder' ),
                 allowClear: true,
-                dropdownParent: $('.form-body'),
                 language: {
                     noResults: function() {
                         return modal1;
@@ -281,8 +354,35 @@
                     return markup; // Biarkan HTML tampil apa adanya
                 }
             });
+    
+            // Event listener untuk Select2 ketika dibuka
+            $('#single-select-clear-field').on('select2:open', function() {
+                // Event listener untuk tombol "Tambah Genre" saat tidak ada hasil
+                let addNewGenreBtn = document.querySelector('#add-new-penyanyi');
+                
+                if (addNewGenreBtn) {
+                    addNewGenreBtn.addEventListener('click', function() {
+                        let newGenre = prompt("Masukkan genre baru:");
+                        if (newGenre) {
+                            // Tambahkan genre baru ke Select2
+                            let newOption = new Option(newGenre, newGenre, true, true);
+                            $('#single-select-clear-field').append(newOption).trigger('change');
+    
+                            // Tampilkan genre baru di pilihan
+                            $('#single-select-clear-field').trigger('select2:close');
+                        }
+                    });
+                }
+            });
+    
+            // Event listener untuk perubahan pada Select2
+            $('#single-select-clear-field').on('change', function() {
+                let selectedItems = document.querySelectorAll('.select2-selection__choice__display');
+                selectedItems.forEach(item => {
+                    console.log(item.innerText); // Menampilkan teks dari setiap item yang dipilih
+                });
+            });
         });
-        
         document.getElementById('audio-input required').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {

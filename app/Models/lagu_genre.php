@@ -13,10 +13,6 @@ class lagu_genre extends Model
         'genre_id',
     ];
 
-    protected $with =[
-        'lagu',
-        'genre'
-    ];
     protected $table = 'lagu_genres';
 
     public function lagu()
