@@ -25,7 +25,9 @@
             <h3>Popular</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
-                    <form action="{{ route('dengerinlagu') }}" method="post">
+                    <form action="" method="post">
+                        @csrf
+                        <input type="hidden" name="slug" value="{{ $item->slug }}">
                         <button class="d-flex py-2 px-5 align-items-center col-12 bg-dark bg-opacity-25 mb-3">
                             <label for="" style="width: 4%;">{{ $loop->iteration }}</label>
                             <img src="{{ url('storage/'.$item->thumb) }}" width="4%" alt="" class="bg-dark">
