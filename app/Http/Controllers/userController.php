@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\lagu;
 use App\Models\penyanyi;
 use App\Models\playlist;
 use App\Models\likedSong;
@@ -20,5 +21,11 @@ class userController extends Controller
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
         return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists]);
+    }
+
+    function songs(){
+        $lagu = lagu::all();
+
+        return view('user.artist', ['lagu' => $lagu]);
     }
 }

@@ -141,7 +141,7 @@
                         <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="">
                         <label for="" class="fs-6" style="color: white">{{ $item->name }}</label>
                     </div>
-                    @if ($loop->iteration == 4)
+                    @if ($loop->iteration == 3)
                         <div class="p-2 d-flex flex-column align-items-center gap-2">
                             <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
                                 <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
