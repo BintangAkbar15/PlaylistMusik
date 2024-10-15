@@ -8,7 +8,13 @@ let volumelevel = document.getElementById('volume');
 let audio = document.getElementById("my-audio");
 let progres = document.getElementById('customRange1');
 let timeend = document.getElementById('end-time');
+<<<<<<< HEAD
 let timeprogres =  document.getElementById('progres-time')
+=======
+let timeprogres =  document.getElementById('progres-time');
+let minimize = document.getElementById('minimize')
+let maximize = document.getElementById('maximaze')
+>>>>>>> 1754b9c7afa0cae6890bc56f042bc4841e296284
 
 like.addEventListener('click', function() {
     if (like.classList.contains('fa-regular')) {
@@ -137,3 +143,17 @@ repeat.addEventListener('click', function() {
         repeat.style.color = 'white'; 
     }
 });
+<<<<<<< HEAD
+=======
+
+
+minimize.addEventListener('click', function(){
+    document.getElementById('fullscreen').style.display = 'none';
+    document.getElementById('normalpage').style.display = 'flex';
+})
+
+maximize.addEventListener('click', function(){
+    document.getElementById('normalpage').style.display = 'none';
+    document.getElementById('fullscreen').style.display = 'block';
+})
+>>>>>>> 1754b9c7afa0cae6890bc56f042bc4841e296284
