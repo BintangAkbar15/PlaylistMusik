@@ -9,9 +9,13 @@ let audio = document.getElementById("my-audio");
 let progres = document.getElementById('customRange1');
 let timeend = document.getElementById('end-time');
 let timeprogres =  document.getElementById('progres-time');
-let minimize = document.getElementById('minimize')
-let maximize = document.getElementById('maximaze')
-let input = document.getElementById('search-field')
+let minimize = document.getElementById('minimize');
+let maximize = document.getElementById('maximaze');
+let input = document.getElementById('search-field');
+let containertitle = document.getElementById('container-cover');
+let contenttitle = document.getElementById('content-title');
+let marquee = document.getElementById('marquee');
+let normaltitle = document.getElementById('normal-title');
 
 like.addEventListener('click', function() {
     if (like.classList.contains('fa-regular')) {
@@ -153,3 +157,16 @@ maximize.addEventListener('click', function(){
     document.getElementById('normalpage').style.display = 'none';
     document.getElementById('fullscreen').style.display = 'block';
 })
+
+
+function checkOverflow() {
+    if (contenttitle.scrollWidth > containertitle.clientWidth) {
+        marquee.style.display = 'block';
+        normaltitle.style.display = 'none';
+    } else {
+        marquee.style.display = 'none';
+        normaltitle.style.display = 'block';
+    }
+}
+
+checkOverflow();
