@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('playlist_lagu', function (Blueprint $table) {
             $table->id();
             $table->foreignId('playlist_id')->constrained('playlists','id')->onDelete('cascade');
-            $table->foreignId('lagu_id')->constrained('lagu','id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('lagu','id')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -15,10 +15,6 @@ class genre extends Model
         'slug',
         'color',
     ];
-
-    protected $with =[
-        'lgenre'
-    ];
     
     public function lgenre()
     {

@@ -25,7 +25,7 @@ class penyanyiController extends Controller
 
     function store(Request $request){
         $request->validate([
-            'name' =>'required|unique:penyanyi',
+            'name' =>'required',
             'thumb' =>'required|image|mimes:jpg,jpeg,png,gif,bmp,tiff,webp,svg,heic,raw,psd|max:5012',
             'negara'=>'required',
             'debut'=>'required',
@@ -37,17 +37,9 @@ class penyanyiController extends Controller
         // Membuat slug berdasarkan nama
         $slug = $this->createSlug($request->input('name'));
 
-        $check = penyanyi::where('name','like','%'.$request->input('name').'%')->pluck('name')->first();
-
-        if(!$check){
-            $name = $request->input('name');
-        }else{
-            return redirect()->back()->with('error','nama artis sudah terdaftar');
-        }
-
         // Menyusun data yang akan disimpan
         $data = [
-            'name' => $name,
+            'name' => $request->input('name'),
             'thumb' => $thumbPath, // Menggunakan path yang benar
             'negara' => $request->input('negara'),
             'debut' => $request->input('debut'),
