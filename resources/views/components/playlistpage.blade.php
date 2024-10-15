@@ -1,5 +1,4 @@
 <div class="col-2 p-1 col-md-3 d-none d-md-block overflow-hidden">
-<div class="col-2 p-1 col-md-3 d-none d-md-block overflow-hidden">
     <div class="col-12 rounded bg-secondary bg-opacity-10 h-100">
         <div class="col-12 pt-4 px-4">
             <div class="d-flex gap-4 fs-4 fw-bold">

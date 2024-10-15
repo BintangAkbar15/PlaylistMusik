@@ -35,7 +35,7 @@
                         <div class="d-flex align-items-center d-none d-md-flex justify-content-center w-100">
                             <label for="customRange1" class="me-2 mb-0 text-nowrap" id="progres-time">-:--</label> 
                             <input type="range" class="form-range px-4 flex-grow-1" id="customRange1" value="0"> 
-                            <label for="customRange1" class="ms-2 me-4 me-lg-0 mb-0 text-nowrap" id="end-time">-:--</label> 
+                            <label for="customRange1" class="ms-2 me-4 me-lg-0 mb-0 text-nowrap" id="end-time">-:--</label>
                         </div>        
                     </div>
                     <div class="d-flex justify-content-end col-12 pe-4">
