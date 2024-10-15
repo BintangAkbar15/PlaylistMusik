@@ -53,7 +53,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ gmdate("i:s", $item->audio_length) }}</td>
-                    <td>{{ $item->plagu[0]->name }}</td>
+                    <td>{{ $item->plagu[$loop->iteration-1]->name }}</td>
                     <td><img src="{{ url('storage/'. $item->thumb ) }}" alt="{{ $item->name }}" width="100" height="100"></td>
                     <td>{{ $item->dilihat }} kali</td>
                     <td>

@@ -23,14 +23,9 @@
                         </div>
                         <div class="card-content">
                             <div class="card-body">
-
-                                @if ($errors->any())
-                                    @foreach ($errors->all() as $item)
-                                        <div class="alert">{{$item}}</div>
-                                    @endforeach
-                                @endif
                                 <form class="form form-vertical" action="{{ route('lagu.addNew') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -38,7 +33,10 @@
                                                     <label class="mb-2" for="music-name">Music Name</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="Music" name="name" value="{{ request('name') }}" id="first-name-icon">
+                                                        @if ($errors->any())
+                                                            value="{{ old('name') }}"
+                                                        @endif
+                                                        placeholder="Music" name="name" value="{{ request('name') }}" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-music-note-beamed"></i>
                                                         </div>
@@ -257,6 +255,7 @@
                 width: '100%',
                 placeholder: 'Choose anything',
                 closeOnSelect: false,
+                dropdownParent: $('.form-body'), // Adjust dropdown behavior
                 language: {
                     noResults: function() {
                         return modal;
@@ -345,6 +344,7 @@
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 placeholder: $( this ).data( 'placeholder' ),
                 allowClear: true,
+                dropdownParent: $('.form-body'),
                 language: {
                     noResults: function() {
                         return modal1;

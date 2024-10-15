@@ -35,28 +35,46 @@
                     <form action="{{ route('regis.phone.submit') }}" method="post">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="tel" id="phone" class="form-control" name="telp" placeholder="123-456-7890">
+                            <input required type="tel" id="phone" class="form-control" id="phone" name="telp" placeholder="123-456-7890"
+                            @if ($errors->any())
+                                value="{{ old('telp') }}"
+                            @endif>
                             <div class="form-control-icon">
                                 <i class="bi bi-telephone"></i>
                             </div>
+                            <label for="" id="phoneMessage" class="text-danger d-none" style="font-size: 14px"></label>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-md" name="name" placeholder="Username" required>
+                            <input required type="text" class="form-control form-control-md" id="email" name="name" placeholder="Username"
+                            @if ($errors->any())
+                                value="{{ old('username') }}"
+                            @endif
+                            required>
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" id="password-field" name="password-field" placeholder="Password" required>
+                            <input required type="password" class="form-control form-control-md" id="password-field" name="password" placeholder="Password" 
+                            @if ($errors->any())
+                                value="{{ old('password') }}"
+                            @endif
+                            required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
+                            <label for="" id="passMessage" class="text-danger d-none" style="font-size: 14px"></label>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" id="c_password-field" name="c_password-field" placeholder="Confirm Password" required>
+                            <input required type="password" class="form-control form-control-md" id="c_password-field" name="c_password" placeholder="Confirm Password" 
+                            @if ($errors->any())
+                                value="{{ old('c_password-field') }}"
+                            @endif
+                            required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
+                            <label for="" id="checkMessage" class="text-danger d-none" style="font-size: 14px"></label>
                         </div>
                         <div class="form-check form-check-md d-flex align-items-end mb-4" id="container-showpass">
                             <input class="form-check-input me-2" type="checkbox" value="" id="showpass">
@@ -80,6 +98,6 @@
         </div>
     </div>
     <script src="{{ url('js/login.js') }}"></script>
+    <x-validasi></x-validasi>
 </body>
-
 </html>

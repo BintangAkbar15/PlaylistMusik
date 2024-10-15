@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 class laguController extends Controller
 {
     //
+
     function createSlug($string) {
         // Tambahkan strip sebelum huruf besar yang tidak di awal string
         $string = preg_replace('/([a-z])([A-Z])/', '$1-$2', $string);
@@ -131,10 +132,11 @@ class laguController extends Controller
     function update(Request $request,string $id,lagu $lagu){
         $validate = $request->validate([
             'name' =>'required',
-            'audio' => 'file|mimetypes:audio/mpeg,audio/wav,audio/aac,audio/flac,audio/ogg,audio/x-aiff,audio/x-ms-wma,audio/alac,audio/opus,audio/amr,audio/mp4,audio/x-hx-aac-adts',
-            'thumb' =>'mimes:jpg, jpeg, png, gif, bmp, tiff, webp, svg, heic, raw, psd',
+            'audio' =>'extensions:mp3, wav, aac, flac, ogg, aiff, wma, alac, opus, amr, m4a',
+            'thumb' =>'extensions:jpg, jpeg, png, gif, bmp, tiff, webp, svg, heic, raw, psd',
             'slug' => $this->createSlug($request->input('slug'))
         ],[
+
         ]);
 
         $request->validate([
@@ -146,20 +148,17 @@ class laguController extends Controller
             // Pesan kesalahan khusus dapat ditambahkan di sini jika diinginkan
         ]);
 
-        lagu::where('id',$id)->update($validate);
         $slug = $this->createSlug($request->input('slug'));
         if($request->hasFile('thumb')){
             Storage::delete('public/'.$lagu->thumb);
             $thumbPath = $request->file('thumb')->store('song-images');
-            lagu::where('id',$id)->update(['thumb'=>$thumbPath]);
         }
         if($request->hasFile('audio')){
             Storage::delete('public/'.$lagu->audio);
-            $audioPath = $request->file('audio')->store('song`');
-            lagu::where('id',$id)->update(['audio'=>$audioPath,
-            'audio_length' => $request->input('track'),]);
+            $audioPath = $request->file('audio')->store('song-images');
         }
         
+        lagu::where('id',$id)->update($validate);
 
         lagu_genre::where('lagu_id',$id)->delete();
 

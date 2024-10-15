@@ -1,10 +1,16 @@
 <x-layout>
     <div class="container-fuild" style="height: 100vh; display: flex;" id="normalpage">
         <x-headeruser></x-headeruser>
-            <div class="col-12 d-flex" style="height: 76vh; margin-top: 8.5vh">
-                <x-playlistpage></x-playlistpage>
-                <div class="col-12 p-1 col-md-9 col-lg-7">
-                    <div class="col-12 rounded bg-secondary bg-opacity-25 h-100">
+            <div class="col-12 d-flex " style="height: 76vh; margin-top: 8.5vh">
+                <x-playlistpage>
+                    <x-slot:liked> {{ $liked }} </x-slot>
+                    <x-slot:slot> {{ $playlist }} </x-slot>
+                </x-playlistpage>
+                <div class="col-12 col-md-9 col-lg-7 p-1">
+                    <audio id="my-audio" class="d-none">
+                        <source src="{{ url('data\MP3\Heakim - Nico Nico Nii.mp3') }}" type="audio/mp3">
+                    </audio>
+                    <div class="rounded bg-opacity-25 h-100 overflow-y-auto" style="background: linear-gradient(to bottom, rgb(103, 103, 255), rgba(88, 88, 88, 0.508), rgba(88, 88, 88, 0.255));" >
                         {{ $slot }}
                     </div>
                 </div>
@@ -30,9 +36,6 @@
                             <label for="customRange1" class="me-2 mb-0 text-nowrap" id="progres-time">-:--</label> 
                             <input type="range" class="form-range px-4 flex-grow-1" id="customRange1" value="0"> 
                             <label for="customRange1" class="ms-2 me-4 me-lg-0 mb-0 text-nowrap" id="end-time">-:--</label> 
-                            <audio id="my-audio" class="d-none">
-                                <source src="{{ url('data/MP3/ONE PROJECT & mei - caramel ribbon cursetard.mp3') }}" type="audio/mp3">
-                            </audio>
                         </div>        
                     </div>
                     <div class="d-flex justify-content-end col-12 pe-4">

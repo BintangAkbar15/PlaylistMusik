@@ -5,11 +5,6 @@
             <x-header></x-header>
             <div class="col-12 pb-5 d-flex flex-column align-items-center mt-5">
                 <div class="col-md-6 col-12">
-                @if ($errors->any())
-                    @foreach ($errors->all() as $item)
-                        <div class="alert">{{$item}}</div>
-                    @endforeach
-                @endif
                     <div class="card">
                         <div class="card-header d-flex align-items-center justify-content-between col-auto">
                             <div>
@@ -31,6 +26,7 @@
                             <div class="card-body">
                                 <form class="form form-vertical" action="{{ route('genre.editNew',$data->id) }}" method="POST">
                                     @csrf
+                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -38,7 +34,7 @@
                                                     <label class="mb-2" for="genre-name">Genre Name</label>
                                                     <div class="position-relative">
                                                         <input type="text" class="form-control"
-                                                            placeholder="Genre" name="name" value="{{ $data->name }}" id="first-name-icon">
+                                                            placeholder="Genre" name="name" value="{{ old('name',$data->name) }}" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="fa-solid fa-record-vinyl"></i>
                                                         </div>

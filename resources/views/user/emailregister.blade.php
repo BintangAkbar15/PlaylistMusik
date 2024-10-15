@@ -31,31 +31,50 @@
                     <h1 class="mt-3">Sign Up Email</h1>
                     <p class="mb-5">Input your data to register to our website.</p>
 
-                    <form action="{{ route('regis.phone.submit') }}" method="post">
+                    <form action="{{ route('regis.email.submit') }}" method="post">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-md" name="email" placeholder="Email" required>
+                            <input type="text" class="form-control form-control-md" id="email" name="email" placeholder="Email" 
+                            @if ($errors->any())
+                                value="{{ old('email') }}"
+                            @endif
+                            required>
                             <div class="form-control-icon">
                                 <i class="bi bi-envelope"></i>
                             </div>
+                            <label for="" id="emailMessage" class="text-danger d-none" style="font-size: 14px"></label>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-md" name="name" placeholder="Username" required>
+                            <input type="text" class="form-control form-control-md" name="name" placeholder="Username"
+                            @if ($errors->any())
+                                value="{{ old('username') }}"
+                            @endif
+                            required>
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control form-control-md" id="password-field" name="password" placeholder="Password" 
+                            @if ($errors->any())
+                                value="{{ old('password') }}"
+                            @endif
+                            required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
+                            <label for="" id="passMessage" class="text-danger d-none" style="font-size: 14px"></label>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" name="c_password" placeholder="Confirm Password" required>
+                            <input type="password" class="form-control form-control-md" id="c_password-field" name="c_password" placeholder="Confirm Password" 
+                            @if ($errors->any())
+                                value="{{ old('c_password-field') }}"
+                            @endif
+                            required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
+                            <label for="" id="checkMessage" class="text-danger d-none" style="font-size: 14px"></label>
                         </div>
                         <div class="form-check form-check-md d-flex align-items-end mb-4" id="container-showpass">
                             <input class="form-check-input me-2" type="checkbox" value="" id="showpass">
@@ -79,5 +98,6 @@
         </div>
     </div>
 </body>
-
+<script src="{{ asset('js/login.js') }}"></script>
+<x-validasi></x-validasi>  
 </html>
