@@ -16,8 +16,59 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-1 d-none d-xl-flex justify-content-end align-items-center" style="font-size: 20px;"> 
+                <div class="col-1 d-none d-xl-flex justify-content-end align-items-center" data-bs-toggle="modal" data-bs-target="#success" style="font-size: 20px; cursor:pointer;"> 
                     <i class="fa-regular fa-square-plus"></i>
+                </div>
+                <!--success theme Modal -->
+                <div class="modal fade text-left" id="success" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel120" aria-hidden="true" >
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                        role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success">
+                                <h5 class="modal-title white" id="myModalLabel120">Tambah Playlist Baru
+                                </h5>
+                                <button type="button" class="close" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i data-feather="x"></i>
+                                </button>
+                            </div>
+                            <form id="genre-form" action="{{ route('playlist.add') }}" method="post">
+                                @csrf
+                                <div class="modal-body">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group has-icon-left">
+                                                    <label class="mb-2" for="genre-name">Playlist Name</label>
+                                                    <div class="position-relative">
+                                                        <input required type="text" class="form-control"
+                                                            placeholder="Genre" name="name" id="first-name-icon">
+                                                        <div class="form-control-icon">
+                                                            <i class="fa-solid fa-record-vinyl"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light-secondary"
+                                        data-bs-dismiss="modal">
+                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Batal</span>
+                                    </button>
+                                    <input required type="hidden" name="id" id="idToDelete" value="">    
+                                    <button type="submit" class="btn btn-success ms-1"
+                                        data-bs-dismiss="modal">
+                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Add Playlist</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>            
             <div class="col-12 ">

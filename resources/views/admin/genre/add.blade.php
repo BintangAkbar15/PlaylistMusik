@@ -48,7 +48,7 @@
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Color-id-icon">Color</label>
                                                     <div class="position-relative">
-                                                        <input required type="color" name="color" id="">
+                                                        <input required type="color" name="color" id="" value="{{ $color }}">
                                                     </div>
                                                 </div>
                                             </div>
