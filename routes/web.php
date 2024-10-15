@@ -12,6 +12,7 @@ use App\Http\Controllers\laguController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\genreController;
 use App\Http\Controllers\penyanyiController;
+use App\Http\Controllers\playlistController;
 
 
 Route::middleware('guest')->group(function () {
@@ -53,6 +54,8 @@ Route::middleware('auth')->group(function(){
         Route::get('/user/fullscreen/namemusic', function(){
             return view('user.fullscreen');
         })->name('fullscreen');
+
+        Route::post('/user/playlist/new', [playlistController::class,'store'])->name('playlist.add');
     });
 
     Route::middleware('access:true')->group(function(){
@@ -65,7 +68,11 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/genre', [genreController::class,'index'])->name('kelola.genre');
         
         Route::get('/admin/genre/tambah', function(){
-            return view('admin.genre.add');
+            do {
+                $color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                $colorExists = genre::where('color', $color)->exists(); // Check if the color exists
+            } while ($colorExists); // Repeat the loop if the color already exists
+            return view('admin.genre.add',['color'=>$color]);
         })->name('genre.add');
 
         Route::get('/admin/genre/edit/{genre:slug}', function(genre $genre){

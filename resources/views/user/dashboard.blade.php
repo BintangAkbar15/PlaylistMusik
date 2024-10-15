@@ -39,43 +39,31 @@
                 <button class="px-3 py-1 rounded-pill btn btn-light border-none ">Music</button>
                 <button class="px-3 py-1 rounded-pill btn btn-light border-none ">Artist</button>
             </div>
-            <label for="" class="fs-4 mt-4" style="color: white">Previously</label>
+            <label for="" class="fs-4 mt-4" style="color: white">Favorite Song</label>
             <div class="col-12 d-flex flex-column flex-md-row">
                 <div class="col-md-6 p-2 col-12">
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
+                    @forelse ($artists as $item)
+                        @if ($loop->iteration <=4)
+                            <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
+                                <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
+                                <label for="" class="fs-6">{{ $item->name }}</label>
+                            </div>        
+                        @endif
+                    @empty
+                        
+                    @endforelse
                 </div>
                 <div class="col-6 p-2 d-none d-md-block">
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
-                    <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                        <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
-                        <label for="" class="fs-6">Favorite song</label>
-                    </div>
+                    @forelse ($artists as $item)
+                        @if ($loop->iteration > 4)
+                            <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
+                                <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
+                                <label for="" class="fs-6">{{ $item->name }}</label>
+                            </div>        
+                        @endif
+                    @empty
+                        
+                    @endforelse
                 </div>
             </div>
             <label for="" class="fs-4 mt-4" style="color: white">Recomended For You</label>
@@ -83,54 +71,59 @@
                 <div class="p-2 d-flex flex-column align-items-center gap-2" 
                     onmouseenter="this.classList.add('bg-secondary')" 
                     onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
+                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="140px" alt="">
                     <label for="" class="fs-5" style="color: white">Pop</label>
                 </div>
                 <div class="p-2 d-flex flex-column align-items-center gap-2"
                     onmouseenter="this.classList.add('bg-secondary')" 
                     onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
+                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="140px" alt="">
                     <label for="" class="fs-5" style="color: white">Pop</label>
                 </div>
                 <div class="p-2 d-flex flex-column align-items-center gap-2"
                     onmouseenter="this.classList.add('bg-secondary')" 
                     onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
+                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="140px" alt="">
                     <label for="" class="fs-5" style="color: white">Pop</label>
                 </div>
                 <div class="p-2 d-flex flex-column align-items-center gap-2">
-                    <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
+                    <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
                         <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
                         <label for="" class="fs-5" style="color: white">More</label>
                     </div>
                 </div>
             </div>
-            <label for="" class="fs-4 mt-4" style="color: white">Best Music</label>
+            <label for="" class="fs-4 mt-4" style="color: white">Music Genre</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2">
-                    <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
-                        <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
-                        <label for="" class="fs-5" style="color: white">More</label>
+                @php
+                function isBright($color) {
+                    // Function to check if the color is bright
+                    $color = ltrim($color, '#');
+                    $r = hexdec(substr($color, 0, 2));
+                    $g = hexdec(substr($color, 2, 2));
+                    $b = hexdec(substr($color, 4, 2));
+                    $brightness = sqrt(0.299 * ($r * $r) + 0.587 * ($g * $g) + 0.114 * ($b * $b));
+                    return $brightness > 128; // Adjust threshold as needed
+                }
+                @endphp
+                @forelse ($genre as $item)
+                    <div class="p-2 d-flex flex-column align-items-center gap-2 justify-content-center rounded"onmouseenter="this.classList.add('bg-secondary')" onmouseleave="this.classList.remove('bg-secondary')" style="width: 140px; height: 160px; background: {{ $item->color }};">
+                        <label for="" class="fs-3 {{ (isBright($item->color) ? 'text-dark' : 'text-light') }}">{{ $item->name }}</label>
                     </div>
-                </div>
+                    @if ($loop->iteration == 3)
+                        <div class="p-0 d-flex flex-column align-items-center gap-2">
+                            <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
+                                <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
+                                <label for="" class="fs-5" style="color: white">More</label>
+                            </div>
+                        </div>
+                        @break
+                    @endif
+                    
+                @empty
+                    
+                @endforelse
+                
             </div>
             <label for="" class="fs-4 mt-4" style="color: white">Artist</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
@@ -138,12 +131,12 @@
                     <div class="p-2 d-flex flex-column align-items-center gap-2"
                         onmouseenter="this.classList.add('bg-secondary')" 
                         onmouseleave="this.classList.remove('bg-secondary')">
-                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="">
+                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded-circle" style="width: 140px; height: 140px; object-fit: cover;" alt="">
                         <label for="" class="fs-6" style="color: white">{{ $item->name }}</label>
                     </div>
-                    @if ($loop->iteration == 4)
+                    @if ($loop->iteration == 3)
                         <div class="p-2 d-flex flex-column align-items-center gap-2">
-                            <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
+                            <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
                                 <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
                                 <label for="" class="fs-5" style="color: white">More</label>
                             </div>
@@ -161,12 +154,12 @@
                         <div class="p-2 d-flex flex-column align-items-center gap-2"
                             onmouseenter="this.classList.add('bg-secondary')" 
                             onmouseleave="this.classList.remove('bg-secondary')">
-                            <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
-                            <label for="" class="fs-5" style="color: white">Pop</label>
+                            <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="140px" alt="">
+                            <label for="" class="fs-5" style="color: white">{{ $item->name }}</label>
                         </div>
-                        @if ($loop->iteration == 4)
+                        @if ($loop->iteration == 3)
                             <div class="p-2 d-flex flex-column align-items-center gap-2">
-                                <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
+                                <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
                                     <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
                                     <label for="" class="fs-5" style="color: white">More</label>
                                 </div>
