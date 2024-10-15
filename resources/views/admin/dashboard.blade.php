@@ -12,20 +12,16 @@
             <div class="col-12 mt-3 pb-5 d-flex flex-column align-items-center">
                 <h2 class="mt-2 fw-bold col-11 text-start">Report</h2>
                 <div class="col-12 d-flex justify-content-evenly pt-5">
-                    <a href="{{ route('log.user') }}">
-                        <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
-                            <i class="fa-solid fa-right-to-bracket" style="font-size:80px"></i>
-                            <label class="h5">User Log</label>
-                            <h3 class="text-bold">{{ $data[2] }}</h3>
-                        </div>
-                    </a>
-                    <a href="{{ route('kelola.lagu') }}">
-                        <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
-                            <i class="fa-brands fa-itunes-note" style="font-size:80px"></i>
-                            <label class="h5">Available song</label>
-                            <h3 class="text-bold">{{ $data[0] }}</h3>
-                        </div>
-                    </a>
+                    <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
+                        <i class="fa-solid fa-right-to-bracket" style="font-size:80px"></i>
+                        <label class="h5">User Login</label>
+                        <h3 class="text-bold">{{ $data[2] }}</h3>
+                    </div>
+                    <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
+                        <i class="fa-brands fa-itunes-note" style="font-size:80px"></i>
+                        <label class="h5">Available song</label>
+                        <h3 class="text-bold">{{ $data[0] }}</h3>
+                    </div>
                     <div style="height: 250px; width: 250px;" class="text-light bg-primary gap-3 p-5 rounded d-flex flex-column align-items-center">
                         <i class="fa-solid fa-users" style="font-size:80px"></i>
                         <label class="h5">User Account</label>
@@ -34,16 +30,8 @@
                 </div>
                 <h2 class="mt-5 fw-bold col-11 text-start">Top search</h2>
                 <div class="col-11 mt-3 gap-3 d-flex flex-column align-items-center justify-content-start overflow-y-auto" style="max-height: 30vh">
-                    <div class="text-light col-12 rounded d-flex gap-3 ps-3 align-items-center" style="height: 7vh; background: #f9fd047d">
-                        <i class="fa-solid fa-crown" style="font-size: 25px; color: #F7FD04"></i>
-                        <label style="font-size: 17px">Sampai Menutup Mata - Mahahili</label>
-                    </div>
-                    <div class="text-light col-12 rounded d-flex gap-3 ps-3 align-items-center" style="height: 7vh; background: #c0c0c061">
-                        <i class="fa-solid fa-crown" style="font-size: 25px; color: #C0C0C0"></i>
-                        <label style="font-size: 17px">Sampai Menutup Mata - Mahahili</label>
-                    </div>
-                    <div class="text-light col-12 rounded d-flex gap-3 ps-3 align-items-center" style="height: 7vh; background: #cd80327e">
-                        <i class="fa-solid fa-crown" style="font-size: 25px; color: #CD7F32"></i>
+                    <div class="bg-primary text-light col-12 rounded d-flex gap-3 ps-3 align-items-center" style="height: 7vh">
+                        <i class="fa-solid fa-crown" style="font-size: 25px"></i>
                         <label style="font-size: 17px">Sampai Menutup Mata - Mahahili</label>
                     </div>
                 </div>
@@ -53,9 +41,9 @@
                     </div>
                     <div class="col-11 d-flex gap-3">
                         <label for="" class="fs-5">From :</label>
-                        <input type="date" name="" id="" value="{{ date('Y-m-d') }}">
+                        <input type="date" name="" id="">
                         <label for="" class="fs-5">To :</label>
-                        <input type="date" name="" id="" value="{{ date('Y-m-d') }}">
+                        <input type="date" name="" id="">
                         <input type="submit" class="btn btn-success" value="Search">
                     </div>
                 </div>
@@ -68,7 +56,7 @@
             </div> 
         </div>
     </div>
-    <script src="{{ mix('js/app.js') }}"></script>
+    {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {

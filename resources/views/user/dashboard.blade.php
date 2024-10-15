@@ -134,58 +134,50 @@
             </div>
             <label for="" class="fs-4 mt-4" style="color: white">Artist</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded-circle" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded-circle" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded-circle" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2">
-                    <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
-                        <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
-                        <label for="" class="fs-5" style="color: white">More</label>
+                @forelse ($artists as $item)
+                    <div class="p-2 d-flex flex-column align-items-center gap-2"
+                        onmouseenter="this.classList.add('bg-secondary')" 
+                        onmouseleave="this.classList.remove('bg-secondary')">
+                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="">
+                        <label for="" class="fs-6" style="color: white">{{ $item->name }}</label>
                     </div>
-                </div>
+                    @if ($loop->iteration == 4)
+                        <div class="p-2 d-flex flex-column align-items-center gap-2">
+                            <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
+                                <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
+                                <label for="" class="fs-5" style="color: white">More</label>
+                            </div>
+                        </div>
+                        @break
+                    @endif
+                @empty
+                    
+                @endforelse
             </div>
-            <label for="" class="fs-4 mt-4" style="color: white">Your playlist</label>
-            <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
+            @if ($playlists->count() > 0)
+                <label for="" class="fs-4 mt-4" style="color: white">Your playlist</label>
+                <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
+                    @forelse ($playlists as $item)
+                        <div class="p-2 d-flex flex-column align-items-center gap-2"
+                            onmouseenter="this.classList.add('bg-secondary')" 
+                            onmouseleave="this.classList.remove('bg-secondary')">
+                            <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
+                            <label for="" class="fs-5" style="color: white">Pop</label>
+                        </div>
+                        @if ($loop->iteration == 4)
+                            <div class="p-2 d-flex flex-column align-items-center gap-2">
+                                <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
+                                    <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
+                                    <label for="" class="fs-5" style="color: white">More</label>
+                                </div>
+                            </div>
+                            @break
+                        @endif
+                    @empty
+                        
+                    @endforelse
                 </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="150px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2">
-                    <div style="width: 150px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
-                        <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
-                        <label for="" class="fs-5" style="color: white">More</label>
-                    </div>
-                </div>
-            </div>
+            @endif
         </div>        
     </div>
 </x-mainpage>

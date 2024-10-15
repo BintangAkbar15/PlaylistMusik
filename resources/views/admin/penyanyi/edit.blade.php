@@ -1,6 +1,13 @@
 <x-layout>
     <div id="app">
         <x-sidebar></x-sidebar>
+        @if ($errors->any())
+            @foreach ($errors->all() as $item)
+                <div class="alert alert-danger">
+                    {{ $item }}
+                </div>
+            @endforeach
+        @endif
         <div id="main" class='layout-navbar navbar-fixed'>
             <x-header></x-header>
             <div class="col-12 d-flex flex-column align-items-center">
@@ -26,7 +33,6 @@
                             <div class="card-body">
                                 <form class="form form-vertical" action="{{ route('penyanyi.editNew',$id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">

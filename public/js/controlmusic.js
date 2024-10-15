@@ -153,8 +153,3 @@ maximize.addEventListener('click', function(){
     document.getElementById('normalpage').style.display = 'none';
     document.getElementById('fullscreen').style.display = 'block';
 })
-
-const d = new Date()
-let jam = 1000 * 60 * 60;
-
-console.log(Math.round(d.getTime() / jam))

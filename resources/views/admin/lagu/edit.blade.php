@@ -32,7 +32,6 @@
                                 @endif
                                 <form class="form form-vertical" action="{{ route('lagu.editNew',$lagu->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <x-info></x-info>
                                     <input required type="hidden" name='track' id="track">
                                     <div class="form-body">
                                         <div class="row">

@@ -17,11 +17,6 @@ class penyanyi extends Model
         'negara',
         'debut',
     ];
-
-    protected $with =[
-        'plagu'
-    ];
-
     public function plagu()
     {
         return $this->belongsToMany(Lagu::class, 'penyanyi_lagu', 'penyanyi_id','lagu_id');
