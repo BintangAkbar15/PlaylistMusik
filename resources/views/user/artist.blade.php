@@ -25,21 +25,71 @@
             <h3>Popular</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
-                    <form action="" method="post">
-                        @csrf
-                        <input type="hidden" name="slug" value="{{ $item->slug }}">
-                        <button class="d-flex py-2 px-5 align-items-center col-12 bg-dark bg-opacity-25 mb-3">
-                            <label for="" style="width: 4%;">{{ $loop->iteration }}</label>
-                            <img src="{{ url('storage/'.$item->thumb) }}" width="4%" alt="" class="bg-dark">
-                            <label for="" style="width: 40%" class="ps-3">{{ $item->name }}</label>
-                            <label for="" style="width: 40%">{{ $item->dilihat }}</label>
-                            <div class="d-flex align-items-center justify-content-between gap-3" style="width: 12%;">
-                                <i class="bi bi-plus-circle d-flex align-items-center"></i>
-                                <label class="mb-0">{{ date('i:s' ,$item->audio_length) }}</label>
-                                <i class="bi bi-three-dots d-flex align-items-center"></i>
-                            </div>       
-                        </button>
-                    </form>
+                    <button id="button{{ $loop->iteration }}" class="d-flex py-2 px-5 align-items-center col-12 bg-dark bg-opacity-25 mb-3">
+                        <label for="" style="width: 4%;">{{ $loop->iteration }}</label>
+                        <img src="{{ url('storage/'.$item->thumb) }}" width="4%" alt="" class="bg-dark">
+                        <label for="" style="width: 40%" class="ps-3">{{ $item->name }}</label>
+                        <label for="" style="width: 40%">{{ $item->dilihat }}</label>
+                        <div class="d-flex align-items-center justify-content-between gap-3" style="width: 12%;">
+                            <i class="bi bi-plus-circle d-flex align-items-center"></i>
+                            <label class="mb-0">{{ date('i:s' ,$item->audio_length) }}</label>
+                            <i class="bi bi-three-dots d-flex align-items-center"></i>
+                        </div>       
+                    </button>
+
+                    <script>
+                        document.getElementById('button{{ $loop->iteration }}').addEventListener('click', function() {
+                            const button = document.getElementById('button{{ $loop->iteration }}');
+                            const children = button.children;
+
+                            // Inisialisasi objek tanpa iteration
+                            let song = {
+                                image: '',
+                                name: '',
+                                views: '',
+                                audio_length: ''
+                            };
+
+                            // Ambil data dari elemen-elemen anak
+                            for (let i = 0; i < children.length; i++) {
+                                let element = children[i];
+
+                                if (element.tagName.toLowerCase() === 'img') {
+                                    // Mengambil sumber gambar (src)
+                                    song.image = element.src || '';
+                                } else if (i === 2) {
+                                    // Mengambil nama lagu (label kedua)
+                                    song.name = element.innerText || '';
+                                } else if (i === 3) {
+                                    // Mengambil jumlah dilihat (label ketiga)
+                                    song.views = element.innerText || '';
+                                } else if (i === 4) {
+                                    // Mengambil panjang audio (label dalam div)
+                                    let divChildren = element.children;
+                                    let audioLengthFormatted = divChildren[1]?.innerText || ''; // Mengambil teks panjang audio dalam format mm:ss
+
+                                    if (audioLengthFormatted) {
+                                        // Pisahkan format mm:ss menjadi menit dan detik
+                                        let [minutes, seconds] = audioLengthFormatted.split(':').map(Number);
+                                        
+                                        // Konversikan ke milidetik
+                                        let totalMilliseconds = ((minutes * 60) + seconds) * 1000;
+                                        
+                                        // Simpan durasi dalam milidetik
+                                        song.audio_length = totalMilliseconds;
+                                    }
+                                }
+                            }
+
+                            // Simpan data ke localStorage sebagai JSON string
+                            let storedSongs = JSON.parse(localStorage.getItem('songs')) || []; // Ambil data sebelumnya atau buat array baru
+                            storedSongs.push(song); // Tambahkan lagu baru ke array
+                            localStorage.setItem('songs', JSON.stringify(storedSongs)); // Simpan array ke localStorage
+
+                            // Cetak objek yang disimpan
+                            console.log('Song object stored:', song);
+                        });
+                    </script>
                 @endforeach
             </div>
         </div>        

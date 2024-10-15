@@ -32,4 +32,9 @@ class userController extends Controller
         }
         return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists,'genre'=>$genre,'recomend'=>$rec]);
     }
+    function songs(){
+        $lagu = lagu::all();
+
+        return view('user.artist', ['lagu' => $lagu]);
+    }
 }
