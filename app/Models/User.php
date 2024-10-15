@@ -44,5 +44,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+        
+    }
+
+    public function user()
+    {
+        return $this->belongsToMany( likedSong::class, 'lagu', 'user_id', 'lagu_id');
     }
 }

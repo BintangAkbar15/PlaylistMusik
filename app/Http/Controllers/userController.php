@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\lagu;
 use App\Models\genre;
 use App\Models\penyanyi;
 use App\Models\playlist;
@@ -21,6 +22,14 @@ class userController extends Controller
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
         $genre = genre::all();
-        return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists,'genre'=>$genre]);
+
+        $reco = likedSong::where('user_id',Auth::user()->id);
+        if($lLagu > 0){
+            $rec = likedSong::with(['user','lagu'])->get();
+        }
+        else{
+            $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
+        }
+        return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists,'genre'=>$genre,'recomend'=>$rec]);
     }
 }

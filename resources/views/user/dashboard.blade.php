@@ -45,7 +45,7 @@
                     @forelse ($artists as $item)
                         @if ($loop->iteration <=4)
                             <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                                <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
+                                <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" width="40px" alt="">
                                 <label for="" class="fs-6">{{ $item->name }}</label>
                             </div>        
                         @endif
@@ -68,24 +68,16 @@
             </div>
             <label for="" class="fs-4 mt-4" style="color: white">Recomended For You</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
-                <div class="p-2 d-flex flex-column align-items-center gap-2" 
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="140px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="140px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
-                <div class="p-2 d-flex flex-column align-items-center gap-2"
-                    onmouseenter="this.classList.add('bg-secondary')" 
-                    onmouseleave="this.classList.remove('bg-secondary')">
-                    <img src="{{ url('img/dumpimg.png') }}" class="rounded" width="140px" alt="">
-                    <label for="" class="fs-5" style="color: white">Pop</label>
-                </div>
+                @forelse ($recomend as $item)
+                    <div class="p-2 d-flex flex-column align-items-center gap-2" 
+                        onmouseenter="this.classList.add('bg-secondary')" 
+                        onmouseleave="this.classList.remove('bg-secondary')">
+                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded" width="140px" alt="">
+                        <label for="" class="fs-6" style="color: white; text-align: center">{{$item->name}}</label>
+                    </div>
+                @empty
+                    
+                @endforelse
                 <div class="p-2 d-flex flex-column align-items-center gap-2">
                     <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
                         <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
