@@ -11,6 +11,7 @@ let timeend = document.getElementById('end-time');
 let timeprogres =  document.getElementById('progres-time');
 let minimize = document.getElementById('minimize')
 let maximize = document.getElementById('maximaze')
+let input = document.getElementById('search-field')
 
 like.addEventListener('click', function() {
     if (like.classList.contains('fa-regular')) {
@@ -87,7 +88,9 @@ function togglePlayPause() {
 document.addEventListener('keydown', function(event) {
     if (event.code === 'Space') {
         event.preventDefault();
-        togglePlayPause();
+        if(document.activeElement !== input){
+            togglePlayPause();
+        }
     }
 });
 

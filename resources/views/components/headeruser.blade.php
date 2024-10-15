@@ -10,7 +10,7 @@
                 <div class="col-12 h-100">
                     <form action="" class="form-group d-flex w-100 h-100 align-items-center">
                         <div class="flex-grow-1 me-2">
-                            <input type="text" name="search-field" class="form-control" placeholder="What do you want to play?" aria-describedby="passwordHelpInline">
+                            <input type="text" name="search-field" class="form-control" placeholder="What do you want to play?" aria-describedby="passwordHelpInline" id="search-field">
                         </div>
                         <div>
                             <input type="submit" value="Search" name="submit" class="btn btn-primary">
