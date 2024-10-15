@@ -55,7 +55,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td> {{ $item->name }}</td>
-                    <td><img src="{{ $item->thumb ?  url('storage/' . $item->thumb)  :  url('img/dumpimg.png')  }}" width="100" height="100" alt="{{ $item->name }}"></td>
+                    <td><img src="{{ $item->thumb ?  url('storage/' . $item->thumb)  :  url('img/dumpimg.png')  }}" alt="{{ $item->name }}" width= '150px'; height= '150px'; style=" object-fit: cover;"></td>
                     <td>{{ $item->debut }}</td>
                     <td>{{ $item->negara }}</td>
                     <td>
