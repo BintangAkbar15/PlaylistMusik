@@ -1,9 +1,8 @@
 <footer class="fixed-bottom  bg-dark col-12 d-flex pt-3" style="height: 15vh">
     <div class="col-8 col-md-3 d-flex align-items-center ps-4 gap-3" style="height:12vh;">
-        <img src="{{ $imageinfo }}" style="width: 70px; height: 70px;" class="rounded d-none d-md-block" alt="">
+        {{ $botimg }}
         <div class="d-flex flex-column gap-1 overflow-hidden">
-            <label for="" class="fs-4 text-nowrap">{{ $titleinfo }}</label>
-            <label for="" class="fs-6 text-nowrap">{{ $artistinfo }}</label>
+            {{ $botinfo }}
         </div>
     </div>
     <div class="col-4 col-md-9 col-lg-6 px-sm-5 pe-2 pe-md-0 d-flex flex-column align-items-center">
