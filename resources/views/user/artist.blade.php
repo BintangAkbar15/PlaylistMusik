@@ -37,7 +37,7 @@
     <x-slot:liked></x-slot:liked>
     <div>
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
-            style="height: 400px; background: url('{{ url('data/artist/one republic/one republic.png') }}'); color: white; background-size: cover;">
+            style="height: 400px; background: linear-gradient(to bottom right, white, rgb(3, 249, 110)); color: white; background-size: cover;">
             <div class="d-flex gap-2 align-items-center" style="color: #74c1fc;">
                 <i class="fa-solid fa-circle-check"></i>
                 <label for="" class="text-light">Verified Artist</label>
@@ -48,7 +48,7 @@
                 <label for="">{{ $lagu[0]->dilihat }} Follower</label>
             </div>
         </div>
-        <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+        <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">`
             <h3>Popular</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
@@ -109,15 +109,31 @@
                 
                         let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                         const songExists = storedSongs.some(storedSong => storedSong.name === song.name);
+                        const songIndex = storedSongs.findIndex(storedSong => storedSong.name === song.name);
+
                         
                         if (!songExists) {
-                            storedSongs.push(song);
+                            if(songExists > 1){
+                                storedSongs.shift()
+                            }
+                            storedSongs.unshift (song);
                             localStorage.setItem('songs', JSON.stringify(storedSongs));
                             console.log('Song object stored:', song);
                             playAudio(song.audio); // Memutar lagu yang baru ditambahkan
                             loadSongData(song)
                         } else {
-                            console.log('Song already exists:', song);
+                            if (songIndex !== -1) {
+                                // Jika lagu sudah ada, hapus dari array
+                                storedSongs.splice(songIndex, 1); // Menghapus lagu yang ada
+                                console.log('Song removed:', storedSongs[songIndex]);
+                            }
+
+                            // Tambahkan lagu baru ke indeks ke-0
+                            storedSongs.unshift(song);
+                            localStorage.setItem('songs', JSON.stringify(storedSongs));
+                            console.log('Song object stored:', song);
+                            loadSongData(song);
+                            playAudio(song.audio); // Memutar lagu yang baru ditambahkan
                         }
                         playmusic()
                         playsong(song.audio_length); // Mengatur durasi dan memutar lagu
