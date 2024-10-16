@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\lagu;
+use App\Models\genre;
 use App\Models\penyanyi;
+use App\Models\penyanyi_lagu;
 use App\Models\playlist;
+use App\Models\playlist_lagu;
 use App\Models\likedSong;
 use Illuminate\Http\Request;
-use App\Models\playlist_lagu;
-use App\Models\penyanyi_lagu;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,15 +22,30 @@ class userController extends Controller
         $hour = Carbon::now('Asia/Jakarta')->format('H');
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
-        return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists]);
+        $genre = genre::all();
+
+        $reco = likedSong::where('user_id',Auth::user()->id);
+        if($lLagu > 0){
+            $rec = likedSong::with(['user','lagu'])->get();
+        }
+        else{
+            $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
+        }
+        return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists,'genre'=>$genre,'recomend'=>$rec]);
     }
 
-    function songs(penyanyi $artist){
-        $penyanyi = penyanyi::where('slug',$artist->slug)->get();
-        $lagu = penyanyi_lagu::whereIn('penyanyi_id', $penyanyi);
-
+    function songs(penyanyi $artist, string $slug) {
+        // Ambil penyanyi berdasarkan slug
+        $artist = penyanyi::where('slug', $slug)->firstOrFail();
+    
+        // Ambil lagu-lagu yang terkait dengan penyanyi tersebut
+        $lagu = penyanyi::with(['plagu'])->where('id', $artist->id)
+                    ->get();
+    
+        // Kirimkan data lagu ke view
         return view('user.artist', ['lagu' => $lagu]);
     }
+    
 
     function playlist(){
         $lagu = lagu::all();
