@@ -12,24 +12,22 @@
                     </div>
                 </div>
                 <x-infopage>
-                    <x-slot:imageartistinfo> {{ $photomusic }} </x-slot>
-                    <x-slot:titleinfo> {{ $titlemusic }} </x-slot>
-                    <x-slot:artistinfo> {{ $artistmusic }} </x-slot>
-                    <x-slot:imageinfo> {{ $imageartist }} </x-slot>
+                    <x-slot:artistdesc>{{ $artistdesc }}</x-slot:artistdesc>
+                    <x-slot:artistut>{{ $artistut }}</x-slot:artistut>
+                    <x-slot:songinfo>{{ $songinfo }}</x-slot:songinfo>
+                    <x-slot:imagesong>{{ $imagesong }}</x-slot:imagesong>
                 </x-infopage>
             </div>
         <x-controlmusic>
-            <x-slot:titleinfo> {{ $titlemusic }} </x-slot>
-            <x-slot:artistinfo> {{ $artistmusic }} </x-slot>
-            <x-slot:imageinfo> {{ $imageartist }} </x-slot>
+            <x-slot:botinfo>{{ $botinfo }}</x-slot:botinfo>
+            <x-slot:botimg>{{ $botimg }}</x-slot:botimg>
         </x-controlmusic>
     </div>
     <div class="col-12 bg-warning overflow-hidden" style="height: 100vh; display: none;" id="fullscreen">
         <div class="col-12 bg-dark bg-opacity-25 d-flex flex-column justify-content-end" style="height: 100vh; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
             <div class="col-12 d-flex justify-content-end" style="height: 20vh;">
                 <div class="d-flex flex-column justify-content-center ps-3 text-white" style="width: 74%">
-                    <label class="fs-2 fw-bold">{{ $songtitle }}</label>
-                    <label class="fs-5">{{ $artist }}</label>
+                    {{ $fdesc }}
                 </div>
             </div>
             <div class="bg-dark col-12 bg-opacity-50 d-flex flex-column justify-content-end" style="height: 24vh;">
@@ -43,7 +41,7 @@
                             <input type="range" class="form-range px-4 flex-grow-1" id="customRange1" value="0"> 
                             <label for="customRange1" class="ms-2 me-4 me-lg-0 mb-0 text-nowrap" id="end-time">-:--</label> 
                             <audio id="my-audio" class="d-none">
-                                <source src="{{ $audio }}" type="audio/mp3">
+                                {{ $audio }}
                             </audio>
                         </div>        
                     </div>
@@ -65,9 +63,9 @@
                                 <i class="fa-solid fa-down-left-and-up-right-to-center text-light" id="minimize"></i>
                         </div>
                     </div>
-                    <script src="{{ asset('js/controlmusic.js') }}"></script>
                 </div>
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/controlmusic.js') }}"></script>
 </x-layout>
