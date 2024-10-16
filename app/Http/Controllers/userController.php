@@ -9,6 +9,7 @@ use App\Models\playlist;
 use App\Models\likedSong;
 use Illuminate\Http\Request;
 use App\Models\playlist_lagu;
+use App\Models\penyanyi_lagu;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,8 +24,9 @@ class userController extends Controller
         return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists]);
     }
 
-    function songs(){
-        $lagu = lagu::all();
+    function songs(penyanyi $artist){
+        $penyanyi = penyanyi::where('slug',$artist->slug)->get();
+        $lagu = penyanyi_lagu::whereIn('penyanyi_id', $penyanyi);
 
         return view('user.artist', ['lagu' => $lagu]);
     }

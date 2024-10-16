@@ -19,8 +19,8 @@
                 </x-infopage>
             </div>
         <x-controlmusic>
-            <x-slot:botinfo>{{ $botinfo }}</x-slot:botinfo>
             <x-slot:botimg>{{ $botimg }}</x-slot:botimg>
+            <x-slot:botinfo>{{ $botinfo }}</x-slot:botinfo>
         </x-controlmusic>
     </div>
     <div class="col-12 bg-secondary overflow-hidden" style="height: 100vh; display: none;" id="fullscreen">

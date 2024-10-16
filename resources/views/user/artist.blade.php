@@ -127,7 +127,7 @@
                     document.getElementById('normal-title').textContent = song.name;
                     document.getElementById('image-song').src = song.image;
                     document.getElementById('image-fullscreen').src = song.image;
-                    document.querySelector('.songimg').src = song.image;
+                    document.querySelectorAll('.songimg').src = song.image;
                     document.getElementById('audio').src = `/storage/${song.audio}`;
                 }
             
