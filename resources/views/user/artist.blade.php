@@ -29,6 +29,9 @@
         <label class="fs-2 fw-bold songname"></label>
         <label class="fs-5 artist-name"></label>
     </x-slot:fdesc>
+    <x-slot:fullscimg>
+        <img src="" id="image-fullscreen" class="rounded shadow" style="width: 300px; height: 300px; margin-top: -150px;" alt="Caramel Ribbon Cursetard">
+    </x-slot:fullscimg>
 
     <x-slot:playlist></x-slot:playlist>
     <x-slot:liked></x-slot:liked>
@@ -122,6 +125,7 @@
                     document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.name);
                     document.getElementById('normal-title').textContent = song.name;
                     document.getElementById('image-song').src = song.image;
+                    document.getElementById('image-fullscreen').src = song.image;
                     document.querySelector('.songimg').src = song.image;
                     document.getElementById('audio').src = `/storage/${song.audio}`;
                 }

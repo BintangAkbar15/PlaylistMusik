@@ -7,19 +7,31 @@ function playmusic() {
     let shuffle = document.getElementById("shuffle");
     let like = document.getElementById("like-btn");
     let volumelevel = document.getElementById('volume');
+    let nextfsc = document.getElementById("next-fsc");
+    let prevfsc = document.getElementById("prev-fsc");
+    let playpausefsc = document.getElementById("play-pause-fsc");
+    let repeatfsc = document.getElementById("repeat-fsc");
+    let shufflefsc = document.getElementById("shuffle-fsc");
+    let likefsc = document.getElementById("like-btn-fsc");
+    let volumelevelfsc = document.getElementById('volume-fsc');
     let audio = document.getElementById("my-audio");
     let progres = document.getElementById('customRange1');
     let timeend = document.getElementById('end-time');
     let timeprogres = document.getElementById('progres-time');
+    let progresfsc = document.getElementById('customRange1-fsc');
+    let timeendfsc = document.getElementById('end-time-fsc');
+    let timeprogresfsc = document.getElementById('progres-time-fsc');
     let minimize = document.getElementById('minimize');
-    let maximize = document.getElementById('maximize');
+    let maximize = document.getElementById('maximaze');
     let input = document.getElementById('search-field');
     let containertitle = document.getElementById('container-cover');
     let contenttitle = document.getElementById('content-title');
     let marquee = document.getElementById('marquee');
     let normaltitle = document.getElementById('normal-title');
 
-    document.addEventListener('DOMContentLoaded', function() {
+    let progressInterval;
+
+    document.addEventListener('DOMContentLoaded', function () {
         // Ambil data dari localStorage
         let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
         if (storedSongs.length > 0) {
@@ -30,25 +42,31 @@ function playmusic() {
 
         // Event listener untuk tombol like
         like.addEventListener('click', toggleLike);
+        likefsc.addEventListener('click', toggleLike);
 
         // Atur volume audio awal
         audio.volume = volumelevel.value / 100;
         volumelevel.addEventListener('input', updateVolume);
+        volumelevelfsc.addEventListener('input', updateVolume);
 
         // Event listeners untuk audio
         audio.onloadedmetadata = updateMetadata;
         playpause.addEventListener('click', togglePlayPause);
-        progres.oninput = updateCurrentTime;
-        progres.onchange = handleProgresChange;
+        playpausefsc.addEventListener('click', togglePlayPause);
+        progres.addEventListener('input', updateCurrentTime);
+        progres.addEventListener('change', handleProgresChange);
+        progresfsc.addEventListener('input', updateCurrentTime);
+        progresfsc.addEventListener('change', handleProgresChange);
 
         document.addEventListener('keydown', handleKeydown);
         audio.addEventListener('play', updateProgressInterval);
         audio.addEventListener('pause', clearProgressInterval);
         audio.addEventListener('ended', resetAudio);
-
-        repeat.addEventListener('click', toggleRepeat);
         minimize.addEventListener('click', minimizeFullscreen);
         maximize.addEventListener('click', maximizeFullscreen);
+
+        repeat.addEventListener('click', toggleRepeat);
+        repeatfsc.addEventListener('click', toggleRepeat);
 
         checkOverflow();
     });
@@ -82,57 +100,71 @@ function playmusic() {
 
     // Fungsi untuk toggle like button
     function toggleLike() {
-        if (like.classList.contains('fa-regular')) {
+        if (like.classList.contains('fa-regular') || likefsc.classList.contains('fa-regular')) {
             like.classList.remove('fa-regular');
             like.classList.add('fa-solid');
             like.style.color = "#90EE90"; // Warna hijau
+            likefsc.classList.remove('fa-regular');
+            likefsc.classList.add('fa-solid');
+            likefsc.style.color = "#90EE90"; // Warna hijau
         } else {
             like.classList.remove('fa-solid');
             like.classList.add('fa-regular');
             like.style.color = "white"; // Warna putih
+            likefsc.classList.remove('fa-solid');
+            likefsc.classList.add('fa-regular');
+            likefsc.style.color = "white"; // Warna putih
         }
     }
 
     // Fungsi untuk mengupdate volume audio
     function updateVolume() {
         audio.volume = volumelevel.value / 100;
+        audio.volume = volumelevelfsc.value / 100;
+        volumelevel.addEventListener('input', function(){
+            volumelevelfsc.value = volumelevel.value
+        })
+        volumelevelfsc.addEventListener('input', function(){
+            volumelevel.value = volumelevelfsc.value
+        })
     }
 
     // Fungsi untuk mengupdate metadata audio
     function updateMetadata() {
         progres.max = audio.duration;
         timeend.innerText = formatTime(audio.duration);
+        progresfsc.max = audio.duration;
+        timeendfsc.innerText = formatTime(audio.duration);
     }
 
     // Fungsi untuk toggle play/pause
     function togglePlayPause() {
-        if (playpause.classList.contains('fa-play')) {
+        if (audio.paused) {
             audio.play();
-            playpause.classList.remove('fa-play');
-            playpause.classList.add('fa-pause');
+            playpause.classList.replace('fa-play', 'fa-pause');
+            playpausefsc.classList.replace('fa-play', 'fa-pause');
             updateProgressInterval();
         } else {
             audio.pause();
-            playpause.classList.remove('fa-pause');
-            playpause.classList.add('fa-play');
+            playpause.classList.replace('fa-pause', 'fa-play');
+            playpausefsc.classList.replace('fa-pause', 'fa-play');
             clearProgressInterval();
         }
     }
 
     // Fungsi untuk mengupdate waktu audio saat diputar
     function updateProgressInterval() {
-        let progressInterval = setInterval(() => {
+        progressInterval = setInterval(() => {
             progres.value = audio.currentTime;
             timeprogres.innerText = formatTime(audio.currentTime);
+            progresfsc.value = audio.currentTime;
+            timeprogresfsc.innerText = formatTime(audio.currentTime);
         }, 500);
-        audio.progressInterval = progressInterval; // Simpan interval dalam audio
     }
 
     // Fungsi untuk menghapus interval progres
     function clearProgressInterval() {
-        clearInterval(audio.progressInterval);
-        playpause.classList.remove('fa-pause');
-        playpause.classList.add('fa-play');
+        clearInterval(progressInterval);
     }
 
     // Fungsi untuk mengatur waktu saat slider diubah
@@ -142,21 +174,19 @@ function playmusic() {
 
     // Fungsi untuk menangani perubahan pada slider
     function handleProgresChange() {
-        if (audio.paused && playpause.classList.contains('fa-play')) {
+        if (audio.paused) {
             audio.play();
-            playpause.classList.remove('fa-play');
-            playpause.classList.add('fa-pause');
+            playpause.classList.replace('fa-play', 'fa-pause');
+            playpausefsc.classList.replace('fa-play', 'fa-pause');
             updateProgressInterval();
         }
     }
 
     // Fungsi untuk menangani penekanan tombol
     function handleKeydown(event) {
-        if (event.code === 'Space') {
+        if (event.code === 'Space' && document.activeElement !== input) {
             event.preventDefault();
-            if (document.activeElement !== input) {
-                togglePlayPause();
-            }
+            togglePlayPause();
         }
     }
 
@@ -165,6 +195,8 @@ function playmusic() {
         clearProgressInterval();
         progres.value = 0;
         timeprogres.innerText = formatTime(0);
+        progresfsc.value = 0;
+        timeprogresfsc.innerText = formatTime(0);
     }
 
     // Fungsi untuk mengubah format waktu
@@ -179,9 +211,11 @@ function playmusic() {
         if (audio.hasAttribute('loop')) {
             audio.removeAttribute('loop');
             repeat.style.color = 'gray';
+            repeatfsc.style.color = 'gray';
         } else {
             audio.setAttribute('loop', '');
             repeat.style.color = 'white';
+            repeatfsc.style.color = 'white';
         }
     }
 
@@ -211,3 +245,4 @@ function playmusic() {
 
 // Panggil fungsi playmusic saat halaman dimuat
 playmusic();
+ 
