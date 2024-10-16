@@ -37,7 +37,7 @@
     <x-slot:liked></x-slot:liked>
     <div>
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
-            style="height: 400px; background: linear-gradient(to bottom right, white, rgb(3, 249, 110)); color: white; background-size: cover;">
+            style="height: 400px; background: url('{{ url('img/background-dump.jpeg') }}'); color: white; background-size: cover;">
             <div class="d-flex gap-2 align-items-center" style="color: #74c1fc;">
                 <i class="fa-solid fa-circle-check"></i>
                 <label for="" class="text-light">Verified Artist</label>
@@ -48,8 +48,11 @@
                 <label for="">{{ $lagu[0]->dilihat }} Follower</label>
             </div>
         </div>
-        <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">`
-            <h3>Popular</h3>
+        <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+            <button class="rounded-circle btn bg-success text-dark d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                <i class="fa-solid fa-play"></i>
+            </button>
+            <h3 class="mt-3">Popular</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
                     @foreach ($item->plagu as $item)
