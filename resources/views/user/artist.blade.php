@@ -1,6 +1,6 @@
 <x-mainpage>
     <x-slot:artistdesc>
-        <img src="" id="img-info-artist" class="artist-image" width="50px" alt="" class="rounded-circle shadow">
+        <img src="" id="img-info-artist" class="artist-image" style="object-fit: cover; width:50px; height:50px" alt="" class="rounded-circle shadow">
         <label for="" id="name-info-artist" class="text-white artist-name-desc"><i class="fa-solid fa-circle-check ms-2" style="color: rgb(0, 208, 255);"></i></label>
     </x-slot:artistdesc>
     <x-slot:artistut>
@@ -83,6 +83,7 @@
                             views: '',
                             audio_length: '',
                             artist: '{{ $lagu[0]->name }}',
+                            artistimg: '{{ $lagu[0]->thumb }}',
                             audio: '{{ $item->audio }}'
                         };
                         
@@ -124,14 +125,14 @@
                 
                     function loadSongData(song) {
                         console.log(song.artist)
-                        document.getElementById('img-info-artist').src = song.image;
+                        document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
                         document.getElementById('name-info-artist').textContent = song.artist;
                         document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
                         document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
                         document.getElementById('normal-title').textContent = song.name;
                         document.getElementById('image-song').src = song.image;
                         document.getElementById('image-fullscreen').src = song.image;
-                        document.querySelector('.songimg').forEach(el => el.src = song.img);
+                        document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
                         document.getElementById('audio').src = `/storage/${song.audio}`;
                     }
                     

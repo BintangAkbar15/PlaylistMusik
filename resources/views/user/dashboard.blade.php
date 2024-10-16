@@ -1,6 +1,6 @@
 <x-mainpage>
     <x-slot:artistdesc>
-        <img src="" id="img-info-artist" class="artist-image" width="50px" alt="" class="rounded-circle shadow">
+        <img src="" id="img-info-artist" class="artist-image" style="object-fit: cover; width:50px; height:50px" alt="" class="rounded-circle shadow">
         <label for="" id="name-info-artist" class="text-white artist-name-desc"><i class="fa-solid fa-circle-check ms-2" style="color: rgb(0, 208, 255);"></i></label>
     </x-slot:artistdesc>
     <x-slot:artistut>
@@ -13,7 +13,7 @@
         <label for="" class="fs-3 mt-2 text-nowrap fw-bold text-white col-12 songname" style="display: block" id="normal-title"></label>
     </x-slot:songinfo>
     <x-slot:imagesong>
-        <img src="" id="image-song" alt="" width="100%" class="rounded songimg">
+        <img src="" id="image-song" alt=""  style="object-fit: cover; width:100%" class="rounded songimg">
     </x-slot:imagesong>
     <x-slot:botinfo>
         <label for="" class="fs-4 text-nowrap songname"></label>
@@ -212,14 +212,14 @@
                 
             
                 function loadSongData(song) {
-                    document.getElementById('img-info-artist').src = song.image;
+                    document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
                     document.getElementById('name-info-artist').textContent = song.name;
                     document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.name);
                     document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
                     document.getElementById('normal-title').textContent = song.name;
                     document.getElementById('image-song').src = song.image;
                     document.getElementById('image-fullscreen').src = song.image;
-                    document.querySelector('.songimg').forEach(el => el.src = song.img);
+                    document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
                     document.getElementById('audio').src = `/storage/${song.audio}`;
                 }
             

@@ -74,7 +74,7 @@ function playmusic() {
     // Fungsi untuk memuat data lagu ke elemen-elemen
     function loadSongData(song) {
         console.log(song.name);
-        document.getElementById('img-info-artist').src = song.image;
+        document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
         document.getElementById('name-info-artist').textContent = song.artist;
         
         let artistUtility = document.querySelectorAll('.artist-name');
@@ -84,12 +84,12 @@ function playmusic() {
         document.getElementById('image-song').src = song.image;
 
         let botSongName = document.querySelector('.songname');
-        let botArtistName = document.querySelector('.artist-name');
+        let botArtistName = document.querySelectorAll('.artist-name');
         botSongName.textContent = song.name;
-        botArtistName.textContent = song.name;
+        botArtistName.forEach(el => el.src = song.artist);;
 
-        let botImage = document.querySelector('.songimg');
-        botImage.forEach(el => el.src = song.img);
+        let botImage = document.querySelectorAll('.songimg');
+        botImage.forEach(el => el.src = song.image);
 
         document.querySelector('.fs-2.fw-bold.songname').textContent = song.name;
         document.querySelector('.fs-5.artist-name').textContent = song.name;
