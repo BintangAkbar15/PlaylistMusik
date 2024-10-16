@@ -88,6 +88,8 @@ function playmusic() {
         botSongName.textContent = song.name;
         botArtistName.forEach(el => el.src = song.artist);;
 
+        document.getElementById('likedsong').value = song.id
+
         let botImage = document.querySelectorAll('.songimg');
         botImage.forEach(el => el.src = song.image);
 
