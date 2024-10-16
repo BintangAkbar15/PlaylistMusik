@@ -7,5 +7,4 @@ use Illuminate\Http\Request;
 class playSong extends Controller
 {
     //
-    // function playSong
 }

@@ -26,13 +26,15 @@
         <source src="" id="audio" type="audio/mp3">
     </x-slot:audio>
     <x-slot:fdesc>
-        <label class="fs-2 fw-bold songname"></label>
+        <label class="fs-2 fw-bold songname" ></label>
         <label class="fs-5 artist-name"></label>
     </x-slot:fdesc>
+    <x-slot:fullscimg>
+        <img src="" id="image-fullscreen" class="rounded shadow" style="width: 300px; height: 300px; margin-top: -150px;" alt="Caramel Ribbon Cursetard">
+    </x-slot:fullscimg>
 
     <x-slot:playlist></x-slot:playlist>
     <x-slot:liked></x-slot:liked>
-
     <div>
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
             style="height: 400px; background: url('{{ url('data/artist/one republic/one republic.png') }}'); color: white; background-size: cover;">
@@ -50,15 +52,15 @@
             <h3>Popular</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
-                <button id="button{{ $loop->iteration }}" class="d-flex py-2 px-5 align-items-center col-12 bg-dark bg-opacity-25 mb-3">
+                <button id="button{{ $loop->iteration }}" class="hoverbutton d-flex py-2 px-5 align-items-center btn col-12 bg-dark bg-opacity-25 mb-3">
                     <label for="" style="width: 4%;">{{ $loop->iteration }}</label>
                     <img src="{{ url('storage/'.$item->thumb) }}" width="4%" alt="" class="bg-dark">
                     <label for="" style="width: 40%" class="ps-3">{{ $item->name }}</label>
                     <label for="" style="width: 40%">{{ $item->dilihat }}</label>
                     <div class="d-flex align-items-center justify-content-between gap-3" style="width: 12%;">
-                        <i class="bi bi-plus-circle d-flex align-items-center"></i>
+                        <i class="bi bi-plus-circle d-flex align-items-center add-to-like"></i>
                         <label class="mb-0">{{ date('i:s' ,$item->audio_length) }}</label>
-                        <i class="bi bi-three-dots d-flex align-items-center"></i>
+                        <i class="bi bi-three-dots d-flex align-items-center option"></i>
                     </div>
                 </button>
                 <script>

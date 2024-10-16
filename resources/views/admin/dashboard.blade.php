@@ -63,7 +63,7 @@
         const ctx = document.getElementById('myChart').getContext('2d');
 
         const myChart = new Chart(ctx, {
-            type: 'bar', // You can change this to 'line', 'pie', etc.
+            type: 'pie', // You can change this to 'line', 'pie', etc.
             data: {
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [{

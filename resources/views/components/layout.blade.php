@@ -19,6 +19,21 @@
             textarea{
                 color: black
             }
+            
+            .add-to-like, .option {
+                color: transparent;
+            }
+    
+            .hoverbutton:hover .add-to-like, .hoverbutton:hover .option {
+                color: white;
+            }
+
+            .hoverbutton:hover {
+                background: rgb(204, 204, 204);
+                transform: scale(1.02);
+                transition: all 0.3s ease-in;
+            }
+
         </style>
     </head>
     <body class="bg-dark">
