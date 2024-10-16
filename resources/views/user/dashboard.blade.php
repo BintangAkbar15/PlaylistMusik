@@ -1,4 +1,5 @@
 <x-mainpage>
+    {{-- {{ dd($recomend) }} --}}
     <x-slot:artistdesc>
         <img src="" id="img-info-artist" class="artist-image" style="object-fit: cover; width:50px; height:50px" alt="" class="rounded-circle shadow">
         <label for="" id="name-info-artist" class="text-white artist-name-desc"><i class="fa-solid fa-circle-check ms-2" style="color: rgb(0, 208, 255);"></i></label>
@@ -49,6 +50,9 @@
         @endforelse
     </x-slot:playlist>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
+    <x-slot:inputlike>
+        <input type="hidden" name="like" id="likedsong" value="">
+    </x-slot:inputlike>
     <div class="px-3 pt-3">
         <div class="col-12 rounded-top p-5 d-flex flex-column" style="height: 200px; background: linear-gradient(to bottom, hsl(35, 100%, 50%), rgb(104, 104, 104)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: white">
             @php
@@ -78,7 +82,7 @@
                     @forelse ($artists as $item)
                         @if ($loop->iteration <=4)
                             <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                                <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" width="40px" alt="">
+                                <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" style="object-fit: cover" width="40px" height="40px" alt="">
                                 <label for="" class="fs-6">{{ $item->name }}</label>
                             </div>        
                         @endif
@@ -90,7 +94,7 @@
                     @forelse ($artists as $item)
                         @if ($loop->iteration > 4)
                             <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
-                                <img src="{{ url('img/dumpimg.png') }}" width="40px" alt="">
+                                <img src="{{ url('img/dumpimg.png') }}" width="40px" height="40px" style="object-fit: cover" alt="">
                                 <label for="" class="fs-6">{{ $item->name }}</label>
                             </div>        
                         @endif
@@ -102,7 +106,8 @@
             <label for="" class="fs-4 mt-4" style="color: white">Recomended For You</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
                 @forelse ($recomend as $item)
-                    <div class="p-2 d-flex flex-column align-items-center gap-2" 
+                <div class="p-2 d-flex flex-column align-items-center gap-2" 
+                {{-- {{ dd($item) }} --}}
                         onmouseenter="this.classList.add('bg-secondary')" 
                         onmouseleave="this.classList.remove('bg-secondary')">
                         <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded" width="140px" alt="">

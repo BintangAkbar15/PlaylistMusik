@@ -19,6 +19,7 @@
                 </x-infopage>
             </div>
         <x-controlmusic>
+            <x-slot:inputlike>{{ $inputlike }}</x-slot:inputlike>
             <x-slot:botimg>{{ $botimg }}</x-slot:botimg>
             <x-slot:botinfo>{{ $botinfo }}</x-slot:botinfo>
         </x-controlmusic>

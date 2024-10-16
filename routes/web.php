@@ -57,6 +57,10 @@ Route::middleware('auth')->group(function(){
             return view('user.fullscreen');
         })->name('fullscreen');
 
+        Route::get('/user/playlist/nameplaylist', [userController::class, 'playlist'])->name('playlist');
+        
+        Route::post('/user/like', [userController::class, 'likedsong'])->name('like.song');
+
         Route::get('/user/playlist/{slug}', [userController::class, 'playlist'])->name('playlist');
 
         Route::post('/user/playlist/new', [playlistController::class,'store'])->name('playlist.add');

@@ -9,12 +9,19 @@ class likedSong extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'lagu_id'
+    ];
+
     public function user()
-    {
-        return $this->belongsToMany( User::class, 'users', 'user_id', 'lagu_id');
-    }
-    public function lagu()
-    {
-        return $this->belongsToMany(Lagu::class, 'lagu', 'lagu_id', 'user_id');
-    }
+{
+    return $this->belongsToMany(User::class, 'liked_songs', 'lagu_id', 'user_id');
+}
+
+public function lagu()
+{
+    return $this->belongsToMany(Lagu::class, 'liked_songs', 'user_id', 'lagu_id');
+}
+
 }

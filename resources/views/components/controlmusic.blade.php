@@ -21,7 +21,13 @@
     </div>
     
     <div class="col-3 gap-3 d-none d-lg-flex justify-content-end align-items-center pe-4">
-        <i class="fa-regular fa-heart fs-4 pe-auto" style="color: white;" id="like-btn"></i>
+        <form id="like-form" action="{{ route('like.song') }}" method="post">
+            @csrf
+            {{ $inputlike }}
+            <button class="d-flex" style="outline: none;background: none;border:none" id="btnlike">
+                <i class="fa-regular fa-heart fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>
+            </button>
+        </form>
         <i class="fa-solid fa-list pe-auto" id="queue"></i>
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-volume-high me-2 pe-auto"></i>
