@@ -75,10 +75,10 @@ function playmusic() {
     function loadSongData(song) {
         console.log(song.name);
         document.getElementById('img-info-artist').src = song.image;
-        document.getElementById('name-info-artist').textContent = song.name;
+        document.getElementById('name-info-artist').textContent = song.artist;
         
         let artistUtility = document.querySelectorAll('.artist-name');
-        artistUtility.forEach(el => el.textContent = song.name);
+        artistUtility.forEach(el => el.textContent = song.artist);
 
         document.getElementById('normal-title').textContent = song.name;
         document.getElementById('image-song').src = song.image;
@@ -89,7 +89,7 @@ function playmusic() {
         botArtistName.textContent = song.name;
 
         let botImage = document.querySelector('.songimg');
-        botImage.src = song.image;
+        botImage.forEach(el => el.src = song.img);
 
         document.querySelector('.fs-2.fw-bold.songname').textContent = song.name;
         document.querySelector('.fs-5.artist-name').textContent = song.name;

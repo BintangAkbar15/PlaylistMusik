@@ -1,4 +1,37 @@
 <x-mainpage>
+    <x-slot:artistdesc>
+        <img src="" id="img-info-artist" class="artist-image" width="50px" alt="" class="rounded-circle shadow">
+        <label for="" id="name-info-artist" class="text-white artist-name-desc"><i class="fa-solid fa-circle-check ms-2" style="color: rgb(0, 208, 255);"></i></label>
+    </x-slot:artistdesc>
+    <x-slot:artistut>
+        <label for="" class="fs-6 overflow-hidden col-12 text-nowrap text-white artist-name"></label>
+    </x-slot:artistut>
+    <x-slot:songinfo>
+        <marquee behavior="" direction="" class="col-12" scrollamount='3' style="display: none;" id="marquee">
+            <label for="" class="fs-3 mt-2 text-nowrap fw-bold text-white songname"></label>
+        </marquee>
+        <label for="" class="fs-3 mt-2 text-nowrap fw-bold text-white col-12 songname" style="display: block" id="normal-title"></label>
+    </x-slot:songinfo>
+    <x-slot:imagesong>
+        <img src="" id="image-song" alt="" width="100%" class="rounded songimg">
+    </x-slot:imagesong>
+    <x-slot:botinfo>
+        <label for="" class="fs-4 text-nowrap songname"></label>
+        <label for="" class="fs-6 text-nowrap artist-name"></label>
+    </x-slot:botinfo>
+    <x-slot:botimg>    
+        <img src="" style="width: 70px; height: 70px;" class="rounded d-none d-md-block songimg" alt="">
+    </x-slot:botimg>
+    <x-slot:audio>    
+        <source src="" id="audio" type="audio/mp3">
+    </x-slot:audio>
+    <x-slot:fdesc>
+        <label class="fs-2 fw-bold songname" ></label>
+        <label class="fs-5 artist-name"></label>
+    </x-slot:fdesc>
+    <x-slot:fullscimg>
+        <img src="" id="image-fullscreen" class="rounded shadow" style="width: 300px; height: 300px; margin-top: -150px;" alt="Caramel Ribbon Cursetard">
+    </x-slot:fullscimg>
     <x-slot:playlist>
         @forelse ($playlists as $item)
             <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
@@ -120,12 +153,14 @@
             <label for="" class="fs-4 mt-4" style="color: white">Artist</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
                 @forelse ($artists as $item)
-                    <div class="p-2 d-flex flex-column align-items-center gap-2"
-                        onmouseenter="this.classList.add('bg-secondary')" 
-                        onmouseleave="this.classList.remove('bg-secondary')">
-                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded-circle" style="width: 140px; height: 140px; object-fit: cover;" alt="">
-                        <label for="" class="fs-6" style="color: white">{{ $item->name }}</label>
-                    </div>
+                    <a href="{{ route('artist',$item->slug) }}">
+                        <div class="p-2 d-flex flex-column align-items-center gap-2"
+                            onmouseenter="this.classList.add('bg-secondary')" 
+                            onmouseleave="this.classList.remove('bg-secondary')">
+                            <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded-circle" style="width: 140px; height: 140px; object-fit: cover;" alt="">
+                            <label for="" class="fs-6" style="color: white">{{ $item->name }}</label>
+                        </div>
+                    </a>
                     @if ($loop->iteration == 3)
                         <div class="p-2 d-flex flex-column align-items-center gap-2">
                             <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
@@ -165,4 +200,53 @@
             @endif
         </div>        
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+                // Memuat lagu pertama dari localStorage saat halaman dimuat
+                let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+                if (storedSongs.length > 0) {
+                    loadSongData(storedSongs[0]);
+                }        
+                playmusic()
+                playsong(song.audio_length); // Mengatur durasi dan memutar lagu
+                
+            
+                function loadSongData(song) {
+                    document.getElementById('img-info-artist').src = song.image;
+                    document.getElementById('name-info-artist').textContent = song.name;
+                    document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.name);
+                    document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
+                    document.getElementById('normal-title').textContent = song.name;
+                    document.getElementById('image-song').src = song.image;
+                    document.getElementById('image-fullscreen').src = song.image;
+                    document.querySelector('.songimg').forEach(el => el.src = song.img);
+                    document.getElementById('audio').src = `/storage/${song.audio}`;
+                }
+            
+                function playAudio(audioSrc) {
+                    const audioPlayer = document.getElementById('my-audio');
+                    audioPlayer.src = `/storage/${audioSrc}`;
+                    audioPlayer.play();
+                    document.getElementById('play-pause').classList.remove('fa-play');
+                    document.getElementById('play-pause').classList.add('fa-pause');
+                }
+            
+                function playsong(duration) {
+                    setTimeout(function() {
+                        let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+                        if (storedSongs.length > 0) {
+                            storedSongs.shift(); // Hapus lagu pertama dari playlist
+                            localStorage.setItem('songs', JSON.stringify(storedSongs));
+            
+                            if (storedSongs.length > 0) {
+                                let nextSong = storedSongs[0];
+                                loadSongData(nextSong); // Memuat lagu berikutnya
+                                playAudio(nextSong.audio);
+                                playsong(nextSong.audio_length);
+                            }
+                        }
+                    }, duration); // Durasi sesuai dengan panjang lagu
+                }
+            });
+    </script>
 </x-mainpage>
