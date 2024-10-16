@@ -51,7 +51,7 @@
         <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
             <button class="rounded-circle btn bg-success text-dark d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                 <i class="fa-solid fa-play"></i>
-            </div>
+            </button>
             <h3 class="mt-3">Popular</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
