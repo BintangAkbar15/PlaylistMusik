@@ -34,9 +34,4 @@ class userController extends Controller
 
         return view('user.playlist', ['lagu' => $lagu]);
     }
-    function songs(){
-        $lagu = lagu::all();
-
-        return view('user.artist', ['lagu' => $lagu]);
-    }
 }
