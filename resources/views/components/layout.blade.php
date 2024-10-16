@@ -28,10 +28,13 @@
                 color: white;
             }
 
+            .hoverbutton{
+                transition: all 0.2s ease-in;
+            }
+
             .hoverbutton:hover {
-                background: rgb(204, 204, 204);
+                background: rgb(70, 70, 70);
                 transform: scale(1.02);
-                transition: all 0.3s ease-in;
             }
 
         </style>

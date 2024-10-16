@@ -56,18 +56,27 @@
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
                     @foreach ($item->plagu as $item)
-                        
-                    <button id="button{{ $loop->iteration }}" class="hoverbutton d-flex py-2 px-5 align-items-center btn col-12 bg-dark bg-opacity-25 mb-3">
-                        <label for="" style="width: 4%;">{{ $loop->iteration }}</label>
-                        <img src="{{ url('storage/'.$item->thumb) }}" width="4%" alt="" class="bg-dark">
-                        <label for="" style="width: 40%" class="ps-3">{{ $item->name }}</label>
-                        <label for="" style="width: 40%">{{ $item->dilihat }}</label>
-                        <div class="d-flex align-items-center justify-content-between gap-3" style="width: 12%;">
-                            <i class="bi bi-plus-circle d-flex align-items-center add-to-like"></i>
-                            <label  class="mb-0">{{ date('i:s' ,$item->audio_length) }}</label>
-                            <i class="bi bi-three-dots d-flex align-items-center option"></i>
+                    <div class="d-flex align-items-stretch hoverbutton">
+                        <!-- Button untuk informasi utama -->
+                        <div id="button{{ $loop->iteration }}" class="d-flex py-2 ps-3 align-items-center col-10 bg-dark bg-opacity-25 mb-0">
+                            <label class="me-3" style="width: 5%;">{{ $loop->iteration }}</label> <!-- Nomor urutan -->
+                            <img src="{{ url('storage/'.$item->thumb) }}" width="50" height="50" alt="Thumbnail" class="rounded me-3"> <!-- Gambar thumbnail -->
+                            <label class="flex-grow-1">{{ $item->name }}</label> <!-- Nama item -->
+                            <label class="text-end me-3" style="width: 20%;">{{ $item->dilihat }} Dilihat</label> <!-- Jumlah dilihat -->
+                        </div>   
+                        <!-- Menu kontrol tambahan -->
+                        <div class="d-flex align-items-center justify-content-center gap-3 px-2 col-2 bg-dark bg-opacity-25" 
+                            onmouseover="falseplay()" 
+                            onmouseout="trueplay()">
+                            <div class="pe-auto" style="z-index: 999">
+                                <i class="bi bi-plus-circle d-flex align-items-center add-to-like"></i> <!-- Ikon suka -->
+                            </div>
+                            <label class="mb-0">{{ date('i:s' ,$item->audio_length) }}</label> <!-- Panjang audio -->
+                            <div class="pe-auto" style="z-index: 999">
+                                <i class="bi bi-three-dots option d-flex align-items-center"></i> <!-- Ikon opsi lainnya -->
+                            </div>
                         </div>
-                    </button>
+                    </div>                    
                     <script>
                     document.addEventListener('DOMContentLoaded', function() {
                     // Memuat lagu pertama dari localStorage saat halaman dimuat

@@ -47,9 +47,9 @@ class userController extends Controller
     }
     
 
-    function playlist(){
-        $lagu = lagu::all();
+    function playlist(penyanyi $artist, string $slug){
+        $playlist = playlist::where('name', $slug)->firstOrFail()->get;
 
-        return view('user.playlist', ['lagu' => $lagu]);
+        return view('user.playlist', ['lagu' => $playlist]);
     }
 }
