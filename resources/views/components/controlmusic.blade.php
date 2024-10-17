@@ -13,9 +13,9 @@
         </div>        
         <div class="d-flex align-items-center justify-content-end justify-content-md-center gap-3 gap-md-5" style="height: 12vh; font-size: 30px;">
             <i class="fa-solid fa-shuffle d-none d-md-block pe-auto" id="shuffle"></i> 
-            <i class="fa-solid fa-backward-step pe-auto" id="prev"></i>
+            <i class="fa-solid fa-backward-step pe-auto" onclick="prev()"></i>
             <i class="fa-solid fa-play pe-auto" id="play-pause"></i>
-            <i class="fa-solid fa-forward-step pe-auto" id="next"></i>
+            <i class="fa-solid fa-forward-step pe-auto" onclick="next()"></i>
             <i class="fa-solid fa-repeat d-none d-md-block pe-auto" id="repeat"></i> 
         </div>
     </div>

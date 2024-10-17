@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function(){
         })->name('user.search');
 
         Route::get('/user/artist/{slug}', [userController::class, 'songs'])->name('artist');
+
+        Route::get('/user/genre/{slug}', [userController::class, 'genre'])->name('genre');
         
         Route::get('/user/fullscreen/namemusic', function(){
             return view('user.fullscreen');

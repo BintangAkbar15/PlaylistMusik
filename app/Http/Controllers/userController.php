@@ -51,6 +51,25 @@ class userController extends Controller
         // Kirimkan data lagu ke view
         return view('user.artist', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
     }
+
+    function genre(penyanyi $artist, string $slug) {
+        // Ambil penyanyi berdasarkan slug
+        $artist = penyanyi::where('slug', $slug)->firstOrFail();
+        $playlist = playlist::where('user_id',Auth::user()->id)->get();
+        $artists = penyanyi::all();
+        $hour = Carbon::now('Asia/Jakarta')->format('H');
+        $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
+        $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
+        $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
+        $genre = genre::all();
+    
+        // Ambil lagu-lagu yang terkait dengan penyanyi tersebut
+        $lagu = penyanyi::with(['plagu'])->where('id', $artist->id)
+                    ->get();
+    
+        // Kirimkan data lagu ke view
+        return view('user.genre', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
+    }
     
 
     function playlist(penyanyi $artist, string $slug){

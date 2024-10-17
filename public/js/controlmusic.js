@@ -1,19 +1,4 @@
-let canPlay = true; 
-
-function falseplay() {
-    canPlay = false; 
-    console.log('tidak bisa di play', canPlay)
-}
-
-function trueplay() {
-    canPlay = true; 
-    console.log('bisa di play', canPlay)
-}
-
 function playmusic() {
-    if (!canPlay) {
-        return false; 
-    }else{
 
         // Mengambil elemen-elemen dari DOM
         let next = document.getElementById("next");
@@ -257,11 +242,7 @@ function playmusic() {
                 normaltitle.style.display = 'block';
             }
         }
-    }
+    
 }
 
-if(canPlay){
     playmusic();
-    console.log(canPlay)
-}
- 
