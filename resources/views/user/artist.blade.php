@@ -120,7 +120,7 @@
                             
                         @foreach ($lagu as $laguIndex => $laguItem)
                             @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
-                                if (index === {{ $loop->iteration }}-1) {
+                                if ({{ $loop->iteration }} - 1 === {{ $loop->iteration }}-1) {
                                     song.id = '{{ $plaguItem->id }}';
                                     song.like = '{{ $like }}';
                                 }
@@ -225,113 +225,125 @@
         </div>
     </div>
     <script>
-         document.getElementById('playAll').addEventListener('click', function() {
-        let allSongs = []; // Array untuk menyimpan semua lagu
+    document.getElementById('playAll').addEventListener('click', function() {
+    let allSongs = []; // Array untuk menyimpan semua lagu
 
-        // Ambil data dari semua tombol
-        const buttons = document.querySelectorAll('[id^="button"]'); // Memilih semua tombol yang diawali dengan "button"
-        
-        buttons.forEach((button,index) => {
-            const children = button.children;
-            console.log(button)
+    // Ambil data dari semua tombol
+    const buttons = document.querySelectorAll('[id^="button"]'); // Memilih semua tombol yang diawali dengan "button"
+    
+    buttons.forEach((button, index) => {
+        const children = button.children;
 
-            let song = {
-                id: '',
-                image: '',
-                name: '',
-                views: '',
-                like: '',
-                audio_length: '',
-                artist: '{{ $lagu[0]->name }}', // Ganti dengan cara yang sesuai jika artist berbeda
-                artistimg: '{{ $lagu[0]->thumb }}', // Ganti jika artist berbeda
-                audio: ''
-            };
+        let song = {
+            id: '',
+            image: '',
+            name: '',
+            views: '',
+            like: '',
+            audio_length: '',
+            artist: '{{ $lagu[0]->name }}', // Ganti jika artist berbeda
+            artistimg: '{{ $lagu[0]->thumb }}', // Ganti jika artist berbeda
+            audio: ''
+        };
 
-            @foreach ($lagu as $laguIndex => $laguItem)
-                @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
-                    if (index === {{ $loop->iteration }}-1) {
-                        song.audio = '{{ $plaguItem->audio }}';
-                        song.id = '{{ $plaguItem->id }}';
-                        song.like = '{{ $like }}';
-                    }
-                @endforeach
+        @foreach ($lagu as $laguIndex => $laguItem)
+            @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+                if (index === {{ $loop->iteration }} - 1) {
+                    song.audio = '{{ $plaguItem->audio }}';
+                    song.id = '{{ $plaguItem->id }}';
+                    song.audio_length = parseAudioLength('{{ $plaguItem->audio_length }}'); // Pastikan ini sudah dalam milidetik
+                    song.like = '{{ $like }}';
+                }
             @endforeach
+        @endforeach
 
+        // Ambil data dari elemen anak
+        for (let i = 0; i < children.length; i++) {
+            let element = children[i];
 
-            // Ambil data dari elemen anak
-            for (let i = 0; i < children.length; i++) {
-                let element = children[i];
-
-                if (element.tagName.toLowerCase() === 'img') {
-                    song.image = element.src || '';
-                } else if (i === 2) {
-                    song.name = element.innerText || '';
-                } else if (i === 3) {
-                    song.views = element.innerText || '';
-                } else if (i === 4) {
-                    let divChildren = element.children;
-                    let audioLengthFormatted = divChildren[1]?.innerText || '';
-                    if (audioLengthFormatted) {
-                        let [minutes, seconds] = audioLengthFormatted.split(':').map(Number);
-                        song.audio_length = ((minutes * 60) + seconds) * 1000;
-                    }
-                }
-                // Simpan audio path
-                if (i === 5) {
-                    song.audio = '{{ $item->audio }}'; // Pastikan ini sesuai dengan data lagu
-                }
+            if (element.tagName.toLowerCase() === 'img') {
+                song.image = element.src || '';
+            } else if (i === 2) {
+                song.name = element.innerText || '';
+            } else if (i === 3) {
+                song.views = element.innerText || '';
             }
+        }
 
-            allSongs.push(song); // Tambahkan lagu ke array allSongs
-        });
-        console.log()
-        // Kosongkan localStorage dan simpan lagu baru
-        localStorage.setItem('songs', JSON.stringify(allSongs));
-        console.log('All songs stored:', allSongs);
-
-        // Memuat dan memutar lagu pertama
-        playmusic()
-        loadSongData(allSongs[0]);
-        playAudio(allSongs[0].audio);
-        playsong(allSongs[0].audio_length);
+        allSongs.push(song); // Tambahkan lagu ke array allSongs
     });
 
-    function loadSongData(song) {
-                        console.log(song.artist)
-                        document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
-                        document.getElementById('name-info-artist').textContent = song.artist;
-                        document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
-                        document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
-                        document.getElementById('normal-title').textContent = song.name;
-                        document.getElementById('image-song').src = song.image;
-                        document.getElementById('image-fullscreen').src = song.image;
-                        document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
-                        document.getElementById('audio').src = `/storage/${song.audio}`;
-                    }
-                    
-                    function playAudio(audioSrc) {
-                        const audioPlayer = document.getElementById('my-audio');
-                        audioPlayer.src = `/storage/${audioSrc}`;
-                        audioPlayer.play();
-                        document.getElementById('play-pause').classList.remove('fa-play');
-                        document.getElementById('play-pause').classList.add('fa-pause');
-                    }
-                
-                    function playsong(duration) {
-                        setTimeout(function() {
-                            let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
-                            if (storedSongs.length > 0) {
-                                storedSongs.shift(); // Hapus lagu pertama dari playlist
-                                localStorage.setItem('songs', JSON.stringify(storedSongs));
-                
-                                if (storedSongs.length > 0) {
-                                    let nextSong = storedSongs[0];
-                                    loadSongData(nextSong); // Memuat lagu berikutnya
-                                    playAudio(nextSong.audio);
-                                    playsong(nextSong.audio_length);
-                                }
-                            }
-                        }, duration); // Durasi sesuai dengan panjang lagu
-                    }
+    // Simpan semua lagu di localStorage
+    localStorage.setItem('songs', JSON.stringify(allSongs));
+    console.log('All songs stored:', allSongs);
+
+    // Memuat dan memutar lagu pertama
+    loadSongData(allSongs[0]);
+    playAudio(allSongs[0].audio);
+});
+
+function parseAudioLength(length) {
+    // Ubah format waktu MM:SS menjadi milidetik
+    let [minutes, seconds] = length.split(':').map(Number);
+    return (minutes * 60 + seconds) * 1000; // Kembalikan dalam milidetik
+}
+
+function loadSongData(song) {
+    document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
+    document.getElementById('name-info-artist').textContent = song.artist;
+    document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
+    document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
+    document.getElementById('normal-title').textContent = song.name;
+    document.getElementById('image-song').src = song.image;
+    document.getElementById('image-fullscreen').src = song.image;
+    document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
+    document.getElementById('audio').src = `/storage/${song.audio}`;
+}
+
+let currentSongIndex = 0; // Inisialisasi indeks lagu saat ini
+
+function playAudio(audioSrc) {
+    const audioPlayer = document.getElementById('my-audio');
+
+    // Hentikan pemutaran jika ada audio yang sedang diputar
+    if (!audioPlayer.paused) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0; // Reset waktu pemutaran
+    }
+
+    // Set audio baru dan mulai memutar
+    audioPlayer.src = `/storage/${audioSrc}`;
+
+    // Mulai pemutaran
+    audioPlayer.play()
+        .then(() => {
+            document.getElementById('play-pause').classList.remove('fa-play');
+            document.getElementById('play-pause').classList.add('fa-pause');
+        })
+        .catch(error => {
+            console.error("Error playing audio:", error);
+        });
+    
+    // Event ketika lagu selesai
+    audioPlayer.onended = function() {
+        let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+        
+        // Lanjutkan ke lagu berikutnya berdasarkan indeks
+        if (currentSongIndex < storedSongs.length - 1) {
+            currentSongIndex++; // Increment index ke lagu berikutnya
+            let nextSong = storedSongs[currentSongIndex];
+            loadSongData(nextSong); // Memuat data lagu berikutnya
+            playAudio(nextSong.audio); // Memutar lagu berikutnya
+        } else {
+            // Jika tidak ada lagi lagu di playlist, set tombol play kembali ke mode play
+            document.getElementById('play-pause').classList.remove('fa-pause');
+            document.getElementById('play-pause').classList.add('fa-play');
+        }
+    };
+}
+
+
+
+
     </script>
 </x-mainpage>
