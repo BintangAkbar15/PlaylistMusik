@@ -1,4 +1,28 @@
 <x-mainpage>
+    <x-slot:artistdesc>a
+    </x-slot:artistdesc>
+    <x-slot:artistut>a
+    </x-slot:artistut>
+    <x-slot:songinfo>a
+    </x-slot:songinfo>
+    <x-slot:imagesong>a
+    </x-slot:imagesong>
+    <x-slot:botinfo>a
+    </x-slot:botinfo>
+    <x-slot:botimg>    a
+    </x-slot:botimg>
+    <x-slot:audio>    
+        a
+    </x-slot:audio>
+    <x-slot:fdesc>
+        a
+    </x-slot:fdesc>
+    <x-slot:fullscimg>
+        a
+    </x-slot:fullscimg>
+    <x-slot:playlist> a </x-slot:playlist>
+    <x-slot:inputlike> a </x-slot:inputlike>
+    <x-slot:liked>a</x-slot:liked>
     <div class="col-12 pt-4 px-4 bg-dark">
         <div class="col-12 gap-2 d-flex">
             <button class="btn bg-light rounded-pill border-none">

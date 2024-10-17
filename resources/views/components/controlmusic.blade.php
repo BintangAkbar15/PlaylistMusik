@@ -21,14 +21,35 @@
     </div>
     
     <div class="col-3 gap-3 d-none d-lg-flex justify-content-end align-items-center pe-4">
-            {{ $inputlike }}
-            <i class="fa-regular fa-heart fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
+        <!-- Form Input -->
+        <form action="" method=""> 
+            {{ $inputlike }} 
         </form>
-        <i class="fa-solid fa-list pe-auto" id="queue"></i>
-        <div class="d-flex align-items-center">
-            <i class="fa-solid fa-volume-high me-2 pe-auto"></i>
-            <input type="range" id="volume" value='100'>
+    
+        <!-- Dropdown Button with Playlist -->
+        <div class="dropdown">
+            <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-list"></i>
+            </button>
+            <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+                <li>
+                    <input type="text" class="form-control" placeholder="Find a playlist">
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">New Playlist</a></li>
+                <li><a class="dropdown-item" href="#">roll mood</a></li>
+                <li><a class="dropdown-item" href="#">Daily</a></li>
+                <li><a class="dropdown-item" href="#">D2B</a></li>
+            </ul>
         </div>
-            <i class="fa-solid fa-up-right-and-down-left-from-center pe-auto" id="maximaze"></i>
+    
+        <!-- Volume Control -->
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-volume-high me-2"></i>
+            <input type="range" id="volume" value="100">
+        </div>
+    
+        <!-- Maximize Icon -->
+        <i class="fa-solid fa-up-right-and-down-left-from-center pe-auto" id="maximize"></i>
     </div>
 </footer>  
