@@ -133,9 +133,11 @@
                 }
                 @endphp
                 @forelse ($genre as $item)
-                    <div class="p-2 d-flex flex-column align-items-center gap-2 justify-content-center rounded"onmouseenter="this.classList.add('bg-secondary')" onmouseleave="this.classList.remove('bg-secondary')" style="width: 140px; height: 160px; background: {{ $item->color }};">
-                        <label for="" class="fs-3 {{ (isBright($item->color) ? 'text-dark' : 'text-light') }}">{{ $item->name }}</label>
-                    </div>
+                    <a href="{{ route('user.genre',$item->slug) }}">
+                        <div class="p-2 d-flex flex-column align-items-center gap-2 justify-content-center rounded"onmouseenter="this.classList.add('bg-secondary')" onmouseleave="this.classList.remove('bg-secondary')" style="width: 140px; height: 160px; background: {{ $item->color }};">
+                            <label for="" class="fs-3 {{ (isBright($item->color) ? 'text-dark' : 'text-light') }}">{{ $item->name }}</label>
+                        </div>
+                    </a>
                     @if ($loop->iteration == 3)
                         <div class="p-0 d-flex flex-column align-items-center gap-2">
                             <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">

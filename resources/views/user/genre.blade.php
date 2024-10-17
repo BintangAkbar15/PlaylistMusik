@@ -53,9 +53,20 @@
     </x-slot:inputlike>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
     <div>
+        @php
+            function isBright($color) {
+                // Function to check if the color is bright
+                $color = ltrim($color, '#');
+                $r = hexdec(substr($color, 0, 2));
+                $g = hexdec(substr($color, 2, 2));
+                $b = hexdec(substr($color, 4, 2));
+                $brightness = sqrt(0.299 * ($r * $r) + 0.587 * ($g * $g) + 0.114 * ($b * $b));
+                return $brightness > 128; // Adjust threshold as needed
+            }
+        @endphp
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
-            style="height: 400px; background: red; color: white; background-size: cover;">
-            <h1>{{ $lagu[0]->name }}</h1>
+            style="height: 400px; background: {{  $genre[0]->color }}; color: {{ isBright($genre[0]->color) }}; background-size: cover;">
+            <h1>{{ $genre[0]->name }}</h1>
         </div>
         <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
             <button id="playAll" class="rounded-circle btn bg-success text-dark d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
@@ -64,7 +75,7 @@
             <h3 class="mt-3">Songs</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
-                    @foreach ($item->plagu as $item)
+                    @foreach ($item->lagu as $item)
                     <div class="d-flex align-items-stretch hoverbutton">
                         <!-- Button untuk informasi utama -->
                         <div id="button{{ $loop->iteration }}" class="d-flex py-2 ps-3 align-items-center col-10 bg-dark bg-opacity-25 mb-0">
@@ -109,9 +120,9 @@
 
                             
                         @foreach ($lagu as $laguIndex => $laguItem)
-                            @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+                            @foreach ($laguItem->lagu as $laguIndex => $laguItem)
                                 if ({{ $loop->iteration }} - 1 === {{ $loop->iteration }}-1) {
-                                    song.id = '{{ $plaguItem->id }}';
+                                    song.id = '{{ $laguItem->id }}';
                                     song.like = '{{ $like }}';
                                 }
                             @endforeach
@@ -241,12 +252,14 @@
         };
 
         @foreach ($lagu as $laguIndex => $laguItem)
-            @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+            @foreach ($laguItem->lagu as $laguIndex => $laguItem)
                 if (index === {{ $loop->iteration }} - 1) {
-                    song.audio = '{{ $plaguItem->audio }}';
-                    song.id = '{{ $plaguItem->id }}';
-                    song.audio_length = parseAudioLength('{{ $plaguItem->audio_length }}'); // Pastikan ini sudah dalam milidetik
+                    song.audio = '{{ $laguItem->audio }}';
+                    song.id = '{{ $laguItem->id }}';
+                    song.audio_length = '{{ $laguItem->audio_length }}'; // Pastikan ini sudah dalam milidetik
                     song.like = '{{ $like }}';
+                    song.artist =  '{{ $artist[$loop->iteration - 1]->name }}'
+                    song.artistimg =  '{{ $artist[$loop->iteration - 1]->thumb }}'
                 }
             @endforeach
         @endforeach
@@ -299,8 +312,8 @@ let currentSongIndex = 0; // Global variable to track the current song index
 let storedSongs = JSON.parse(localStorage.getItem('songs')) || []; // Retrieve songs from localStorage
 
 function next() {
-    if (currentSongIndex < storedSongs.length - 1) {
-        currentSongIndex += 1;
+    currentSongIndex += 1;
+    if (currentSongIndex < storedSongs.length) {
         let nextSong = storedSongs[currentSongIndex];
         loadSongData(nextSong);
         playAudio(nextSong.audio);
