@@ -155,7 +155,7 @@ class laguController extends Controller
         }
         if($request->hasFile('audio')){
             Storage::delete('public/'.$lagu->audio);
-            $audioPath = $request->file('audio')->store('song`');
+            $audioPath = $request->file('audio')->store('song');
             lagu::where('id',$id)->update(['audio'=>$audioPath,
             'audio_length' => $request->input('track'),]);
         }

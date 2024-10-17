@@ -34,16 +34,18 @@
     </x-slot:fullscimg>
     <x-slot:playlist>
         @forelse ($playlists as $item)
-            <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
-                <div class="col-12 col-lg-3">
-                    <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-block d-none" style="max-height: 55px" alt="">
-                    <img src="{{ url('img/dumpimg.png') }}" class="img-fluid d-lg-none" alt="">
+            <a href="{{ route('user.playlist',$item->name) }}">
+                <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
+                    <div class="col-12 col-lg-3">
+                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="img-fluid d-lg-block d-none" style="max-height: 55px" alt="">
+                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="img-fluid d-lg-none" alt="">
+                    </div>
+                    <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
+                        <label for="" class="fs-5 d-none d-lg-block">{{ $item->name }}</label>
+                        <label for="" class="fs-6 d-none d-xl-block">Playlist &#8226 {{ $jlagu }} {{ $jlagu > 1 ? 'Songs' : 'Song'}}</label>
+                    </div>
                 </div>
-                <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
-                    <label for="" class="fs-5 d-none d-lg-block">{{ $item->name }}</label>
-                    <label for="" class="fs-6 d-none d-xl-block">Playlist &#8226 {{ $jlagu }} {{ $jlagu > 1 ? 'Songs' : 'Song'}}</label>
-                </div>
-            </div>
+            </a>
         @empty
             
         @endforelse
@@ -53,6 +55,7 @@
     </x-slot:inputlike>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
     <div>
+        @csrf
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
             style="height: 400px; background: url('{{ url('img/background-dump.jpeg') }}'); color: white; background-size: cover;">
             <div class="d-flex gap-2 align-items-center" style="color: #74c1fc;">
@@ -191,6 +194,21 @@
                         document.getElementById('image-fullscreen').src = song.image;
                         document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
                         document.getElementById('audio').src = `/storage/${song.audio}`;
+                        fetch('/song/seen', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Jika menggunakan Laravel
+                            },
+                            body: JSON.stringify({ id: song.id })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Song seen status updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error sending seen status:', error);
+                        });
                     }
                     
                     function playAudio(audioSrc) {
@@ -298,13 +316,29 @@ function loadSongData(song) {
     document.getElementById('image-fullscreen').src = song.image;
     document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
     document.getElementById('audio').src = `/storage/${song.audio}`;
+    fetch('/song/seen', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Jika menggunakan Laravel
+        },
+        body: JSON.stringify({ id: song.id })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Song seen status updated:', data);
+    })
+    .catch(error => {
+        console.error('Error sending seen status:', error);
+    });
 }
 
 let currentSongIndex = 0; // Inisialisasi indeks lagu saat ini
 
 function playAudio(audioSrc) {
     const audioPlayer = document.getElementById('my-audio');
-
+    let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+    console.log(storedSongs)
     // Hentikan pemutaran jika ada audio yang sedang diputar
     if (!audioPlayer.paused) {
         audioPlayer.pause();
@@ -341,9 +375,6 @@ function playAudio(audioSrc) {
         }
     };
 }
-
-
-
 
     </script>
 </x-mainpage>

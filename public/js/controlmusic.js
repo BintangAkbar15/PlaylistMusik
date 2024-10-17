@@ -112,6 +112,7 @@ function playmusic() {
     
             // Mengatur sumber audio
             audio.src = `/storage/${song.audio}`;
+            
         }
     
         // Fungsi untuk toggle like button
