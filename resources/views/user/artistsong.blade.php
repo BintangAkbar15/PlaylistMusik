@@ -105,56 +105,14 @@
                     @endforelse
                 </div>
             </div>
-            <label for="" class="fs-4 mt-4" style="color: white">Recomended For You</label>
-            <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
-                @forelse ($recomend as $item)
-                <div class="p-2 d-flex flex-column align-items-center gap-2" 
-                {{-- {{ dd($item) }} --}}
-                        onmouseenter="this.classList.add('bg-secondary')" 
-                        onmouseleave="this.classList.remove('bg-secondary')">
-                        <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded" width="140px" height="140px" alt="">
-                        <label for="" class="fs-6" style="color: white; text-align: center">{{$item->name}}</label>
-                    </div>
-                @empty
-                    
-                @endforelse
-            </div>
-            <label for="" class="fs-4 mt-4" style="color: white">Music Genre</label>
-            <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
-                @php
-                function isBright($color) {
-                    // Function to check if the color is bright
-                    $color = ltrim($color, '#');
-                    $r = hexdec(substr($color, 0, 2));
-                    $g = hexdec(substr($color, 2, 2));
-                    $b = hexdec(substr($color, 4, 2));
-                    $brightness = sqrt(0.299 * ($r * $r) + 0.587 * ($g * $g) + 0.114 * ($b * $b));
-                    return $brightness > 128; // Adjust threshold as needed
-                }
-                @endphp
-                @forelse ($genre as $item)
-                    <div class="p-2 d-flex flex-column align-items-center gap-2 justify-content-center rounded"onmouseenter="this.classList.add('bg-secondary')" onmouseleave="this.classList.remove('bg-secondary')" style="width: 140px; height: 160px; background: {{ $item->color }};">
-                        <label for="" class="fs-3 {{ (isBright($item->color) ? 'text-dark' : 'text-light') }}">{{ $item->name }}</label>
-                    </div>
-                    @if ($loop->iteration == 3)
-                        <div class="p-0 d-flex flex-column align-items-center gap-2">
-                            <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
-                                <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
-                                <label for="" class="fs-5" style="color: white">More</label>
-                            </div>
-                        </div>
-                        @break
-                    @endif
-                    
-                @empty
-                    
-                @endforelse
-                
-            </div>
-            <label for="" class="fs-4 mt-4" style="color: white">New Song</label>
-            <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
+            <label for="" class="fs-4 mt-4" style="color: white">Artist</label>
+            <div class="col-12 d-flex justify-content-evenly flex-wrap">
                 @forelse ($artists as $item)
-                    <a href="{{ route('artist',$item->slug) }}">
+                    @if ($loop->iteration % 4 == 1) {{-- Memulai blok baru setiap kelipatan 4 --}}
+                        <div class="row w-100 d-flex justify-content-start"> {{-- Membuat baris baru untuk setiap 4 artis --}}
+                    @endif
+            
+                    <a href="{{ route('artist',$item->slug) }}" class="col-md-3 col-sm-6 p-2">
                         <div class="p-2 d-flex flex-column align-items-center gap-2"
                             onmouseenter="this.classList.add('bg-secondary')" 
                             onmouseleave="this.classList.remove('bg-secondary')">
@@ -162,38 +120,28 @@
                             <label for="" class="fs-6" style="color: white">{{ $item->name }}</label>
                         </div>
                     </a>
-                        @if ($loop->iteration == 3)
-                        <a href="{{ route('artist.all') }}">
-                            <div class="p-2 d-flex flex-column align-items-center gap-2">
-                                <div style="width: 140px; height: 160px; color: white" class="d-flex gap-3 flex-column rounded bg-dark justify-content-center align-items-center">
-                                    <i class="fa-solid fa-circle-arrow-right" style="font-size: 50px"></i>
-                                    <label for="" class="fs-5" style="color: white">More</label>
-                                </div>
-                            </div>
-                        </a>
-                        @break
+            
+                    @if ($loop->iteration % 4 == 0 || $loop->last) {{-- Menutup blok pada kelipatan 4 atau saat loop terakhir --}}
+                        </div>
                     @endif
                 @empty
-                    
+                    <p>No artists available.</p>
                 @endforelse
-            </div>
+            </div>            
         </div>        
     </div>
     <script>
-        let currentSongIndex = 0
         document.addEventListener('DOMContentLoaded', function() {
                 // Memuat lagu pertama dari localStorage saat halaman dimuat
                 let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                 if (storedSongs.length > 0) {
                     loadSongData(storedSongs[0]);
-                    playAudio(storedSongs)
                 }        
                 playmusic()
                 
             
                 function loadSongData(song) {
                     document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
-                    document.getElementById('likedsong').value = song.id;
                     document.getElementById('name-info-artist').textContent = song.name;
                     document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.name);
                     document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);

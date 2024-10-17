@@ -43,7 +43,7 @@
                                                     <label class="mb-2" for="genre-name">Playlist Name</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="Genre" name="name" id="first-name-icon">
+                                                            placeholder="Playlist" name="name" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="fa-solid fa-record-vinyl"></i>
                                                         </div>

@@ -1,10 +1,14 @@
 <?php
 
+use Carbon\Carbon;
 use App\Models\log;
 use App\Models\lagu;
 use App\Models\User;
 use App\Models\genre;
 use App\Models\penyanyi;
+use App\Models\playlist;
+use App\Models\playlist_lagu;
+use App\Models\likedSong;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -52,18 +56,33 @@ Route::middleware('auth')->group(function(){
         })->name('user.search');
 
         Route::get('/user/artist/{slug}', [userController::class, 'songs'])->name('artist');
-
-        Route::get('/user/genre/{slug}', [userController::class, 'genre'])->name('genre');
+        Route::get('/user/artist', [userController::class, 'Asongs'])->name('artist.all');
         
         Route::get('/user/fullscreen/namemusic', function(){
             return view('user.fullscreen');
         })->name('fullscreen');
-
-        Route::get('/user/playlist/nameplaylist', [userController::class, 'playlist'])->name('playlist');
         
         Route::post('/user/like', [userController::class, 'likedsong'])->name('like.song');
 
-        Route::get('/user/playlist/{slug}', [userController::class, 'playlist'])->name('playlist');
+        Route::get('/user/playlist/edit/{name}', function($name, playlist $playlist){
+            $playlists = playlist::where('user_id',Auth::user()->id)->get();
+            $artists = penyanyi::all();
+            $hour = Carbon::now('Asia/Jakarta')->format('H');
+            $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
+            $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
+            $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
+            $genre = genre::all();
+    
+    
+            $playlist = playlist::where('name', $name)->firstOrFail();
+            return view('user.edit',['id'=>$playlist->id,'data'=>$playlist,'playlists'=>$playlists,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
+        })->name('playlist.change');
+        
+        Route::get('/user/playlist/{name}', [userController::class, 'playlist'])->name('user.playlist');
+
+        Route::post('/user/playlist/{id}', [playlistController::class, 'playlistedit'])->name('playlist.edit');
+        
+        Route::post('/song/seen', [userController::class, 'seen'])->name('playlist');
 
         Route::post('/user/playlist/new', [playlistController::class,'store'])->name('playlist.add');
     });

@@ -9,6 +9,7 @@ use App\Models\penyanyi;
 use App\Models\penyanyi_lagu;
 use App\Models\playlist;
 use App\Models\playlist_lagu;
+use App\Models\lagu_genre;
 use App\Models\likedSong;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,9 +24,13 @@ class userController extends Controller
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
         $genre = genre::all();
-
+        
+        
         if($lLagu > 0){
-            $rec = likedSong::with(['user','lagu'])->get();
+            $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
+            $genreLagu = lagu_genre::whereIn('lagu_id',$likedSongs)->pluck('genre_id');
+            $laguGenre = lagu_genre::whereIn('genre_id',$genreLagu)->pluck('lagu_id');
+            $rec = lagu::whereIn('id',$laguGenre)->get();
         }
         else{
             $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
@@ -50,6 +55,20 @@ class userController extends Controller
     
         // Kirimkan data lagu ke view
         return view('user.artist', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
+    
+    }
+    function Asongs() {
+        // Ambil penyanyi berdasarkan slug
+        $playlist = playlist::where('user_id',Auth::user()->id)->get();
+        $artists = penyanyi::all();
+        $hour = Carbon::now('Asia/Jakarta')->format('H');
+        $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
+        $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
+        $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
+        $genre = genre::all();
+    
+        // Kirimkan data lagu ke view
+        return view('user.artistsong', ['artists' => $artists,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
     }
 
     function genre(penyanyi $artist, string $slug) {
@@ -72,18 +91,58 @@ class userController extends Controller
     }
     
 
-    function playlist(penyanyi $artist, string $slug){
-        $playlist = playlist::where('name', $slug)->firstOrFail()->get;
-
-        return view('user.playlist', ['lagu' => $playlist]);
+    function playlist(playlist $playlist, string $slug){
+        $playlists = playlist::where('user_id',Auth::user()->id)->get();
+        $artists = penyanyi::all();
+        $hour = Carbon::now('Asia/Jakarta')->format('H');
+        $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
+        $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
+        $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
+        $genre = genre::all();
+    
+        // Ambil lagu-lagu yang terkait dengan penyanyi tersebut
+        $lagu = playlist_lagu::with(['lagu','playlist'])->where('playlist_id', $playlist->id)
+                    ->get();
+        $pname = playlist::where('name',$slug)->get();
+    
+        // Kirimkan data lagu ke view
+        return view('user.playlist', ['pname'=>$pname,'lagu' => $lagu,'playlists'=>$playlists,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
     }
 
-    function likedsong(){
-        $like = likedSong::create([
-            'user_id'=>Auth::user()->id,
-            'lagu_id'=>request('like')
-        ]);
+    public function likedsong(Request $request)
+{
+    // Validasi data yang masuk
+    $request->validate([
+        'song_id' => 'required|exists:lagu,id',  // Pastikan 'lagu_id' ada di tabel lagu
+    ]);
 
-        return response()->json($like);
-    }
+    // Simpan data ke tabel likedSong
+    $like = likedSong::create([
+        'user_id' => Auth::user()->id,
+        'lagu_id' => $request->song_id // Ambil song_id dari request
+    ]);
+
+    // Kembalikan response JSON
+    return response()->json([
+        'message' => 'Song liked successfully',
+        'like' => $like
+    ]);
+}
+
+
+    public function seen(Request $request)
+    {
+        $songId = $request->input('id'); // Mengambil ID lagu dari request
+
+        // Update nilai 'dilihat' secara langsung
+        $see = lagu::where('id', $songId)->increment('dilihat');
+
+        // Cek jika update berhasil
+        if ($see) {
+            return response()->json(['status' => 'success', 'message' => 'Song view count updated', 'song_id' => $songId]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Failed to update song view count'], 500);
+        }
+}
+
 }

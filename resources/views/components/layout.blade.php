@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Dashboard - Bara FM</title>
     
         <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">  
@@ -55,22 +56,30 @@
         <script src="{{ asset('dist/assets/compiled/js/app.js') }}"></script>
         <script src="{{ asset('dist/assets/static/js/pages/dashboard.js') }}"></script>
         <script>
-            $(document).on('submit', '#like-form', function(event) {
-                event.preventDefault(); // Mencegah form dari refresh
-
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'), // URL yang diambil dari atribut action form
-                    data: $(this).serialize(), // Mengambil data form
-                    success: function(response) {
-                        
+            document.getElementById('like-btn').addEventListener('click',function(){
+                let id = document.getElementById('likedsong').value;
+                console.log(id)
+                fetch('/user/like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    error: function(xhr) {
-                        // Menampilkan pesan kesalahan
-                        alert('Error: ' + xhr.responseText);
+                    body: JSON.stringify({
+                        song_id: id  // Kirim song_id sebagai song_id, bukan 'like'
+                    })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
                     }
+                    return response.json();
+                }).then(data => {
+                    console.log('Song like status updated:', data);
+                }).catch(error => {
+                    console.error('Error:', error.message);
                 });
-            });
+            })
+
         </script>
     </body>
 </html>
