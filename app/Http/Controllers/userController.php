@@ -50,8 +50,7 @@ class userController extends Controller
         $genre = genre::all();
     
         // Ambil lagu-lagu yang terkait dengan penyanyi tersebut
-        $lagu = penyanyi::with(['plagu'])->where('id', $artist->id)
-                    ->get();
+        $lagu = penyanyi::with(['plagu'])->where('id', $artist->id)->get();
     
         // Kirimkan data lagu ke view
         return view('user.artist', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);

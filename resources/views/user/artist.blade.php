@@ -52,6 +52,7 @@
     </x-slot:playlist>
     <x-slot:inputlike>
         <input type="hidden" name="like" id="likedsong" value="">
+        <i class="{{ 1==1 ?'fa-regular fa-heart': 'fa-solid fa-heart' }} fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
     <div>
