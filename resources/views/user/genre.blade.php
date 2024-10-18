@@ -66,8 +66,8 @@
             }
         @endphp
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
-            style="height: 400px; background: {{  $genre[0]->color }}; color: {{ isBright($genre[0]->color) }}; background-size: cover;">
-            <h1>{{ $genre[0]->name }}</h1>
+            style="height: 400px; background: {{  $genre->color }}; color: {{ isBright($genre->color) }}; background-size: cover;">
+            <h1>{{ $genre->name }}</h1>
         </div>
         <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
             <button id="playAll" class="rounded-circle btn bg-success text-dark d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
