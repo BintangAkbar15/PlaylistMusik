@@ -154,12 +154,10 @@ class userController extends Controller
 
     function playlist(playlist $playlist, string $slug){
         $playlists = playlist::where('user_id',Auth::user()->id)->get();
-        $artists = penyanyi::all();
         $hour = Carbon::now('Asia/Jakarta')->format('H');
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
         $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
-        $genre = genre::all();
     
         if($lLagu > 0){
             $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
@@ -187,13 +185,29 @@ class userController extends Controller
         $request->validate([
             'song_id' => 'required|exists:lagu,id',  // Pastikan 'lagu_id' ada di tabel lagu
         ]);
+    {
+        // Validasi data yang masuk
+        $request->validate([
+            'song_id' => 'required|exists:lagu,id',  // Pastikan 'lagu_id' ada di tabel lagu
+        ]);
 
         // Simpan data ke tabel likedSong
         $like = likedSong::create([
             'user_id' => Auth::user()->id,
             'lagu_id' => $request->song_id // Ambil song_id dari request
         ]);
+        // Simpan data ke tabel likedSong
+        $like = likedSong::create([
+            'user_id' => Auth::user()->id,
+            'lagu_id' => $request->song_id // Ambil song_id dari request
+        ]);
 
+        // Kembalikan response JSON
+        return response()->json([
+            'message' => 'Song liked successfully',
+            'like' => $like
+        ]);
+    }
         // Kembalikan response JSON
         return response()->json([
             'message' => 'Song liked successfully',
@@ -232,6 +246,21 @@ class userController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => 'Failed to update song view count'], 500);
         }
-}
+    }
+
+    public function search(Request $request)
+    {
+          // Ambil data dari request
+          $keyword = $request->input('search-field');
+          $results = lagu::where('name', 'LIKE', "%{$keyword}%")->pluck('id');
+          $lagu = lagu::where('name', 'LIKE', "%{$keyword}%")->get();
+          $plagu = penyanyi_lagu::whereIn('lagu_id', $results)->pluck('penyanyi_id'); 
+          $artist = penyanyi::with('plagu')->whereIn('id',$plagu)->get();
+
+
+  
+          // Kembalikan hasil pencarian ke view atau tampilkan
+          return view('user.search', ['lagu' => $lagu, 'artist' => $artist]);
+    }
 
 }

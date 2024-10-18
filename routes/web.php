@@ -51,9 +51,7 @@ Route::middleware('auth')->group(function(){
     Route::middleware('access:false')->group(function(){
         Route::get('/user/dashboard', [userController::class,'index'])->name('userDashboard');
 
-        Route::get('/user/search', function(){
-            return view('user.search');
-        })->name('user.search');
+        Route::post('/user/search', [userController::class,'search'])->name('user.search');
 
         Route::get('/user/artist/{slug}', [userController::class, 'songs'])->name('artist');
         Route::get('/user/artist', [userController::class, 'Asongs'])->name('artist.all');
