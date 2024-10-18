@@ -52,7 +52,7 @@
     </x-slot:playlist>
     <x-slot:inputlike>
         <input type="hidden" name="like" id="likedsong" value="">
-        <i class="{{ $liked ? 'fa-regular fa-heart': 'fa-solid fa-heart' }} fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
+        <i class="fa-regular fa-heart fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
     <div>
@@ -160,31 +160,45 @@
                             }
                             storedSongs.unshift (song);
                             localStorage.setItem('songs', JSON.stringify(storedSongs));
-                            console.log('Song object stored:', song);
+                            //('Song object stored:', song);
                             playAudio(song.audio); // Memutar lagu yang baru ditambahkan
                             loadSongData(song)
+                            likeyy(song)
                         } else {
                             if (songIndex !== -1) {
                                 // Jika lagu sudah ada, hapus dari array
                                 storedSongs.splice(songIndex, 1); // Menghapus lagu yang ada
-                                console.log('Song removed:', storedSongs[songIndex]);
+                                //('Song removed:', storedSongs[songIndex]);
                             }
 
                             // Tambahkan lagu baru ke indeks ke-0
                             storedSongs.unshift(song);
                             localStorage.setItem('songs', JSON.stringify(storedSongs));
-                            console.log('Song object stored:', song);
+                            //('Song object stored:', song);
                             loadSongData(song);
+                            likeyy(song);
                             playAudio(song.audio); // Memutar lagu yang baru ditambahkan
                         }
                         playmusic()
                         playsong(song.audio_length); // Mengatur durasi dan memutar lagu
                     });
+
+                    function likeyy(song){
+                        let likedSong = @json($liked)||[];
+
+                        if( likedSong.includes(Number(song.id))  ){
+                            document.getElementById('like-btn').classList.add('fa-solid')
+                            document.getElementById('like-btn').classList.remove('fa-regular')
+                            document.getElementById('like-btn').style.color = "#90EE90";
+                        }
+                        else{
+                            document.getElementById('like-btn').classList.remove('fa-solid')
+                            document.getElementById('like-btn').classList.add('fa-regular')    
+                        }
+                    }
                 
                     function loadSongData(song) {
-                        let likedSong = @json($liked);
-                        console.log(likedSong)
-                        console.log(song.artist)
+
                         document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
                         document.getElementById('likedsong').value = song.id;
                         document.getElementById('name-info-artist').textContent = song.artist;
@@ -195,16 +209,6 @@
                         document.getElementById('image-fullscreen').src = song.image;
                         document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
                         document.getElementById('audio').src = `/storage/${song.audio}`;
-                        if( likedSong.includes(Number(song.id))  ){
-                            document.getElementById('like-btn').classList.add('fa-solid fa-heart')
-                            document.getElementById('like-btn').classList.remove('fa-regular fa-heart')
-                            console.log('retuuuu')
-                        }
-                        else{
-                            console.log('irettt')
-                            document.getElementById('like-btn').classList.remove('fa-solid fa-heart')
-                            document.getElementById('like-btn').classList.add('fa-regular fa-heart')    
-                        }
 
                         fetch('/song/seen', {
                             method: 'POST',
@@ -216,7 +220,7 @@
                         })
                         .then(response => response.json())
                         .then(data => {
-                            console.log('Song seen status updated:', data);
+                            //('Song seen status updated:', data);
                         })
                         .catch(error => {
                             console.error('Error sending seen status:', error);
@@ -260,7 +264,7 @@
     </div>
     <script>
     var recomend = @json($recomend);
-            console.log(recomend)
+            //(recomend)
             // Array untuk menyimpan data yang telah diubah formatnya
             var transformedRecomend = [];
             
@@ -331,11 +335,11 @@
 
     // Simpan semua lagu di localStorage
     localStorage.setItem('songs', JSON.stringify(allSongs));
-    console.log('All songs stored:', allSongs);
 
     // Memuat dan memutar lagu pertama
     currentSongIndex = 0; // Reset currentSongIndex to 0
     loadSongData(allSongs[currentSongIndex]);
+    likeyy(allSongs[currentSongIndex].id);
     playAudio(allSongs[currentSongIndex].audio);
 });
 
@@ -343,6 +347,22 @@ function parseAudioLength(length) {
     // Ubah format waktu MM:SS menjadi milidetik
     let [minutes, seconds] = length.split(':').map(Number);
     return (minutes * 60 + seconds) * 1000; // Kembalikan dalam milidetik
+}
+
+function likeyy(song){
+    let likedSong = @json($liked)||[];
+    console.log(song)
+
+    if( likedSong.includes(Number(song))  ){
+        document.getElementById('like-btn').classList.add('fa-solid')
+        document.getElementById('like-btn').classList.remove('fa-regular')
+        document.getElementById('like-btn').style.color = "#90EE90";
+    }
+    else{
+        document.getElementById('like-btn').classList.remove('fa-solid')
+        document.getElementById('like-btn').classList.add('fa-regular')    
+        document.getElementById('like-btn').style.color = "#ffff";
+    }
 }
 
 function loadSongData(song) {
@@ -364,6 +384,7 @@ window.next = function() {
                         currentSongIndex++;
                         let nextSong = storedSongs[currentSongIndex];
                         loadSongData(nextSong);
+                        likeyy(nextSong.id);
                         playAudio(nextSong.audio);
                     }else{
                         // Gabungkan rekomendasi ke playlist di localStorage jika diperlukan
@@ -376,6 +397,7 @@ window.next = function() {
                             currentSongIndex++;
                             let nextSong = storedSongs[currentSongIndex];
                             loadSongData(nextSong); // Memuat data lagu dari rekomendasi
+                            likeyy(nextSong.id); // Memuat data lagu dari rekomendasi
                             playAudio(nextSong.audio); // Memutar lagu dari rekomendasi
                         } else {
                             // Jika tidak ada rekomendasi, set tombol play kembali ke mode play
@@ -392,13 +414,14 @@ window.next = function() {
                         let prevSong = storedSongs[currentSongIndex];
                         loadSongData(prevSong);
                         playAudio(prevSong.audio);
+                        likeyy(prevSong.id);
                     }
                 }
 
 function playAudio(audioSrc) {
     const audioPlayer = document.getElementById('my-audio');
     let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
-    console.log(storedSongs)
+    //(storedSongs)
     // Hentikan pemutaran jika ada audio yang sedang diputar
     if (!audioPlayer.paused) {
         audioPlayer.pause();
@@ -424,6 +447,7 @@ function playAudio(audioSrc) {
             currentSongIndex++; // Increment index ke lagu berikutnya
             let nextSong = storedSongs[currentSongIndex];
             loadSongData(nextSong); // Memuat data lagu berikutnya
+            likeyy(nextSong.id); // Memuat data lagu berikutnya
             playAudio(nextSong.audio); // Memutar lagu berikutnya
         } else {
             // Jika tidak ada lagi lagu di playlist, set tombol play kembali ke mode play

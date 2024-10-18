@@ -79,6 +79,7 @@ function playmusic() {
     
             document.getElementById('normal-title').textContent = song.name;
             document.getElementById('image-song').src = song.image;
+            document.getElementById('likedsong').value = song.id;
     
             let botSongName = document.querySelector('.songname');
             let botArtistName = document.querySelectorAll('.artist-name');
