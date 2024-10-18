@@ -48,7 +48,6 @@
                     </div>
                     <div class="d-flex justify-content-end col-12 pe-4">
                         <div class="d-flex align-items-center col-6 justify-content-center justify-content-md-center gap-3 gap-md-5" style="height: 12vh; font-size: 30px;">
-                            <i class="fa-solid fa-shuffle d-none d-md-block pe-auto" id="shuffle-fsc"></i> 
                             <i class="fa-solid fa-backward-step pe-auto" id="prev-fsc"></i>
                             <i class="fa-solid fa-play pe-auto" id="play-pause-fsc"></i>
                             <i class="fa-solid fa-forward-step pe-auto" id="next-fsc"></i>
@@ -63,7 +62,7 @@
                                 <i class="fa-solid fa-volume-high me-2 pe-auto"></i>
                                 <input type="range" id="volume-fsc" value='100'>
                             </div>
-                                <i class="fa-solid fa-down-left-and-up-right-to-center text-light" id="minimize"></i>
+                                <i class="fa-solid fa-down-left-and-up-right-to-center text-light" onclick="minimizeFullscreen()"></i>
                         </div>
                     </div>
                 </div>
@@ -71,4 +70,17 @@
         </div>
     </div>
     <script src="{{ asset('js/controlmusic.js') }}"></script>
+    <script>
+        // Fungsi untuk meminimalkan tampilan penuh
+        function minimizeFullscreen() {
+            document.getElementById('fullscreen').style.display = 'none';
+            document.getElementById('normalpage').style.display = 'flex';
+        }
+    
+        // Fungsi untuk memaksimalkan tampilan penuh
+        function maximizeFullscreen() {
+            document.getElementById('normalpage').style.display = 'none';
+            document.getElementById('fullscreen').style.display = 'block';
+        }
+    </script>
 </x-layout>

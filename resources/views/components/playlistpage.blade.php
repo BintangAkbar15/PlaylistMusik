@@ -71,17 +71,17 @@
                     </div>
                 </div>
             </div>            
-            <div class="col-12 ">
+            <div class="col-12 mt-1">
                 <div class=" align-items-center py-2 gap-2 d-lg-flex d-none">
                     <button class="rounded-circle d-flex p-2 btn btn-light d-none">
                         <i class="fa-solid fa-x "></i>
                     </button>
-                    <button class="rounded-pill d-flex px-3 align-items-center py-1 btn btn-light gap-2">
+                    <button id="show-playlist" class="rounded-pill d-flex px-3 align-items-center py-1 btn btn-light gap-2">
                         <label for="">Playlist</label>
                         <i class="fa-solid fa-x d-none"></i>
                     </button> 
-                    <button class="rounded-pill d-flex px-3 align-items-center py-1 btn btn-light gap-2">
-                        <label for="">Artist</label>
+                    <button id="show-queue" class="rounded-pill d-flex px-3 align-items-center py-1 btn btn-light gap-2">
+                        <label for="">Queue</label>
                         <i class="fa-solid fa-x d-none"></i>
                     </button> 
                 </div>
@@ -91,8 +91,9 @@
                     </button>
                 </div>
             </div>
-            <div class="col-12 mt-2 overflow-y-auto" style="max-height: 48vh">
-                <div class="col-lg-12 col-auto p-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
+            <div class="col-12 mt-2 overflow-y-auto" style="max-height: 48vh; display: block;" id="side-playlist">
+                <label for="">Playlist</label>
+                <div class="col-lg-12 col-auto p-2 mt-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
                     <div class="col-12 col-lg-3">
                         <div style="height: 55px; width: 55px; background: linear-gradient(to bottom right, rgb(12, 22, 226), white); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);" class="bg-opacity-50 d-flex align-items-center justify-content-center rounded shadow">
                             <i class="fa-solid fa-heart fs-5 text-white"></i>
@@ -104,7 +105,20 @@
                     </div>
                 </div>
                 {{ $slot }}
+            </div>    
+            <div class="col-12 mt-2 overflow-y-auto" style="max-height: 48vh; display: none;" id="side-queue">
+                <label for="">Next Song</label>
+                <div class="col-lg-12 col-auto p-2 mt-2 p-lg-3 mb-3 rounded d-flex gap-3 shadow" style="background: #424445">
+                    <div class="col-12 col-lg-3">
+                        <img style="height: 55px; width: 55px;" src="{{ url('img/dumpimg.png') }}" class="rounded shadow">
+                    </div>
+                    <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
+                        <label for="" class="fs-5 d-none d-lg-block">Mirage</label>
+                        <label for="" class="fs-6 d-none d-xl-block">One Republic </label>
+                    </div>
+                </div>
             </div>         
         </div>
     </div>
+    <script src="{{ url('js/toggleplaylist.js') }}"></script>
 </div>
