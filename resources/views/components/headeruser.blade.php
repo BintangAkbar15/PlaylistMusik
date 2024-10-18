@@ -8,7 +8,8 @@
         <div class="h-100 col-7 d-flex align-items-center justify-content-center">
             <div class="row w-100 align-items-center h-100">
                 <div class="col-12 h-100">
-                    <form action="" class="form-group d-flex w-100 h-100 align-items-center">
+                    <form action="{{ route('user.search') }}" method="POST" class="form-group d-flex w-100 h-100 align-items-center">
+                        @csrf
                         <div class="flex-grow-1 me-2">
                             <input type="text" name="search-field" class="form-control" placeholder="What do you want to play?" aria-describedby="passwordHelpInline" id="search-field">
                         </div>
