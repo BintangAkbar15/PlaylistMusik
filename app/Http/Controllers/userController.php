@@ -71,7 +71,7 @@ class userController extends Controller
     }
 
     function genre(penyanyi $artist, string $slug) {
-        // Ambil penyanyi berdasarkan slug
+      a
         $artist = penyanyi::where('slug', $slug)->firstOrFail();
         $playlist = playlist::where('user_id',Auth::user()->id)->get();
         $artists = penyanyi::all();
