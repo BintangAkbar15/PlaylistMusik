@@ -30,10 +30,23 @@
                 </div>
                 <h2 class="mt-5 fw-bold col-11 text-start">Top search</h2>
                 <div class="col-11 mt-3 gap-3 d-flex flex-column align-items-center justify-content-start overflow-y-auto" style="max-height: 30vh">
-                    <div class="bg-primary text-light col-12 rounded d-flex gap-3 ps-3 align-items-center" style="height: 7vh">
-                        <i class="fa-solid fa-crown" style="font-size: 25px"></i>
-                        <label style="font-size: 17px">Sampai Menutup Mata - Mahahili</label>
-                    </div>
+                    @foreach ($rank as $item)
+                        <div class="bg-primary text-light col-12 rounded d-flex gap-3 ps-3 align-items-center" style="height: 7vh">
+                            <i class="fa-solid fa-crown" style="font-size: 25px; color:
+    @if($loop->iteration == 1) 
+        #FFD700;  /* Emas untuk urutan 1 */
+    @elseif($loop->iteration == 2) 
+        #C0C0C0;  /* Perak untuk urutan 2 */
+    @elseif($loop->iteration == 3) 
+        #cd7f32;  /* Perunggu untuk urutan 3 */
+    @else
+        #000000;  /* Warna default jika lebih dari 3 */
+    @endif
+"></i>
+
+                            <label style="font-size: 17px">{{ $item->name }} - {{ $item->plagu[0]->name }}</label>
+                        </div>
+                    @endforeach
                 </div>
             </div> 
         </div>

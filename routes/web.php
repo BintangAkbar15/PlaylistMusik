@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/user/artist/{slug}', [userController::class, 'songs'])->name('artist');
         Route::get('/user/artist', [userController::class, 'Asongs'])->name('artist.all');
-        
+
         Route::get('/user/genre', [userController::class, 'gsongs'])->name('genre.all');
         
         Route::post('/user/like', [userController::class, 'likedsong'])->name('like.song');
@@ -90,8 +90,9 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('access:true')->group(function(){
         Route::get('/admin/dashboard', function () {
+            $lagu =  lagu::with('plagu')->orderBy('dilihat','asc')->take(3)->get();
             $data = [lagu::all()->count(), User::where('is_admin',0)->get()->count(),log::all()->count()];
-            return view('admin.dashboard',['data'=>$data]);
+            return view('admin.dashboard',['data'=>$data,'rank'=>$lagu]);
         })->name('adminDashboard');
 
         //genre section
