@@ -12,10 +12,7 @@
                 {{ $artistdesc }}
             </div>
             <div class="col-12 text-end">
-                <button class="py-1 px-3 gap-3 mt-3 btn rounded-pill border border-white text-white">
-                    <i class="fa-solid fa-plus"></i>
-                    <label for="">Ikut</label>
-                </button>
+                <label for="">Jumlah Lagu 10</label>
             </div>            
         </div>
     </div>

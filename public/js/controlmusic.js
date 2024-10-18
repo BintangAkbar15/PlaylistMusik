@@ -22,8 +22,6 @@ function playmusic() {
         let progresfsc = document.getElementById('customRange1-fsc');
         let timeendfsc = document.getElementById('end-time-fsc');
         let timeprogresfsc = document.getElementById('progres-time-fsc');
-        let minimize = document.getElementById('minimize');
-        let maximize = document.getElementById('maximaze');
         let input = document.getElementById('search-field');
         let containertitle = document.getElementById('container-cover');
         let contenttitle = document.getElementById('content-title');
@@ -63,8 +61,6 @@ function playmusic() {
             audio.addEventListener('play', updateProgressInterval);
             audio.addEventListener('pause', clearProgressInterval);
             audio.addEventListener('ended', resetAudio);
-            minimize.addEventListener('click', minimizeFullscreen);
-            maximize.addEventListener('click', maximizeFullscreen);
     
             repeat.addEventListener('click', toggleRepeat);
             repeatfsc.addEventListener('click', toggleRepeat);
@@ -220,18 +216,7 @@ function playmusic() {
                 repeatfsc.style.color = 'white';
             }
         }
-    
-        // Fungsi untuk meminimalkan tampilan penuh
-        function minimizeFullscreen() {
-            document.getElementById('fullscreen').style.display = 'none';
-            document.getElementById('normalpage').style.display = 'flex';
-        }
-    
-        // Fungsi untuk memaksimalkan tampilan penuh
-        function maximizeFullscreen() {
-            document.getElementById('normalpage').style.display = 'none';
-            document.getElementById('fullscreen').style.display = 'block';
-        }
+
     
         // Fungsi untuk memeriksa overflow teks
         function checkOverflow() {

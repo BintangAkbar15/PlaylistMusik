@@ -12,7 +12,6 @@
             <label for="customRange1" class="ms-2 me-4 me-lg-0 mb-0 text-nowrap" id="end-time">-:--</label> 
         </div>        
         <div class="d-flex align-items-center justify-content-end justify-content-md-center gap-3 gap-md-5" style="height: 12vh; font-size: 30px;">
-            <i class="fa-solid fa-shuffle d-none d-md-block pe-auto" id="shuffle"></i> 
             <i class="fa-solid fa-backward-step pe-auto" onclick="prev()"></i>
             <i class="fa-solid fa-play pe-auto" id="play-pause"></i>
             <i class="fa-solid fa-forward-step pe-auto" onclick="next()"></i>
@@ -31,17 +30,20 @@
             <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-list"></i>
             </button>
-            <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+            <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton" style="max-height: 200px; overflow-y: auto;">
                 <li>
-                    <input type="text" class="form-control" placeholder="Find a playlist">
+                    <input type="text" class="form-control mb-2" placeholder="Find a playlist">
                 </li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">New Playlist</a></li>
-                <li><a class="dropdown-item" href="#">roll mood</a></li>
-                <li><a class="dropdown-item" href="#">Daily</a></li>
-                <li><a class="dropdown-item" href="#">D2B</a></li>
+                <li class="dropdown-item"><i class="fa-regular me-3 fa-plus"></i><label for="">New Playlist</label></li>
+                <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 1</label></li>
+                <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 2</label></li>
+                <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 3</label></li>
+                <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 4</label></li>
+                <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 5</label></li>
             </ul>
         </div>
+        
     
         <!-- Volume Control -->
         <div class="d-flex align-items-center">
@@ -50,6 +52,6 @@
         </div>
     
         <!-- Maximize Icon -->
-        <i class="fa-solid fa-up-right-and-down-left-from-center pe-auto" id="maximize"></i>
+        <i class="fa-solid fa-up-right-and-down-left-from-center pe-auto" onclick="maximizeFullscreen()"></i>
     </div>
 </footer>  
