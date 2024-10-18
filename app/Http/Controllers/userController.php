@@ -114,7 +114,7 @@ class userController extends Controller
         $lagu = lagu_genre::with(['lagu','genre'])->where('genre_id', $genres->id)->get();
     
         // Kirimkan data lagu ke view
-        return view('user.genre', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'genre'=>$genre,'artist'=>$artists]);
+        return view('user.genre', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'genre'=>$genre,'artist'=>$artists,'recomend'=>$rec]);
     }
     
 

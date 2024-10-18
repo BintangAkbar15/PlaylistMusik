@@ -154,7 +154,7 @@
                 @endforelse
                 
             </div>
-            <label for="" class="fs-4 mt-4" style="color: white">New Song</label>
+            <label for="" class="fs-4 mt-4" style="color: white">Artist</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
                 @forelse ($artists as $item)
                     <a href="{{ route('artist',$item->slug) }}">
