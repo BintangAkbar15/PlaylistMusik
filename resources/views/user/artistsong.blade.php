@@ -57,7 +57,15 @@
         <input type="hidden" name="like" id="likedsong" value="">
         <i class="fa-regular fa-heart fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
-    <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
+    <x-slot:playlistadd> 
+        
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 1</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 2</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 3</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 4</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 5</label></li>
+
+    </x-slot:playlistadd>
     <x-slot:queue>
         <script>
             // Mengambil data lagu dari localStorage

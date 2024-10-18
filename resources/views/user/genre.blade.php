@@ -29,7 +29,15 @@
         <label class="fs-2 fw-bold songname" ></label>
         <label class="fs-5 artist-name"></label>
     </x-slot:fdesc>
-    <x-slot:playlistadd>  </x-slot:playlistadd>
+    <x-slot:playlistadd>  
+        
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 1</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 2</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 3</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 4</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 5</label></li>
+
+    </x-slot:playlistadd>
     <x-slot:fullscimg>
         <img src="" id="image-fullscreen" class="rounded shadow" style="width: 300px; height: 300px; margin-top: -150px;" alt="Caramel Ribbon Cursetard">
     </x-slot:fullscimg>

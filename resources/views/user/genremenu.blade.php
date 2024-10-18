@@ -13,7 +13,15 @@
         </marquee>
         <label for="" class="fs-3 mt-2 text-nowrap fw-bold text-white col-12 songname" style="display: block" id="normal-title"></label>
     </x-slot:songinfo>
-    <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
+    <x-slot:playlistadd>  
+        
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 1</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 2</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 3</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 4</label></li>
+    <li class="dropdown-item"><i class="fa-regular me-3 fa-bookmark"></i><label for="">My Playlist 5</label></li>
+
+    </x-slot:playlistadd>
     <x-slot:imagesong>
         <img src="" id="image-song" alt=""  style="object-fit: cover; width:100%" class="rounded songimg">
     </x-slot:imagesong>
