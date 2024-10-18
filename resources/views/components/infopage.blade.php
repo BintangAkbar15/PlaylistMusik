@@ -11,9 +11,6 @@
             <div class="col-12 d-flex gap-3">
                 {{ $artistdesc }}
             </div>
-            <div class="col-12 text-end">
-                <label for="">Jumlah Lagu 10</label>
-            </div>            
         </div>
     </div>
 </div>

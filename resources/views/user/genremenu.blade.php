@@ -289,19 +289,47 @@
         </div>        
     </div>
     <script>
+        <script>
         document.addEventListener('DOMContentLoaded', function() {
+            var recomend = @json($recomend);
+            console.log(recomend)
+            // Array untuk menyimpan data yang telah diubah formatnya
+            var transformedRecomend = [];
+            
+            // Gunakan forEach untuk mengubah format data
+            @foreach ($recomend as $laguIndex => $laguItem)
+                @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+                    transformedRecomend.push({
+                        id: {{ $laguItem->id }}, // Ubah ID ke bentuk string
+                        image: `/storage/{{ $laguItem->thumb }}`, // Ubah thumb menjadi URL lengkap
+                        name: `{{ $laguItem->name }}`, // Ambil nama asli dari data
+                        views: `{{ $laguItem->dilihat }}} Dilihat`, // Ubah format dilihat menjadi string dengan "Dilihat"
+                        like: "", // Data like (statik atau dinamis)
+                        audio_length: {{ $laguItem->audio_length }} || null, // Tetapkan null jika audio_length kosong
+                        artist: "{{ $plaguItem->name }}", // Menggunakan nama artis statis atau dari sumber lain
+                        artistimg: `{{ $plaguItem->thumb }}`, // Gambar artis
+                        audio: "{{ $laguItem->audio }}" // Mengambil dari data asli
+                    });
+                @endforeach
+            @endforeach
+            
+
+            
+            console.log(transformedRecomend)
                 // Memuat lagu pertama dari localStorage saat halaman dimuat
                 let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                 if (storedSongs.length > 0) {
                     loadSongData(storedSongs[0]);
+                    playAudio(storedSongs)
                 }        
                 playmusic()
                 
             
                 function loadSongData(song) {
                     document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
-                    document.getElementById('name-info-artist').textContent = song.name;
-                    document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.name);
+                    document.getElementById('likedsong').value = song.id;
+                    document.getElementById('name-info-artist').textContent = song.artist;
+                    document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
                     document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
                     document.getElementById('normal-title').textContent = song.name;
                     document.getElementById('image-song').src = song.image;
@@ -352,16 +380,29 @@
                     audioPlayer.onended = function() {
                         let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                         
-                        // Lanjutkan ke lagu berikutnya berdasarkan indeks
                         if (currentSongIndex < storedSongs.length - 1) {
-                            currentSongIndex++; // Increment index ke lagu berikutnya
+                            // Masih ada lagu di playlist yang tersisa
+                            currentSongIndex++; // Increment ke lagu berikutnya
                             let nextSong = storedSongs[currentSongIndex];
                             loadSongData(nextSong); // Memuat data lagu berikutnya
                             playAudio(nextSong.audio); // Memutar lagu berikutnya
                         } else {
-                            // Jika tidak ada lagi lagu di playlist, set tombol play kembali ke mode play
-                            document.getElementById('play-pause').classList.remove('fa-pause');
-                            document.getElementById('play-pause').classList.add('fa-play');
+                            // Playlist sudah habis, tambahkan lagu rekomendasi ke localStorage
+                            if (currentSongIndex >= storedSongs.length - 1 || recomend.length > 0) {
+                                // Tambahkan rekomendasi ke akhir playlist
+                                storedSongs = storedSongs.concat(transformedRecomend); 
+                                localStorage.setItem('songs', JSON.stringify(storedSongs));
+
+                                // Reset currentSongIndex untuk memulai lagu rekomendasi
+                                currentSongIndex++;
+                                let nextSong = storedSongs[currentSongIndex];
+                                loadSongData(nextSong); // Memuat data lagu dari rekomendasi
+                                playAudio(nextSong.audio); // Memutar lagu dari rekomendasi
+                            } else {
+                                // Jika tidak ada rekomendasi, set tombol play kembali ke mode play
+                                document.getElementById('play-pause').classList.remove('fa-pause');
+                                document.getElementById('play-pause').classList.add('fa-play');
+                            }
                         }
                     };
                 }
@@ -382,6 +423,45 @@
                         }
                     }, duration); // Durasi sesuai dengan panjang lagu
                 }
+                let currentSongIndex = 0; // Global variable to track the current song index
+    
+                // Global function to access next song
+                window.next = function() {
+                    if (currentSongIndex < storedSongs.length - 1) {
+                        currentSongIndex++;
+                        let nextSong = storedSongs[currentSongIndex];
+                        loadSongData(nextSong);
+                        playAudio(nextSong.audio);
+                    }else{
+                        // Gabungkan rekomendasi ke playlist di localStorage jika diperlukan
+                        if (currentSongIndex >= storedSongs.length - 1 || recomend.length > 0) {
+                            // Tambahkan rekomendasi ke akhir playlist
+                            storedSongs = storedSongs.concat(transformedRecomend); 
+                            localStorage.setItem('songs', JSON.stringify(storedSongs));
+
+                            // Reset currentSongIndex untuk memulai lagu rekomendasi
+                            currentSongIndex++;
+                            let nextSong = storedSongs[currentSongIndex];
+                            loadSongData(nextSong); // Memuat data lagu dari rekomendasi
+                            playAudio(nextSong.audio); // Memutar lagu dari rekomendasi
+                        } else {
+                            // Jika tidak ada rekomendasi, set tombol play kembali ke mode play
+                            document.getElementById('play-pause').classList.remove('fa-pause');
+                            document.getElementById('play-pause').classList.add('fa-play');
+                        }            
+                    }
+                }
+
+                // Global function to access previous song
+                window.prev = function() {
+                    if (currentSongIndex > 0) {
+                        currentSongIndex--;
+                        let prevSong = storedSongs[currentSongIndex];
+                        loadSongData(prevSong);
+                        playAudio(prevSong.audio);
+                    }
+                }
             });
+    </script>
     </script>
 </x-mainpage>

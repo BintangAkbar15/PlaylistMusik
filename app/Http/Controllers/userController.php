@@ -118,7 +118,7 @@ class userController extends Controller
         }
 
         // Kirimkan data lagu ke view
-        return view('user.genremenu', ['artists' => $genre,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'liked'=>$likedSongs,'recomend',$rec,'new'=>$new]);
+        return view('user.genremenu', ['artists' => $genre,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'liked'=>$likedSongs,'recomend'=>$rec,'new'=>$new]);
     }
 
     function genre(string $slug) {
@@ -257,10 +257,27 @@ class userController extends Controller
           $plagu = penyanyi_lagu::whereIn('lagu_id', $results)->pluck('penyanyi_id'); 
           $artist = penyanyi::with('plagu')->whereIn('id',$plagu)->get();
 
-
+          $playlist = playlist::where('user_id',Auth::user()->id)->get();
+          $artists = penyanyi::all();
+          $hour = Carbon::now('Asia/Jakarta')->format('H');
+          $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
+          $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
+          $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
+          $new = Penyanyi::orderBy('created_at', 'desc')->take(6)->get();
+          $genre = genre::all();
+          if($lLagu > 0){
+              $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
+              $genreLagu = lagu_genre::whereIn('lagu_id',$likedSongs)->pluck('genre_id');
+              $laguGenre = lagu_genre::whereIn('genre_id',$genreLagu)->pluck('lagu_id');
+              $rec = lagu::with(['plagu'])->whereIn('id',$laguGenre)->get();
+          }
+          else{
+              $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
+              $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
+          }
   
           // Kembalikan hasil pencarian ke view atau tampilkan
-          return view('user.search', ['lagu' => $lagu, 'artist' => $artist]);
+          return view('user.search', ['lagu' => $lagu, 'artist' => $artist,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'recomend'=>$rec,'liked'=>$likedSongs,'artists'=>$artists,'genre'=>$genre]);
     }
 
 }
