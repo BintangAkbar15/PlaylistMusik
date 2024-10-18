@@ -214,6 +214,7 @@
         <input type="hidden" name="like" id="likedsong" value="">
         <i class="fa-regular fa-heart fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
+    <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
     <div class="px-3 pt-3">
         <div class="col-12 rounded-top p-5 d-flex flex-column" style="height: 200px; background: linear-gradient(to bottom, hsl(35, 100%, 50%), rgb(104, 104, 104)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: white">
             @php

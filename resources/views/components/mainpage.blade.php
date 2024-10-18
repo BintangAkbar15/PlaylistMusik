@@ -23,6 +23,7 @@
             <x-slot:inputlike>{{ $inputlike }}</x-slot:inputlike>
             <x-slot:botimg>{{ $botimg }}</x-slot:botimg>
             <x-slot:botinfo>{{ $botinfo }}</x-slot:botinfo>
+            <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
         </x-controlmusic>
     </div>
     <div class="col-12 bg-secondary overflow-hidden" style="height: 100vh; display: none;" id="fullscreen">
