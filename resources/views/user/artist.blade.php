@@ -52,7 +52,7 @@
     </x-slot:playlist>
     <x-slot:inputlike>
         <input type="hidden" name="like" id="likedsong" value="">
-        <i class="{{ 1==1 ?'fa-regular fa-heart': 'fa-solid fa-heart' }} fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
+        <i class="{{ $liked ? 'fa-regular fa-heart': 'fa-solid fa-heart' }} fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
     <div>
@@ -182,6 +182,8 @@
                     });
                 
                     function loadSongData(song) {
+                        let likedSong = @json($liked);
+                        console.log(likedSong)
                         console.log(song.artist)
                         document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
                         document.getElementById('likedsong').value = song.id;
@@ -193,6 +195,17 @@
                         document.getElementById('image-fullscreen').src = song.image;
                         document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
                         document.getElementById('audio').src = `/storage/${song.audio}`;
+                        if( likedSong.includes(Number(song.id))  ){
+                            document.getElementById('like-btn').classList.add('fa-solid fa-heart')
+                            document.getElementById('like-btn').classList.remove('fa-regular fa-heart')
+                            console.log('retuuuu')
+                        }
+                        else{
+                            console.log('irettt')
+                            document.getElementById('like-btn').classList.remove('fa-solid fa-heart')
+                            document.getElementById('like-btn').classList.add('fa-regular fa-heart')    
+                        }
+
                         fetch('/song/seen', {
                             method: 'POST',
                             headers: {
@@ -246,6 +259,28 @@
         </div>
     </div>
     <script>
+    var recomend = @json($recomend);
+            console.log(recomend)
+            // Array untuk menyimpan data yang telah diubah formatnya
+            var transformedRecomend = [];
+            
+            // Gunakan forEach untuk mengubah format data
+            @foreach ($recomend as $laguIndex => $laguItem)
+                @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+                    transformedRecomend.push({
+                        id: {{ $laguItem->id }}, // Ubah ID ke bentuk string
+                        image: `/storage/{{ $laguItem->thumb }}`, // Ubah thumb menjadi URL lengkap
+                        name: `{{ $laguItem->name }}`, // Ambil nama asli dari data
+                        views: `{{ $laguItem->dilihat }}} Dilihat`, // Ubah format dilihat menjadi string dengan "Dilihat"
+                        like: "", // Data like (statik atau dinamis)
+                        audio_length: {{ $laguItem->audio_length }} || null, // Tetapkan null jika audio_length kosong
+                        artist: "{{ $plaguItem->name }}", // Menggunakan nama artis statis atau dari sumber lain
+                        artistimg: `{{ $plaguItem->thumb }}`, // Gambar artis
+                        audio: "{{ $laguItem->audio }}" // Mengambil dari data asli
+                    });
+                @endforeach
+            @endforeach
+
     document.getElementById('playAll').addEventListener('click', function () {
     let allSongs = []; // Array untuk menyimpan semua lagu
 
@@ -324,28 +359,41 @@ function loadSongData(song) {
 
 let currentSongIndex = 0; // Global variable to track the current song index
 let storedSongs = JSON.parse(localStorage.getItem('songs')) || []; // Retrieve songs from localStorage
+window.next = function() {
+                    if (currentSongIndex < storedSongs.length - 1) {
+                        currentSongIndex++;
+                        let nextSong = storedSongs[currentSongIndex];
+                        loadSongData(nextSong);
+                        playAudio(nextSong.audio);
+                    }else{
+                        // Gabungkan rekomendasi ke playlist di localStorage jika diperlukan
+                        if (currentSongIndex >= storedSongs.length - 1 || recomend.length > 0) {
+                            // Tambahkan rekomendasi ke akhir playlist
+                            storedSongs = storedSongs.concat(transformedRecomend); 
+                            localStorage.setItem('songs', JSON.stringify(storedSongs));
 
-function next() {
-    if (currentSongIndex < storedSongs.length - 1) {
-        currentSongIndex += 1;
-        let nextSong = storedSongs[currentSongIndex];
-        loadSongData(nextSong);
-        playAudio(nextSong.audio);
-    }
-    else{
-    console.log('gagal')
-    }
-}
+                            // Reset currentSongIndex untuk memulai lagu rekomendasi
+                            currentSongIndex++;
+                            let nextSong = storedSongs[currentSongIndex];
+                            loadSongData(nextSong); // Memuat data lagu dari rekomendasi
+                            playAudio(nextSong.audio); // Memutar lagu dari rekomendasi
+                        } else {
+                            // Jika tidak ada rekomendasi, set tombol play kembali ke mode play
+                            document.getElementById('play-pause').classList.remove('fa-pause');
+                            document.getElementById('play-pause').classList.add('fa-play');
+                        }            
+                    }
+                }
 
-// Event listener for previous button
-function prev() {
-    if (currentSongIndex > 0) {
-        currentSongIndex -= 1;
-        let prevSong = storedSongs[currentSongIndex];
-        loadSongData(prevSong);
-        playAudio(prevSong.audio);
-    }
-}
+                // Global function to access previous song
+                window.prev = function() {
+                    if (currentSongIndex > 0) {
+                        currentSongIndex--;
+                        let prevSong = storedSongs[currentSongIndex];
+                        loadSongData(prevSong);
+                        playAudio(prevSong.audio);
+                    }
+                }
 
 function playAudio(audioSrc) {
     const audioPlayer = document.getElementById('my-audio');

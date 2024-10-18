@@ -79,7 +79,6 @@
                     console.error('Error:', error.message);
                 });
             })
-
         </script>
     </body>
 </html>
