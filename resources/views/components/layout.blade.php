@@ -55,30 +55,5 @@
         <script src="{{ asset('dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
         <script src="{{ asset('dist/assets/compiled/js/app.js') }}"></script>
         <script src="{{ asset('dist/assets/static/js/pages/dashboard.js') }}"></script>
-        <script>
-            document.getElementById('like-btn').addEventListener('click',function(){
-                let id = document.getElementById('likedsong').value;
-                console.log(id)
-                fetch('/user/like', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        song_id: id  // Kirim song_id sebagai song_id, bukan 'like'
-                    })
-                }).then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                }).then(data => {
-                    console.log('Song like status updated:', data);
-                }).catch(error => {
-                    console.error('Error:', error.message);
-                });
-            })
-        </script>
     </body>
 </html>

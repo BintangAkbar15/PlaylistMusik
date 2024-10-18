@@ -55,6 +55,164 @@
     <x-slot:inputlike>
         <input type="hidden" name="like" id="likedsong" value="">
     </x-slot:inputlike>
+    <x-slot:queue>
+        <script>
+            // Mengambil data lagu dari localStorage
+            const storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+    
+            // Kirim data lagu ke Blade untuk diproses
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const queueElement = document.getElementById('queue');
+    
+                storedSongs.forEach((song, index) => {
+                    const label = `
+                    <div class="d-flex gap-2" onclick="handleSongClick(${index})">
+                        <div class="col-12 col-lg-3">
+                            <img style="height: 55px; width: 55px;" src="${song.image}" class="rounded shadow">
+                        </div>
+                        <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
+                            <label for="" class="fs-5 d-none d-lg-block"> ${song.name} </label>
+                            <label for="" class="fs-6 d-none d-xl-block"> ${song.artist} </label>
+                        </div>
+                    </div>
+                    `;
+                    queueElement.innerHTML += label;
+                });
+            });
+    
+            // Fungsi untuk menangani klik
+            function handleSongClick(index) {
+                // Akses data lagu berdasarkan indeks
+                const song = JSON.parse(localStorage.getItem('songs'))[index];
+                playAudio(song.audio); // Memutar lagu yang baru ditambahkan
+                loadSongData(song)
+                likeyy(song)
+                // Di sini kamu bisa melakukan tindakan lebih lanjut
+                // Misalnya, memutar lagu, menampilkan detail, dll.
+            }
+            function playAudio(audioSrc) {
+                const audioPlayer = document.getElementById('my-audio');
+                let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+                //(storedSongs)
+                // Hentikan pemutaran jika ada audio yang sedang diputar
+                if (!audioPlayer.paused) {
+                    audioPlayer.pause();
+                    audioPlayer.currentTime = 0; // Reset waktu pemutaran
+                }
+
+                // Set audio baru dan mulai memutar
+                audioPlayer.src = `/storage/${audioSrc}`;
+
+                // Mulai pemutaran
+                audioPlayer.play()
+                    .then(() => {
+                        document.getElementById('play-pause').classList.remove('fa-play');
+                        document.getElementById('play-pause').classList.add('fa-pause');
+                    })
+                    .catch(error => {
+                        console.error('Error playing audio:', error);
+                    });
+
+                // Event ketika lagu selesai
+                audioPlayer.onended = function () {
+                    if (currentSongIndex < storedSongs.length - 1) {
+                        currentSongIndex++; // Increment index ke lagu berikutnya
+                        let nextSong = storedSongs[currentSongIndex];
+                        loadSongData(nextSong); // Memuat data lagu berikutnya
+                        likeyy(nextSong.id); // Memuat data lagu berikutnya
+                        playAudio(nextSong.audio); // Memutar lagu berikutnya
+                    } else {
+                        // Jika tidak ada lagi lagu di playlist, set tombol play kembali ke mode play
+                        document.getElementById('play-pause').classList.remove('fa-pause');
+                        document.getElementById('play-pause').classList.add('fa-play');
+                    }
+                };
+            }
+            function likeyy(song){
+                        let likedSong = @json($liked)||[];
+
+                        if( likedSong.includes(Number(song.id))  ){
+                            document.getElementById('like-btn').classList.add('fa-solid')
+                            document.getElementById('like-btn').classList.remove('fa-regular')
+                            document.getElementById('like-btn').style.color = "#90EE90";
+                        }
+                        else{
+                            document.getElementById('like-btn').classList.remove('fa-solid')
+                            document.getElementById('like-btn').classList.add('fa-regular')    
+                        }
+                    }
+                
+                    function loadSongData(song) {
+
+                        document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
+                        document.getElementById('likedsong').value = song.id;
+                        document.getElementById('name-info-artist').textContent = song.artist;
+                        document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
+                        document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
+                        document.getElementById('normal-title').textContent = song.name;
+                        document.getElementById('image-song').src = song.image;
+                        document.getElementById('image-fullscreen').src = song.image;
+                        document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
+                        document.getElementById('audio').src = `/storage/${song.audio}`;
+
+                        fetch('/song/seen', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Jika menggunakan Laravel
+                            },
+                            body: JSON.stringify({ id: song.id })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            //('Song seen status updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error sending seen status:', error);
+                        });
+                    }
+                    
+                let currentSongIndex = 0; // Global variable to track the current song index
+                    window.next = function() {
+                    if (currentSongIndex < storedSongs.length - 1) {
+                        currentSongIndex++;
+                        let nextSong = storedSongs[currentSongIndex];
+                        loadSongData(nextSong);
+                        likeyy(nextSong.id);
+                        playAudio(nextSong.audio);
+                    }else{
+                        // Gabungkan rekomendasi ke playlist di localStorage jika diperlukan
+                        if (currentSongIndex >= storedSongs.length - 1 || recomend.length > 0) {
+                            // Tambahkan rekomendasi ke akhir playlist
+                            storedSongs = storedSongs.concat(transformedRecomend); 
+                            localStorage.setItem('songs', JSON.stringify(storedSongs));
+
+                            // Reset currentSongIndex untuk memulai lagu rekomendasi
+                            currentSongIndex++;
+                            let nextSong = storedSongs[currentSongIndex];
+                            loadSongData(nextSong); // Memuat data lagu dari rekomendasi
+                            likeyy(nextSong.id); // Memuat data lagu dari rekomendasi
+                            playAudio(nextSong.audio); // Memutar lagu dari rekomendasi
+                        } else {
+                            // Jika tidak ada rekomendasi, set tombol play kembali ke mode play
+                            document.getElementById('play-pause').classList.remove('fa-pause');
+                            document.getElementById('play-pause').classList.add('fa-play');
+                        }            
+                    }
+                }
+
+                // Global function to access previous song
+                window.prev = function() {
+                    if (currentSongIndex > 0) {
+                        currentSongIndex--;
+                        let prevSong = storedSongs[currentSongIndex];
+                        loadSongData(prevSong);
+                        playAudio(prevSong.audio);
+                        likeyy(prevSong.id);
+                    }
+                }
+        </script>
+    </x-slot:queue>
     <div class="px-3 pt-3">
         <div class="col-12 rounded-top p-5 d-flex flex-column" style="height: 200px; background: linear-gradient(to bottom, hsl(35, 100%, 50%), rgb(104, 104, 104)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: white">
             @php
@@ -73,32 +231,31 @@
             <label for="" class="fs-6">Bara FM siap nih setel lagu kesukaan mu untuk menemani hari mu</label>
         </div>
         <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
-            <div class="col-12 d-flex gap-2">
-                <button class="px-3 py-1 rounded-pill btn btn-light border-none ">All</button>
-                <button class="px-3 py-1 rounded-pill btn btn-light border-none ">Music</button>
-                <button class="px-3 py-1 rounded-pill btn btn-light border-none ">Artist</button>
-            </div>
             <label for="" class="fs-4 mt-4" style="color: white">Favorite Song</label>
             <div class="col-12 d-flex flex-column flex-md-row">
                 <div class="col-md-6 p-2 col-12">
-                    @forelse ($artists as $item)
+                    @forelse ($new as $item)
                         @if ($loop->iteration % 2 == 1)
+                        <a href="{{ route('artist',$item->slug) }}">
                             <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
                                 <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" style="object-fit: cover" width="40px" height="40px" alt="">
                                 <label for="" class="fs-6">{{ $item->name }}</label>
                             </div>        
+                        </a>
                         @endif
                     @empty
                         
                     @endforelse
                 </div>
                 <div class="col-6 p-2 d-none d-md-block">
-                    @forelse ($artists as $item)
+                    @forelse ($new as $item)
                         @if ($loop->iteration % 2 == 0)
+                        <a href="{{ route('artist',$item->slug) }}">
                             <div class="col-12 p-2 d-flex align-items-center m-2 gap-3 bg-dark rounded">
                                 <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" style="object-fit: cover" width="40px" height="40px" alt="">
                                 <label for="" class="fs-6">{{ $item->name }}</label>
                             </div>        
+                        </a>
                         @endif
                     @empty
                         

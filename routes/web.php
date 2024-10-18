@@ -58,7 +58,10 @@ Route::middleware('auth')->group(function(){
         Route::get('/user/artist/{slug}', [userController::class, 'songs'])->name('artist');
         Route::get('/user/artist', [userController::class, 'Asongs'])->name('artist.all');
         
+        Route::get('/user/genre', [userController::class, 'gsongs'])->name('genre.all');
+        
         Route::post('/user/like', [userController::class, 'likedsong'])->name('like.song');
+        Route::post('/user/unlike', [userController::class, 'unlikesong'])->name('like.song');
 
         Route::get('/user/playlist/edit/{name}', function($name, playlist $playlist){
             $playlists = playlist::where('user_id',Auth::user()->id)->get();

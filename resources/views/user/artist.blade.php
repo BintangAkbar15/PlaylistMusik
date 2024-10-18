@@ -55,6 +55,164 @@
         <i class="fa-regular fa-heart fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
+    <x-slot:queue>
+        <script>
+            // Mengambil data lagu dari localStorage
+            const storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+    
+            // Kirim data lagu ke Blade untuk diproses
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const queueElement = document.getElementById('queue');
+    
+                storedSongs.forEach((song, index) => {
+                    const label = `
+                    <div class="d-flex gap-2" onclick="handleSongClick(${index})">
+                        <div class="col-12 col-lg-3">
+                            <img style="height: 55px; width: 55px;" src="${song.image}" class="rounded shadow">
+                        </div>
+                        <div class="col-9 d-none d-lg-block d-flex flex-column justify-content-center">
+                            <label for="" class="fs-5 d-none d-lg-block"> ${song.name} </label>
+                            <label for="" class="fs-6 d-none d-xl-block"> ${song.artist} </label>
+                        </div>
+                    </div>
+                    `;
+                    queueElement.innerHTML += label;
+                });
+            });
+    
+            // Fungsi untuk menangani klik
+            function handleSongClick(index) {
+                // Akses data lagu berdasarkan indeks
+                const song = JSON.parse(localStorage.getItem('songs'))[index];
+                playAudio(song.audio); // Memutar lagu yang baru ditambahkan
+                loadSongData(song)
+                likeyy(song)
+                // Di sini kamu bisa melakukan tindakan lebih lanjut
+                // Misalnya, memutar lagu, menampilkan detail, dll.
+            }
+            function playAudio(audioSrc) {
+                const audioPlayer = document.getElementById('my-audio');
+                let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+                //(storedSongs)
+                // Hentikan pemutaran jika ada audio yang sedang diputar
+                if (!audioPlayer.paused) {
+                    audioPlayer.pause();
+                    audioPlayer.currentTime = 0; // Reset waktu pemutaran
+                }
+
+                // Set audio baru dan mulai memutar
+                audioPlayer.src = `/storage/${audioSrc}`;
+
+                // Mulai pemutaran
+                audioPlayer.play()
+                    .then(() => {
+                        document.getElementById('play-pause').classList.remove('fa-play');
+                        document.getElementById('play-pause').classList.add('fa-pause');
+                    })
+                    .catch(error => {
+                        console.error('Error playing audio:', error);
+                    });
+
+                // Event ketika lagu selesai
+                audioPlayer.onended = function () {
+                    if (currentSongIndex < storedSongs.length - 1) {
+                        currentSongIndex++; // Increment index ke lagu berikutnya
+                        let nextSong = storedSongs[currentSongIndex];
+                        loadSongData(nextSong); // Memuat data lagu berikutnya
+                        likeyy(nextSong.id); // Memuat data lagu berikutnya
+                        playAudio(nextSong.audio); // Memutar lagu berikutnya
+                    } else {
+                        // Jika tidak ada lagi lagu di playlist, set tombol play kembali ke mode play
+                        document.getElementById('play-pause').classList.remove('fa-pause');
+                        document.getElementById('play-pause').classList.add('fa-play');
+                    }
+                };
+            }
+            function likeyy(song){
+                        let likedSong = @json($liked)||[];
+
+                        if( likedSong.includes(Number(song.id))  ){
+                            document.getElementById('like-btn').classList.add('fa-solid')
+                            document.getElementById('like-btn').classList.remove('fa-regular')
+                            document.getElementById('like-btn').style.color = "#90EE90";
+                        }
+                        else{
+                            document.getElementById('like-btn').classList.remove('fa-solid')
+                            document.getElementById('like-btn').classList.add('fa-regular')    
+                        }
+                    }
+                
+                    function loadSongData(song) {
+
+                        document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
+                        document.getElementById('likedsong').value = song.id;
+                        document.getElementById('name-info-artist').textContent = song.artist;
+                        document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
+                        document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
+                        document.getElementById('normal-title').textContent = song.name;
+                        document.getElementById('image-song').src = song.image;
+                        document.getElementById('image-fullscreen').src = song.image;
+                        document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
+                        document.getElementById('audio').src = `/storage/${song.audio}`;
+
+                        fetch('/song/seen', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Jika menggunakan Laravel
+                            },
+                            body: JSON.stringify({ id: song.id })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            //('Song seen status updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error sending seen status:', error);
+                        });
+                    }
+                    
+                let currentSongIndex = 0; // Global variable to track the current song index
+                    window.next = function() {
+                    if (currentSongIndex < storedSongs.length - 1) {
+                        currentSongIndex++;
+                        let nextSong = storedSongs[currentSongIndex];
+                        loadSongData(nextSong);
+                        likeyy(nextSong.id);
+                        playAudio(nextSong.audio);
+                    }else{
+                        // Gabungkan rekomendasi ke playlist di localStorage jika diperlukan
+                        if (currentSongIndex >= storedSongs.length - 1 || recomend.length > 0) {
+                            // Tambahkan rekomendasi ke akhir playlist
+                            storedSongs = storedSongs.concat(transformedRecomend); 
+                            localStorage.setItem('songs', JSON.stringify(storedSongs));
+
+                            // Reset currentSongIndex untuk memulai lagu rekomendasi
+                            currentSongIndex++;
+                            let nextSong = storedSongs[currentSongIndex];
+                            loadSongData(nextSong); // Memuat data lagu dari rekomendasi
+                            likeyy(nextSong.id); // Memuat data lagu dari rekomendasi
+                            playAudio(nextSong.audio); // Memutar lagu dari rekomendasi
+                        } else {
+                            // Jika tidak ada rekomendasi, set tombol play kembali ke mode play
+                            document.getElementById('play-pause').classList.remove('fa-pause');
+                            document.getElementById('play-pause').classList.add('fa-play');
+                        }            
+                    }
+                }
+
+                // Global function to access previous song
+                window.prev = function() {
+                    if (currentSongIndex > 0) {
+                        currentSongIndex--;
+                        let prevSong = storedSongs[currentSongIndex];
+                        loadSongData(prevSong);
+                        playAudio(prevSong.audio);
+                        likeyy(prevSong.id);
+                    }
+                }
+        </script>
+    </x-slot:queue>
     <div>
         @csrf
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
@@ -286,100 +444,150 @@
             @endforeach
 
     document.getElementById('playAll').addEventListener('click', function () {
-    let allSongs = []; // Array untuk menyimpan semua lagu
+        let allSongs = []; // Array untuk menyimpan semua lagu
 
-    // Ambil data dari semua tombol
-    const buttons = document.querySelectorAll('[id^="button"]'); // Memilih semua tombol yang diawali dengan "button"
+        // Ambil data dari semua tombol
+        const buttons = document.querySelectorAll('[id^="button"]'); // Memilih semua tombol yang diawali dengan "button"
 
-    buttons.forEach((button, index) => {
-        const children = button.children;
+        buttons.forEach((button, index) => {
+            const children = button.children;
 
-        let song = {
-            id: '',
-            image: '',
-            name: '',
-            views: '',
-            like: '',
-            audio_length: '',
-            artist: '{{ $lagu[0]->name }}', // Ganti jika artist berbeda
-            artistimg: '{{ $lagu[0]->thumb }}', // Ganti jika artist berbeda
-            audio: ''
-        };
+            let song = {
+                id: '',
+                image: '',
+                name: '',
+                views: '',
+                like: '',
+                audio_length: '',
+                artist: '{{ $lagu[0]->name }}', // Ganti jika artist berbeda
+                artistimg: '{{ $lagu[0]->thumb }}', // Ganti jika artist berbeda
+                audio: ''
+            };
 
-        @foreach ($lagu as $laguIndex => $laguItem)
-            @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
-                if (index === {{ $loop->iteration }} - 1) {
-                    song.audio = '{{ $plaguItem->audio }}';
-                    song.id = '{{ $plaguItem->id }}';
-                    song.audio_length = parseAudioLength('{{ $plaguItem->audio_length }}'); // Pastikan ini sudah dalam milidetik
-                    song.like = '{{ $like }}';
-                }
+            @foreach ($lagu as $laguIndex => $laguItem)
+                @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+                    if (index === {{ $loop->iteration }} - 1) {
+                        song.audio = '{{ $plaguItem->audio }}';
+                        song.id = '{{ $plaguItem->id }}';
+                        song.audio_length = parseAudioLength('{{ $plaguItem->audio_length }}'); // Pastikan ini sudah dalam milidetik
+                        song.like = '{{ $like }}';
+                    }
+                @endforeach
             @endforeach
-        @endforeach
 
-        // Ambil data dari elemen anak
-        for (let i = 0; i < children.length; i++) {
-            let element = children[i];
+            // Ambil data dari elemen anak
+            for (let i = 0; i < children.length; i++) {
+                let element = children[i];
 
-            if (element.tagName.toLowerCase() === 'img') {
-                song.image = element.src || '';
-            } else if (i === 2) {
-                song.name = element.innerText || '';
-            } else if (i === 3) {
-                song.views = element.innerText || '';
+                if (element.tagName.toLowerCase() === 'img') {
+                    song.image = element.src || '';
+                } else if (i === 2) {
+                    song.name = element.innerText || '';
+                } else if (i === 3) {
+                    song.views = element.innerText || '';
+                }
+            }
+
+            allSongs.push(song); // Tambahkan lagu ke array allSongs
+        });
+
+        // Simpan semua lagu di localStorage
+        localStorage.setItem('songs', JSON.stringify(allSongs));
+
+        // Memuat dan memutar lagu pertama
+        currentSongIndex = 0; // Reset currentSongIndex to 0
+        loadSongData(allSongs[currentSongIndex]);
+        likeyy(allSongs[currentSongIndex].id);
+        playAudio(allSongs[currentSongIndex].audio);
+    });
+
+        function parseAudioLength(length) {
+            // Ubah format waktu MM:SS menjadi milidetik
+            let [minutes, seconds] = length.split(':').map(Number);
+            return (minutes * 60 + seconds) * 1000; // Kembalikan dalam milidetik
+        }
+
+        function likeyy(song){
+            let likedSong = @json($liked)||[];
+            console.log(song)
+            let likeBtn = document.getElementById('like-btn');
+
+            if (likeBtn.classList.contains('fa-heart') && likeBtn.classList.contains('fa-regular')) {
+                document.getElementById('like-btn').addEventListener('click',function(){
+                    let id = document.getElementById('likedsong').value;
+                    console.log(id)
+                    fetch('/user/like', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            song_id: song // Kirim song_id sebagai song_id, bukan 'like'
+                        })
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    }).then(data => {
+                        console.log('Song like status updated:', data);
+                    }).catch(error => {
+                        console.error('Error:', error.message);
+                    });
+                })
+            } else {
+            document.getElementById('like-btn').addEventListener('click',function(){
+                    let id = document.getElementById('likedsong').value;
+                    console.log(id)
+                    fetch('/user/unlike', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            song_id: song // Kirim song_id sebagai song_id, bukan 'like'
+                        })
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    }).then(data => {
+                        console.log('Song like status updated:', data);
+                    }).catch(error => {
+                        console.error('Error:', error.message);
+                    });
+                })
+            }
+            if( likedSong.includes(Number(song))  ){
+                document.getElementById('like-btn').classList.add('fa-solid')
+                document.getElementById('like-btn').classList.remove('fa-regular')
+                document.getElementById('like-btn').style.color = "#90EE90";
+            }
+            else{
+                document.getElementById('like-btn').classList.remove('fa-solid')
+                document.getElementById('like-btn').classList.add('fa-regular')    
+                document.getElementById('like-btn').style.color = "#ffff";
             }
         }
 
-        allSongs.push(song); // Tambahkan lagu ke array allSongs
-    });
+                function loadSongData(song) {
+                    document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
+                    document.getElementById('name-info-artist').textContent = song.artist;
+                    document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
+                    document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
+                    document.getElementById('normal-title').textContent = song.name;
+                    document.getElementById('image-song').src = song.image;
+                    document.getElementById('image-fullscreen').src = song.image;
+                    document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
+                    document.getElementById('audio').src = `/storage/${song.audio}`;
+                }
 
-    // Simpan semua lagu di localStorage
-    localStorage.setItem('songs', JSON.stringify(allSongs));
-
-    // Memuat dan memutar lagu pertama
-    currentSongIndex = 0; // Reset currentSongIndex to 0
-    loadSongData(allSongs[currentSongIndex]);
-    likeyy(allSongs[currentSongIndex].id);
-    playAudio(allSongs[currentSongIndex].audio);
-});
-
-function parseAudioLength(length) {
-    // Ubah format waktu MM:SS menjadi milidetik
-    let [minutes, seconds] = length.split(':').map(Number);
-    return (minutes * 60 + seconds) * 1000; // Kembalikan dalam milidetik
-}
-
-function likeyy(song){
-    let likedSong = @json($liked)||[];
-    console.log(song)
-
-    if( likedSong.includes(Number(song))  ){
-        document.getElementById('like-btn').classList.add('fa-solid')
-        document.getElementById('like-btn').classList.remove('fa-regular')
-        document.getElementById('like-btn').style.color = "#90EE90";
-    }
-    else{
-        document.getElementById('like-btn').classList.remove('fa-solid')
-        document.getElementById('like-btn').classList.add('fa-regular')    
-        document.getElementById('like-btn').style.color = "#ffff";
-    }
-}
-
-function loadSongData(song) {
-    document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
-    document.getElementById('name-info-artist').textContent = song.artist;
-    document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
-    document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
-    document.getElementById('normal-title').textContent = song.name;
-    document.getElementById('image-song').src = song.image;
-    document.getElementById('image-fullscreen').src = song.image;
-    document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
-    document.getElementById('audio').src = `/storage/${song.audio}`;
-}
-
-let currentSongIndex = 0; // Global variable to track the current song index
-let storedSongs = JSON.parse(localStorage.getItem('songs')) || []; // Retrieve songs from localStorage
-window.next = function() {
+                let currentSongIndex = 0; // Global variable to track the current song index
+                let storedSongs = JSON.parse(localStorage.getItem('songs')) || []; // Retrieve songs from localStorage
+                window.next = function() {
                     if (currentSongIndex < storedSongs.length - 1) {
                         currentSongIndex++;
                         let nextSong = storedSongs[currentSongIndex];
@@ -418,43 +626,43 @@ window.next = function() {
                     }
                 }
 
-function playAudio(audioSrc) {
-    const audioPlayer = document.getElementById('my-audio');
-    let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
-    //(storedSongs)
-    // Hentikan pemutaran jika ada audio yang sedang diputar
-    if (!audioPlayer.paused) {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0; // Reset waktu pemutaran
-    }
+        function playAudio(audioSrc) {
+            const audioPlayer = document.getElementById('my-audio');
+            let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+            //(storedSongs)
+            // Hentikan pemutaran jika ada audio yang sedang diputar
+            if (!audioPlayer.paused) {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0; // Reset waktu pemutaran
+            }
 
-    // Set audio baru dan mulai memutar
-    audioPlayer.src = `/storage/${audioSrc}`;
+            // Set audio baru dan mulai memutar
+            audioPlayer.src = `/storage/${audioSrc}`;
 
-    // Mulai pemutaran
-    audioPlayer.play()
-        .then(() => {
-            document.getElementById('play-pause').classList.remove('fa-play');
-            document.getElementById('play-pause').classList.add('fa-pause');
-        })
-        .catch(error => {
-            console.error('Error playing audio:', error);
-        });
+            // Mulai pemutaran
+            audioPlayer.play()
+                .then(() => {
+                    document.getElementById('play-pause').classList.remove('fa-play');
+                    document.getElementById('play-pause').classList.add('fa-pause');
+                })
+                .catch(error => {
+                    console.error('Error playing audio:', error);
+                });
 
-    // Event ketika lagu selesai
-    audioPlayer.onended = function () {
-        if (currentSongIndex < storedSongs.length - 1) {
-            currentSongIndex++; // Increment index ke lagu berikutnya
-            let nextSong = storedSongs[currentSongIndex];
-            loadSongData(nextSong); // Memuat data lagu berikutnya
-            likeyy(nextSong.id); // Memuat data lagu berikutnya
-            playAudio(nextSong.audio); // Memutar lagu berikutnya
-        } else {
-            // Jika tidak ada lagi lagu di playlist, set tombol play kembali ke mode play
-            document.getElementById('play-pause').classList.remove('fa-pause');
-            document.getElementById('play-pause').classList.add('fa-play');
+            // Event ketika lagu selesai
+            audioPlayer.onended = function () {
+                if (currentSongIndex < storedSongs.length - 1) {
+                    currentSongIndex++; // Increment index ke lagu berikutnya
+                    let nextSong = storedSongs[currentSongIndex];
+                    loadSongData(nextSong); // Memuat data lagu berikutnya
+                    likeyy(nextSong.id); // Memuat data lagu berikutnya
+                    playAudio(nextSong.audio); // Memutar lagu berikutnya
+                } else {
+                    // Jika tidak ada lagi lagu di playlist, set tombol play kembali ke mode play
+                    document.getElementById('play-pause').classList.remove('fa-pause');
+                    document.getElementById('play-pause').classList.add('fa-play');
+                }
+            };
         }
-    };
-}
     </script>
 </x-mainpage>

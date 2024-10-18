@@ -23,7 +23,10 @@ class userController extends Controller
         $hour = Carbon::now('Asia/Jakarta')->format('H');
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
-        $genre = genre::all();
+        $lagu = lagu::pluck('id');
+        $lgenre = lagu_genre::whereIn('lagu_id',$lagu)->pluck('genre_id');
+        $new = Penyanyi::orderBy('created_at', 'desc')->take(6)->get();
+        $genre = genre::whereIn('id',$lgenre)->get();
         
         
         if($lLagu > 0){
@@ -33,9 +36,10 @@ class userController extends Controller
             $rec = lagu::with(['plagu'])->whereIn('id',$laguGenre)->get();
         }
         else{
+            $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
             $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
         }
-        return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists,'genre'=>$genre,'recomend'=>$rec]);
+        return view('user.dashboard',['playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'artists'=>$artists,'genre'=>$genre,'recomend'=>$rec,'liked'=>$likedSongs,'new'=>$new]);
     }
 
     function songs(penyanyi $artist, string $slug) {
@@ -47,6 +51,7 @@ class userController extends Controller
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
         $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
+        $new = Penyanyi::orderBy('created_at', 'desc')->take(6)->get();
         $genre = genre::all();
         if($lLagu > 0){
             $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
@@ -63,7 +68,7 @@ class userController extends Controller
         $lagu = penyanyi::with(['plagu'])->where('id', $artist->id)->get();
     
         // Kirimkan data lagu ke view
-        return view('user.artist', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'recomend'=>$rec,'liked'=>$likedSongs]);
+        return view('user.artist', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'recomend'=>$rec,'liked'=>$likedSongs,'new'=>$new]);
     
     }
     function Asongs() {
@@ -75,6 +80,7 @@ class userController extends Controller
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
         $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
         $genre = genre::all();
+        $new = Penyanyi::orderBy('created_at', 'desc')->take(6)->get();
         if($lLagu > 0){
             $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
             $genreLagu = lagu_genre::whereIn('lagu_id',$likedSongs)->pluck('genre_id');
@@ -82,11 +88,37 @@ class userController extends Controller
             $rec = lagu::with(['plagu'])->whereIn('id',$laguGenre)->get();
         }
         else{
+            $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
             $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
         }
 
         // Kirimkan data lagu ke view
-        return view('user.artistsong', ['artists' => $artists,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
+        return view('user.artistsong', ['artists' => $artists,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'liked'=>$likedSongs,'recomend',$rec,'new'=>$new]);
+    }
+
+    function gsongs() {
+        // Ambil penyanyi berdasarkan slug
+        $playlist = playlist::where('user_id',Auth::user()->id)->get();
+        $artists = penyanyi::all();
+        $hour = Carbon::now('Asia/Jakarta')->format('H');
+        $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
+        $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
+        $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
+        $genre = genre::all();
+        $new = genre::orderBy('created_at', 'desc')->take(6)->get();
+        if($lLagu > 0){
+            $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
+            $genreLagu = lagu_genre::whereIn('lagu_id',$likedSongs)->pluck('genre_id');
+            $laguGenre = lagu_genre::whereIn('genre_id',$genreLagu)->pluck('lagu_id');
+            $rec = lagu::with(['plagu'])->whereIn('id',$laguGenre)->get();
+        }
+        else{
+            $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
+            $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
+        }
+
+        // Kirimkan data lagu ke view
+        return view('user.genremenu', ['artists' => $genre,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'liked'=>$likedSongs,'recomend',$rec,'new'=>$new]);
     }
 
     function genre(string $slug) {
@@ -97,7 +129,6 @@ class userController extends Controller
         $jLagu = playlist_lagu::whereIn('playlist_id',$playlist->pluck('id'))->count();
         $lLagu = likedSong::where('user_id',Auth::user()->id)->count();
         $lagulike = likedSong::with('user')->where('user_id',Auth::user()->id)->pluck('id');
-        $genre = genre::all();
         $laguGen = lagu_genre::where('genre_id',$genres->id)->pluck('lagu_id');
         $plagu = penyanyi_lagu::whereIn('lagu_id',$laguGen)->pluck('penyanyi_id'); 
         $artists = penyanyi::whereIn('id',$plagu)->get();
@@ -112,11 +143,12 @@ class userController extends Controller
             $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
         }
     
+        $song = lagu::with('plagu')->whereIn('id',$laguGen)->get();
         // Ambil lagu-lagu yang terkait dengan penyanyi tersebut
-        $lagu = lagu_genre::with(['lagu','genre'])->where('genre_id', $genres->id)->get();
+        $lagu = genre::with(['lgenre'])->where('id', $genres->id)->get();
     
         // Kirimkan data lagu ke view
-        return view('user.genre', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'genre'=>$genres,'artist'=>$artists,'recomend'=>$rec]);
+        return view('user.genre', ['lagu' => $lagu,'playlists'=>$playlist,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike,'genre'=>$genres,'artist'=>$artists,'recomend'=>$rec,'liked'=>$likedSongs,'song'=>$song]);
     }
     
 
@@ -136,6 +168,7 @@ class userController extends Controller
             $rec = lagu::with(['plagu'])->whereIn('id',$laguGenre)->get();
         }
         else{
+            $likedSongs = likedSong::where('user_id',Auth::user()->id)->pluck('lagu_id');
             $rec = lagu::where('dilihat','>','0')->orderBy('dilihat','asc')->get();
         }
          
@@ -149,24 +182,41 @@ class userController extends Controller
     }
 
     public function likedsong(Request $request)
-{
-    // Validasi data yang masuk
-    $request->validate([
-        'song_id' => 'required|exists:lagu,id',  // Pastikan 'lagu_id' ada di tabel lagu
-    ]);
+    {
+        // Validasi data yang masuk
+        $request->validate([
+            'song_id' => 'required|exists:lagu,id',  // Pastikan 'lagu_id' ada di tabel lagu
+        ]);
 
-    // Simpan data ke tabel likedSong
-    $like = likedSong::create([
-        'user_id' => Auth::user()->id,
-        'lagu_id' => $request->song_id // Ambil song_id dari request
-    ]);
+        // Simpan data ke tabel likedSong
+        $like = likedSong::create([
+            'user_id' => Auth::user()->id,
+            'lagu_id' => $request->song_id // Ambil song_id dari request
+        ]);
 
-    // Kembalikan response JSON
-    return response()->json([
-        'message' => 'Song liked successfully',
-        'like' => $like
-    ]);
-}
+        // Kembalikan response JSON
+        return response()->json([
+            'message' => 'Song liked successfully',
+            'like' => $like
+        ]);
+    }
+
+    public function unlikesong(Request $request)
+    {
+        // Validasi data yang masuk
+        $request->validate([
+            'song_id' => 'required|exists:lagu,id',  // Pastikan 'lagu_id' ada di tabel lagu
+        ]);
+
+        // Simpan data ke tabel likedSong
+        $like = likedSong::where('lagu_id',$request->song_id)->delete;
+
+        // Kembalikan response JSON
+        return response()->json([
+            'message' => 'Song successfully deleted',
+            'like' => $like
+        ]);
+    }
 
 
     public function seen(Request $request)
