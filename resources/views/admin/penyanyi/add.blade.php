@@ -51,7 +51,7 @@
                                                     <label class="mb-2" for="Debut-year">Debut Year</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="Debut" name="debut" id="first-name-icon">
+                                                            placeholder="Debut Year" name="debut" id="first-name-icon" maxlength="4">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-calendar-date"></i>
                                                         </div>

@@ -221,7 +221,7 @@
                                                     <label class="mb-2" for="Debut-year">Debut Year</label>
                                                     <div class="position-relative">
                                                         <input required value="{{ request('name') }}" type="text" class="form-control"
-                                                            placeholder="Debut" name="debut" id="first-name-icon">
+                                                            placeholder="Debut Year" maxlength="4" name="debut" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-calendar-date"></i>
                                                         </div>
