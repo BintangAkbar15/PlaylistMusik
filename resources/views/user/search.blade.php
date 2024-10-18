@@ -22,6 +22,7 @@
     </x-slot:fullscimg>
     <x-slot:playlist> a </x-slot:playlist>
     <x-slot:inputlike> a </x-slot:inputlike>
+    <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
     <x-slot:liked>a</x-slot:liked>
     <div class="col-12 pt-4 px-4 bg-dark">
         <div class="col-12 rounded p-2 mt-2 d-flex flex-column flex-md-row">

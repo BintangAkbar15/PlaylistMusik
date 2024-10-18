@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="col-lg-7 d-none d-lg-block">
-                <div id="auth-right">
+                <div id="auth-right" style="background-size: cover; background: url('{{ url('img/background-dump-2.jpeg') }}');">
 
                 </div>
             </div>

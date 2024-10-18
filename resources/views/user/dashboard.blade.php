@@ -214,6 +214,7 @@
         <input type="hidden" name="like" id="likedsong" value="">
         <i class="{{ 1==1 ? 'fa-regular fa-heart': 'fa-solid fa-heart' }} fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
+    <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
     <div class="px-3 pt-3">
         <div class="col-12 rounded-top p-5 d-flex flex-column" style="height: 200px; background: linear-gradient(to bottom, hsl(35, 100%, 50%), rgb(104, 104, 104)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: white">
             @php
@@ -266,13 +267,130 @@
             <label for="" class="fs-4 mt-4" style="color: white">Recomended For You</label>
             <div class="col-12 d-flex justify-content-evenly overflow-x-auto">
                 @forelse ($recomend as $item)
-                <div class="p-2 d-flex flex-column align-items-center gap-2" 
-                {{-- {{ dd($item) }} --}}
+                    <div class="p-2 d-flex flex-column align-items-center gap-2" 
+                        {{-- {{ dd($item) }} --}}
                         onmouseenter="this.classList.add('bg-secondary')" 
                         onmouseleave="this.classList.remove('bg-secondary')">
                         <img src="{{ url($item->thumb ? 'storage/'.$item->thumb : 'img/dumpimg.png') }}" class="rounded" width="140px" height="140px" alt="">
                         <label for="" class="fs-6" style="color: white; text-align: center">{{$item->name}}</label>
                     </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Initialize variables
+                            var recomend = @json($recomend);
+                            var transformedRecomend = [];
+                            var currentSongIndex = 0;
+                            var storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+
+                            // Populate transformedRecomend array
+                            recomend.forEach(function(laguItem, laguIndex) {
+                                laguItem.plagu.forEach(function(plaguItem, plaguIndex) {
+                                    transformedRecomend.push({
+                                        id: laguItem.id,
+                                        image: `/storage/${laguItem.thumb}`,
+                                        name: laguItem.name,
+                                        views: `${laguItem.dilihat} Dilihat`,
+                                        audio_length: laguItem.audio_length || null,
+                                        artist: plaguItem.name,
+                                        artistimg: plaguItem.thumb,
+                                        audio: laguItem.audio
+                                    });
+                                });
+                            });
+
+                            console.log(transformedRecomend);
+
+                            // Function to load song data
+                            function loadSongData(song) {
+                                document.getElementById('img-info-artist').src = `/storage/${song.artistimg}`;
+                                document.getElementById('likedsong').value = song.id;
+                                document.getElementById('name-info-artist').textContent = song.artist;
+                                document.querySelectorAll('.artist-name').forEach(el => el.textContent = song.artist);
+                                document.querySelectorAll('.songname').forEach(el => el.textContent = song.name);
+                                document.getElementById('normal-title').textContent = song.name;
+                                document.getElementById('image-song').src = song.image;
+                                document.getElementById('image-fullscreen').src = song.image;
+                                document.querySelectorAll('.songimg').forEach(el => el.src = song.image);
+                                document.getElementById('audio').src = `/storage/${song.audio}`;
+
+                                // Send a request to update seen status (if necessary)
+                                fetch('/song/seen', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                    },
+                                    body: JSON.stringify({ id: song.id })
+                                }).then(response => response.json())
+                                .then(data => {
+                                    console.log('Song seen status updated:', data);
+                                }).catch(error => {
+                                    console.error('Error sending seen status:', error);
+                                });
+                            }
+
+                            // Function to play audio
+                            function playAudio(audioSrc) {
+                                const audioPlayer = document.getElementById('my-audio');
+
+                                // Stop any playing audio before starting a new one
+                                if (!audioPlayer.paused) {
+                                    audioPlayer.pause();
+                                    audioPlayer.currentTime = 0; // Reset time
+                                }
+
+                                // Set the new audio source and play
+                                audioPlayer.src = `/storage/${audioSrc}`;
+                                audioPlayer.play()
+                                    .then(() => {
+                                        document.getElementById('play-pause').classList.remove('fa-play');
+                                        document.getElementById('play-pause').classList.add('fa-pause');
+                                    })
+                                    .catch(error => {
+                                        console.error("Error playing audio:", error);
+                                    });
+
+                                // Handle when the audio ends
+                                audioPlayer.onended = function() {
+                                    if (currentSongIndex < storedSongs.length - 1) {
+                                        // Play next song if available
+                                        currentSongIndex++;
+                                        let nextSong = storedSongs[currentSongIndex];
+                                        loadSongData(nextSong);
+                                        playAudio(nextSong.audio);
+                                    } else if (transformedRecomend.length > 0) {
+                                        // Add recommended songs to playlist and play next
+                                        storedSongs = storedSongs.concat(transformedRecomend);
+                                        localStorage.setItem('songs', JSON.stringify(storedSongs));
+
+                                        currentSongIndex++;
+                                        let nextSong = storedSongs[currentSongIndex];
+                                        loadSongData(nextSong);
+                                        playAudio(nextSong.audio);
+                                    } else {
+                                        // If no songs are left, reset the play button
+                                        document.getElementById('play-pause').classList.remove('fa-pause');
+                                        document.getElementById('play-pause').classList.add('fa-play');
+                                    }
+                                };
+                            }
+
+                            // If songs are stored, load the first song on page load
+                            if (storedSongs.length > 0) {
+                                loadSongData(storedSongs[0]);
+                            }
+
+                            // Add event listeners for song buttons
+                            document.querySelectorAll('[id^=button]').forEach((button, index) => {
+                                button.addEventListener('click', function() {
+                                    let songAudio = document.getElementById(`audio${index + 1}`).innerText;
+                                    playAudio(songAudio);
+                                });
+                            });
+                        });
+
+                    </script>
                 @empty
                     
                 @endforelse

@@ -55,6 +55,7 @@
     <x-slot:inputlike>
         <input type="hidden" name="like" id="likedsong" value="">
     </x-slot:inputlike>
+    <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
     <x-slot:queue>
         <script>
             // Mengambil data lagu dari localStorage

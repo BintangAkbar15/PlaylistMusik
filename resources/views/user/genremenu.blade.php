@@ -13,6 +13,7 @@
         </marquee>
         <label for="" class="fs-3 mt-2 text-nowrap fw-bold text-white col-12 songname" style="display: block" id="normal-title"></label>
     </x-slot:songinfo>
+    <x-slot:playlistadd> {{ $playlistadd }} </x-slot:playlistadd>
     <x-slot:imagesong>
         <img src="" id="image-song" alt=""  style="object-fit: cover; width:100%" class="rounded songimg">
     </x-slot:imagesong>
