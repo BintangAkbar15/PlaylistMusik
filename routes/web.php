@@ -58,10 +58,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/user/artist/{slug}', [userController::class, 'songs'])->name('artist');
         Route::get('/user/artist', [userController::class, 'Asongs'])->name('artist.all');
         
-        Route::get('/user/fullscreen/namemusic', function(){
-            return view('user.fullscreen');
-        })->name('fullscreen');
-        
         Route::post('/user/like', [userController::class, 'likedsong'])->name('like.song');
 
         Route::get('/user/playlist/edit/{name}', function($name, playlist $playlist){
@@ -87,6 +83,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/song/seen', [userController::class, 'seen'])->name('playlist');
 
         Route::post('/user/playlist/new', [playlistController::class,'store'])->name('playlist.add');
+
+        Route::get('/user/genre/{name}', [userController::class, 'genre'])->name('user.genre');
     });
 
     Route::middleware('access:true')->group(function(){
