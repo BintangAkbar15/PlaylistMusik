@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function(){
             return view('user.edit',['id'=>$playlist->id,'data'=>$playlist,'playlists'=>$playlists,'hour'=>$hour,'jlagu'=>$jLagu,'lLagu'=>$lLagu,'like'=>$lagulike]);
         })->name('playlist.change');
         
+        Route::get('/user/genre/{slug}', [userController::class, 'genre'])->name('user.genre');
+        
         Route::get('/user/playlist/{name}', [userController::class, 'playlist'])->name('user.playlist');
 
         Route::post('/user/playlist/{id}', [playlistController::class, 'playlistedit'])->name('playlist.edit');

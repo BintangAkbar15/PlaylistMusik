@@ -50,12 +50,24 @@
     </x-slot:playlist>
     <x-slot:inputlike>
         <input type="hidden" name="like" id="likedsong" value="">
+        <i class="{{ 1==1 ? 'fa-regular fa-heart': 'fa-solid fa-heart' }} fs-4 pe-auto text-center" style="color: white;" id="like-btn"></i>   
     </x-slot:inputlike>
     <x-slot:liked>{{ $lLagu }} {{ $lLagu > 1 ? 'Songs' : 'Song'}}</x-slot:liked>
     <div>
+        @php
+            function isBright($color) {
+                // Function to check if the color is bright
+                $color = ltrim($color, '#');
+                $r = hexdec(substr($color, 0, 2));
+                $g = hexdec(substr($color, 2, 2));
+                $b = hexdec(substr($color, 4, 2));
+                $brightness = sqrt(0.299 * ($r * $r) + 0.587 * ($g * $g) + 0.114 * ($b * $b));
+                return $brightness > 128; // Adjust threshold as needed
+            }
+        @endphp
         <div class="col-12 rounded-top px-5 py-3 d-flex flex-column justify-content-end"
-            style="height: 400px; background: red; color: white; background-size: cover;">
-            <h1>{{ $lagu[0]->name }}</h1>
+            style="height: 400px; background: {{  $genre[0]->color }}; color: {{ isBright($genre[0]->color) }}; background-size: cover;">
+            <h1>{{ $genre[0]->name }}</h1>
         </div>
         <div class="col-12 d-flex p-4 flex-column" style="background: rgb(104, 104, 104, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
             <button id="playAll" class="rounded-circle btn bg-success text-dark d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
@@ -64,7 +76,7 @@
             <h3 class="mt-3">Songs</h3>
             <div class="d-flex flex-column col-12">
                 @foreach ($lagu as $item)
-                    @foreach ($item->plagu as $item)
+                    @foreach ($item->lagu as $item)
                     <div class="d-flex align-items-stretch hoverbutton">
                         <!-- Button untuk informasi utama -->
                         <div id="button{{ $loop->iteration }}" class="d-flex py-2 ps-3 align-items-center col-10 bg-dark bg-opacity-25 mb-0">
@@ -109,9 +121,9 @@
 
                             
                         @foreach ($lagu as $laguIndex => $laguItem)
-                            @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+                            @foreach ($laguItem->lagu as $laguIndex => $laguItem)
                                 if ({{ $loop->iteration }} - 1 === {{ $loop->iteration }}-1) {
-                                    song.id = '{{ $plaguItem->id }}';
+                                    song.id = '{{ $laguItem->id }}';
                                     song.like = '{{ $like }}';
                                 }
                             @endforeach
@@ -219,6 +231,27 @@
         </div>
     </div>
     <script>
+        var recomend = @json($recomend);
+            console.log(recomend)
+            // Array untuk menyimpan data yang telah diubah formatnya
+            var transformedRecomend = [];
+            
+            // Gunakan forEach untuk mengubah format data
+            @foreach ($recomend as $laguIndex => $laguItem)
+                @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+                    transformedRecomend.push({
+                        id: {{ $laguItem->id }}, // Ubah ID ke bentuk string
+                        image: `/storage/{{ $laguItem->thumb }}`, // Ubah thumb menjadi URL lengkap
+                        name: `{{ $laguItem->name }}`, // Ambil nama asli dari data
+                        views: `{{ $laguItem->dilihat }}} Dilihat`, // Ubah format dilihat menjadi string dengan "Dilihat"
+                        like: "", // Data like (statik atau dinamis)
+                        audio_length: {{ $laguItem->audio_length }} || null, // Tetapkan null jika audio_length kosong
+                        artist: "{{ $plaguItem->name }}", // Menggunakan nama artis statis atau dari sumber lain
+                        artistimg: `{{ $plaguItem->thumb }}`, // Gambar artis
+                        audio: "{{ $laguItem->audio }}" // Mengambil dari data asli
+                    });
+                @endforeach
+            @endforeach
     document.getElementById('playAll').addEventListener('click', function () {
     let allSongs = []; // Array untuk menyimpan semua lagu
 
@@ -241,12 +274,14 @@
         };
 
         @foreach ($lagu as $laguIndex => $laguItem)
-            @foreach ($laguItem->plagu as $plaguIndex => $plaguItem)
+            @foreach ($laguItem->lagu as $laguIndex => $laguItem)
                 if (index === {{ $loop->iteration }} - 1) {
-                    song.audio = '{{ $plaguItem->audio }}';
-                    song.id = '{{ $plaguItem->id }}';
-                    song.audio_length = parseAudioLength('{{ $plaguItem->audio_length }}'); // Pastikan ini sudah dalam milidetik
+                    song.audio = '{{ $laguItem->audio }}';
+                    song.id = '{{ $laguItem->id }}';
+                    song.audio_length = '{{ $laguItem->audio_length }}'; // Pastikan ini sudah dalam milidetik
                     song.like = '{{ $like }}';
+                    song.artist =  '{{ $artist[$loop->iteration - 1]->name }}'
+                    song.artistimg =  '{{ $artist[$loop->iteration - 1]->thumb }}'
                 }
             @endforeach
         @endforeach
@@ -297,28 +332,41 @@ function loadSongData(song) {
 
 let currentSongIndex = 0; // Global variable to track the current song index
 let storedSongs = JSON.parse(localStorage.getItem('songs')) || []; // Retrieve songs from localStorage
+window.next = function() {
+                    if (currentSongIndex < storedSongs.length - 1) {
+                        currentSongIndex++;
+                        let nextSong = storedSongs[currentSongIndex];
+                        loadSongData(nextSong);
+                        playAudio(nextSong.audio);
+                    }else{
+                        // Gabungkan rekomendasi ke playlist di localStorage jika diperlukan
+                        if (currentSongIndex >= storedSongs.length - 1 || recomend.length > 0) {
+                            // Tambahkan rekomendasi ke akhir playlist
+                            storedSongs = storedSongs.concat(transformedRecomend); 
+                            localStorage.setItem('songs', JSON.stringify(storedSongs));
 
-function next() {
-    if (currentSongIndex < storedSongs.length - 1) {
-        currentSongIndex += 1;
-        let nextSong = storedSongs[currentSongIndex];
-        loadSongData(nextSong);
-        playAudio(nextSong.audio);
-    }
-    else{
-    console.log('gagal')
-    }
-}
+                            // Reset currentSongIndex untuk memulai lagu rekomendasi
+                            currentSongIndex++;
+                            let nextSong = storedSongs[currentSongIndex];
+                            loadSongData(nextSong); // Memuat data lagu dari rekomendasi
+                            playAudio(nextSong.audio); // Memutar lagu dari rekomendasi
+                        } else {
+                            // Jika tidak ada rekomendasi, set tombol play kembali ke mode play
+                            document.getElementById('play-pause').classList.remove('fa-pause');
+                            document.getElementById('play-pause').classList.add('fa-play');
+                        }            
+                    }
+                }
 
-// Event listener for previous button
-function prev() {
-    if (currentSongIndex > 0) {
-        currentSongIndex -= 1;
-        let prevSong = storedSongs[currentSongIndex];
-        loadSongData(prevSong);
-        playAudio(prevSong.audio);
-    }
-}
+                // Global function to access previous song
+                window.prev = function() {
+                    if (currentSongIndex > 0) {
+                        currentSongIndex--;
+                        let prevSong = storedSongs[currentSongIndex];
+                        loadSongData(prevSong);
+                        playAudio(prevSong.audio);
+                    }
+                }
 
 function playAudio(audioSrc) {
     const audioPlayer = document.getElementById('my-audio');

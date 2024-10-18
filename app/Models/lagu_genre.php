@@ -17,10 +17,10 @@ class lagu_genre extends Model
 
     public function lagu()
     {
-        return $this->belongsToMany(Lagu::class, 'lagu', 'lagu_id', 'genre_id');
+        return $this->belongsToMany(Lagu::class, 'lagu_genres', 'lagu_id', 'genre_id');
     }
     public function genre()
     {
-        return $this->belongsToMany(Genre::class, 'genres', 'genre_id', 'lagu_id');
+        return $this->belongsToMany(Genre::class, 'lagu_genres', 'genre_id', 'lagu_id');
     }
 }
