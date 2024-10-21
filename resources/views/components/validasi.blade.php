@@ -1,8 +1,8 @@
 <script>
     let c_pass = document.getElementById('c_password-field');
     let pass = document.getElementById('password-field');
-    let email = document.getElementById('email') ? document.getElementById('email') : '';
-    let phone = document.getElementById('phone') ? document.getElementById('phone') : '';
+    let email = document.getElementById('email');
+    let phone = document.getElementById('phone');
     let name = document.getElementById('name');
 
     let passRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;

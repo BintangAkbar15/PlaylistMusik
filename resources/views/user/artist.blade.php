@@ -442,7 +442,7 @@
                         id: {{ $laguItem->id }}, // Ubah ID ke bentuk string
                         image: `/storage/{{ $laguItem->thumb }}`, // Ubah thumb menjadi URL lengkap
                         name: `{{ $laguItem->name }}`, // Ambil nama asli dari data
-                        views: `{{ $laguItem->dilihat }}} Dilihat`, // Ubah format dilihat menjadi string dengan "Dilihat"
+                        views: `{{ $laguItem->dilihat }}} Didengar`, // Ubah format dilihat menjadi string dengan "Dilihat"
                         like: "", // Data like (statik atau dinamis)
                         audio_length: {{ $laguItem->audio_length }} || null, // Tetapkan null jika audio_length kosong
                         artist: "{{ $plaguItem->name }}", // Menggunakan nama artis statis atau dari sumber lain

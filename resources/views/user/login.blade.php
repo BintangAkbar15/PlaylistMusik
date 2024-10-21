@@ -59,8 +59,8 @@
         </div>
     </div>
 </div>
-
     </div>
+    <x-validasi></x-validasi>
     <script src="{{ url('js/login.js')  }}"></script>
 </body>
 

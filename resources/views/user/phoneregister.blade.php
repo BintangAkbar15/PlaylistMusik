@@ -39,6 +39,7 @@
                             <div class="form-control-icon">
                                 <i class="bi bi-telephone"></i>
                             </div>
+                            <label for="" id="phoneMessage" class="text-danger d-none" style="font-size: 14px">
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" class="form-control form-control-md" name="name" placeholder="Username" required>
@@ -47,16 +48,18 @@
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" id="password-field" name="password-field" placeholder="Password" required>
+                            <input type="password" class="form-control form-control-md" id="password-field" name="password" placeholder="Password" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
+                            <label for="" id="passMessage" class="text-danger d-none" style="font-size: 14px">
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-md" id="c_password-field" name="c_password-field" placeholder="Confirm Password" required>
+                            <input type="password" class="form-control form-control-md" id="c_password-field" name="c_password" placeholder="Confirm Password" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
+                            <label for="" id="checkMessage" class="text-danger d-none" style="font-size: 14px">
                         </div>
                         <div class="form-check form-check-md d-flex align-items-end mb-4" id="container-showpass">
                             <input class="form-check-input me-2" type="checkbox" value="" id="showpass">
@@ -64,6 +67,8 @@
                                 Show Password
                             </label>
                         </div>
+                        <input type="hidden" class="form-control form-control-md" id="email" name="email" placeholder="Email" required>
+
                         <button class="btn btn-primary btn-block btn-md shadow-lg mt-2">Sign Up</button>
                     </form>
                     <div class="text-center mt-3 text-lg fs-6">
@@ -79,6 +84,7 @@
             </div>
         </div>
     </div>
+    <x-validasi></x-validasi>
     <script src="{{ url('js/login.js') }}"></script>
 </body>
 

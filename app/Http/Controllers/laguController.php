@@ -6,6 +6,7 @@ use App\Models\lagu;
 use App\Models\genre;
 use App\Models\penyanyi;
 use App\Models\lagu_genre;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\penyanyi_lagu;
 use FFMpeg\FFMpeg as FFMpegFacade;
@@ -16,16 +17,32 @@ class laguController extends Controller
 {
     //
     function createSlug($string) {
-        // Tambahkan strip sebelum huruf besar yang tidak di awal string
-        $string = preg_replace('/([a-z])([A-Z])/', '$1-$2', $string);
-        // Ubah ke huruf kecil
-        $string = strtolower($string);
-        // Hapus karakter selain huruf, angka, dan spasi
-        $string = preg_replace('/[^a-z0-9\s]/', '', $string);
-        // Ganti satu atau lebih spasi dengan strip
-        $string = preg_replace('/\s+/', '-', $string);
-        // Hapus strip di awal atau akhir (jika ada)
-        $string = trim($string, '-');
+        $data = lagu::where('name',$string)->count();
+        if($data > 0){
+            do{
+                // Tambahkan strip sebelum huruf besar yang tidak di awal string
+                $string = preg_replace('/([a-z])([A-Z])/', '$1-$2', $string);
+                // Ubah ke huruf kecil
+                $string = strtolower($string);
+                // Hapus karakter selain huruf, angka, dan spasi
+                $string = preg_replace('/[^a-z0-9\s]/', '', $string);
+                // Ganti satu atau lebih spasi dengan strip
+                $string = preg_replace('/\s+/', '-', $string);
+                // Hapus strip di awal atau akhir (jika ada)
+                $string = trim($string, '-').'-'.rand(000,999);
+            }while(lagu::where('slug',$string)->count() > 1);
+        }else{
+            // Tambahkan strip sebelum huruf besar yang tidak di awal string
+            $string = preg_replace('/([a-z])([A-Z])/', '$1-$2', $string);
+            // Ubah ke huruf kecil
+            $string = strtolower($string);
+            // Hapus karakter selain huruf, angka, dan spasi
+            $string = preg_replace('/[^a-z0-9\s]/', '', $string);
+            // Ganti satu atau lebih spasi dengan strip
+            $string = preg_replace('/\s+/', '-', $string);
+            // Hapus strip di awal atau akhir (jika ada)
+            $string = trim($string, '-');
+        }
         
         return $string;
     }
@@ -70,6 +87,11 @@ class laguController extends Controller
             'lagu_id' => $laguModel->id,
             'genre_id' => $genreId,
         ]);
+        $jlagu = genre::where('id',$genreId)->pluck('j_lagu')->first();
+
+        genre::where('id',$genreId)->update([
+            'j_lagu'=>$jlagu+1
+        ]);
     }
 
     penyanyi_lagu::create([
@@ -101,7 +123,7 @@ class laguController extends Controller
             $request->validate([
                 'name' =>'required',
                 'negara'=>'required',
-                'debut'=>'required',
+                'debut'=>'required|numeric',
             ],[
     
             ]);

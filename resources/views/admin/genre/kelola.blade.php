@@ -44,6 +44,7 @@
                         <th>Name</th>
                         <th>Color</th>
                         <th>Slug</th>
+                        <th>Jumlah Lagu</th>
                         <th colspan="2">action</th>
                     </tr>
                 </x-slot>
@@ -53,6 +54,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->color }}</td>
                     <td>{{ $item->slug }}</td>
+                    <td>{{ $item->j_lagu }}</td>
                     <td>
                         <a href="{{ route('genre.edit',$item->slug) }}" class="btn btn-outline-warning">Ubah</a>
                         <button type="button" class="btn btn-outline-danger" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-bs-toggle="modal" data-bs-target="#danger">Hapus</button>
