@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function(){
     Route::middleware('access:true')->group(function(){
         Route::get('/admin/dashboard', function () {
             $lagu =  lagu::with('plagu')->orderBy('dilihat','asc')->take(3)->get();
-            $data = [lagu::all()->count(), User::where('is_admin',0)->get()->count(),log::all()->count()];
+            $data = [lagu::all()->count(), User::where('is_admin',0)->get()->count(),log::where('status','login')->count(),penyanyi::all()->count()];
             return view('admin.dashboard',['data'=>$data,'rank'=>$lagu]);
         })->name('adminDashboard');
 

@@ -27,10 +27,10 @@
                               <input type="text" name="search-field" class="form-control" aria-describedby="passwordHelpInline">
                             </div>
                             <div class="col-auto">
-                                <button class="btn btn-secondary" type="submit">Cari</button>
+                                <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
                             </div>
                             <div class="col-auto">
-                                <a class="btn btn-success" name="add" href="{{ route('genre.add') }}">Add</a>
+                                <a class="btn btn-success" name="add" href="{{ route('genre.add') }}"><i class="fa-solid fa-plus"></i> Add</a>
                             </div>
                         </div>
                     </form>
@@ -56,8 +56,8 @@
                     <td>{{ $item->slug }}</td>
                     <td>{{ $item->j_lagu }}</td>
                     <td>
-                        <a href="{{ route('genre.edit',$item->slug) }}" class="btn btn-outline-warning">Ubah</a>
-                        <button type="button" class="btn btn-outline-danger" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-bs-toggle="modal" data-bs-target="#danger">Hapus</button>
+                        <a href="{{ route('genre.edit',$item->slug) }}" class="btn btn-outline-warning"><i class="fa-solid fa-pen-fancy"></i> Ubah</a>
+                        <button type="button" class="btn btn-outline-danger" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-bs-toggle="modal" data-bs-target="#danger"><i class="fa-solid fa-trash"></i> Hapus</button>
                         <!--Danger theme Modal -->
                         <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
                             aria-labelledby="myModalLabel120" aria-hidden="true" >

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,13 +13,14 @@ class AuthController extends Controller
 {
     function submitLogin(Request $request){
         $data = $request->only('name','password');
-
         if(Auth::attempt($data)){
             $request->session()->regenerate();
-            $data = Auth::user()->is_admin == true ? true : false;
+            $data = Auth::user()->is_admin == true ?? false;
             if($data == true){
                 return redirect()->route('adminDashboard')->with('success','Login Berhasil');
             }
+            $log = ['name'=>Auth::user()->name,'date'=>now(),'status'=>'login'];
+            log::create($log);
             return redirect()->route('userDashboard')->with('success','Login Berhasil');
         }else{
             return back()->with('error','Username/Password salah');
@@ -26,6 +28,8 @@ class AuthController extends Controller
     }
 
     function logout(){
+        $log = ['name'=>Auth::user()->name,'date'=>now(),'status'=>'logout'];
+        log::create($log);
         Auth::logout();
         return redirect()->route('login.tampil');
     }

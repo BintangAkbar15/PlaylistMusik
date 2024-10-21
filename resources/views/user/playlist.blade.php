@@ -365,7 +365,7 @@ function loadSongData(song) {
     });
 }
 
-let currentSongIndex = 0; // Inisialisasi indeks lagu saat ini
+currentSongIndex = 0; // Inisialisasi indeks lagu saat ini
 
 function playAudio(audioSrc) {
     const audioPlayer = document.getElementById('my-audio');

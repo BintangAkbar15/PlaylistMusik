@@ -69,7 +69,7 @@
     <x-slot:queue>
         <script>
             // Mengambil data lagu dari localStorage
-            const storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+            storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
     
             // Kirim data lagu ke Blade untuk diproses
             window.addEventListener('DOMContentLoaded', (event) => {
@@ -183,7 +183,7 @@
                         });
                     }
                     
-                let currentSongIndex = 0; // Global variable to track the current song index
+                currentSongIndex = 0; // Global variable to track the current song index
                     window.next = function() {
                     if (currentSongIndex < storedSongs.length - 1) {
                         currentSongIndex++;

@@ -592,7 +592,7 @@
                     document.getElementById('audio').src = `/storage/${song.audio}`;
                 }
 
-                let currentSongIndex = 0; // Global variable to track the current song index
+                currentSongIndex = 0; // Global variable to track the current song index
                 let storedSongs = JSON.parse(localStorage.getItem('songs')) || []; // Retrieve songs from localStorage
                 window.next = function() {
                     if (currentSongIndex < storedSongs.length - 1) {
