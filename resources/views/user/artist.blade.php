@@ -67,7 +67,7 @@
     <x-slot:queue>
         <script>
             // Mengambil data lagu dari localStorage
-            const storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+            storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
     
             // Kirim data lagu ke Blade untuk diproses
             window.addEventListener('DOMContentLoaded', (event) => {
@@ -101,7 +101,7 @@
             }
             function playAudio(audioSrc) {
                 const audioPlayer = document.getElementById('my-audio');
-                let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+                storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                 //(storedSongs)
                 // Hentikan pemutaran jika ada audio yang sedang diputar
                 if (!audioPlayer.paused) {
@@ -181,7 +181,7 @@
                         });
                     }
                     
-                let currentSongIndex = 0; // Global variable to track the current song index
+                currentSongIndex = 0; // Global variable to track the current song index
                     window.next = function() {
                     if (currentSongIndex < storedSongs.length - 1) {
                         currentSongIndex++;
@@ -266,7 +266,7 @@
                     <script>
                     document.addEventListener('DOMContentLoaded', function() {
                     // Memuat lagu pertama dari localStorage saat halaman dimuat
-                    let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+                    storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                     if (storedSongs.length > 0) {
                         loadSongData(storedSongs[0]);
                     }
@@ -316,7 +316,6 @@
                             }
                         }
                 
-                        let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                         const songExists = storedSongs.some(storedSong => storedSong.name === song.name);
                         const songIndex = storedSongs.findIndex(storedSong => storedSong.name === song.name);
 
@@ -408,7 +407,6 @@
                 
                     function playsong(duration) {
                         setTimeout(function() {
-                            let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
                             if (storedSongs.length > 0) {
                                 storedSongs.shift(); // Hapus lagu pertama dari playlist
                                 localStorage.setItem('songs', JSON.stringify(storedSongs));
@@ -637,7 +635,7 @@
 
         function playAudio(audioSrc) {
             const audioPlayer = document.getElementById('my-audio');
-            let storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
+            storedSongs = JSON.parse(localStorage.getItem('songs')) || [];
             //(storedSongs)
             // Hentikan pemutaran jika ada audio yang sedang diputar
             if (!audioPlayer.paused) {
