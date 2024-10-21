@@ -20,6 +20,11 @@ use App\Http\Controllers\playlistController;
 
 
 Route::middleware('guest')->group(function () {
+
+    Route::get('/', function(){
+        return view('welcome');
+    })->name('landing-page');
+    
     //menampilkan bagian register user
     Route::get('/register/email', function () {
         return view('user.emailregister');
@@ -177,7 +182,3 @@ Route::middleware('auth')->group(function(){
     //Logout
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
-
-Route::get('/', function(){
-    return view('welcome');
-})->name('landing-page');
