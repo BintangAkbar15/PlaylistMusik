@@ -23,9 +23,14 @@
                         </div>
                         <div class="card-content">
                             <div class="card-body">
+
+                                @if ($errors->any())
+                                    @foreach ($errors->all() as $item)
+                                        <div class="alert">{{$item}}</div>
+                                    @endforeach
+                                @endif
                                 <form class="form form-vertical" action="{{ route('lagu.addNew') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -33,10 +38,7 @@
                                                     <label class="mb-2" for="music-name">Music Name</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                        @if ($errors->any())
-                                                            value="{{ old('name') }}"
-                                                        @endif
-                                                        placeholder="Music" name="name" value="{{ request('name') }}" id="first-name-icon">
+                                                            placeholder="Music" name="name" value="{{ request('name') }}" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-music-note-beamed"></i>
                                                         </div>
@@ -77,13 +79,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <div class="form-group has-icon-left ">
+                                                <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Slug-id-icon">Photo</label>
                                                     <div class="position-relative d-flex align-items-center">
-                                                        <div style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
-                                                            <i class="fa-regular fa-image" style="font-size: 40px"></i>
+                                                        <div id="preview-container" style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
+                                                            <i id="image-icon" class="fa-regular fa-image" style="font-size: 40px"></i>
                                                         </div>
-                                                        <input required type="file" name="thumb" id="thumb" class="ms-5">
+                                                        <input required type="file" name="thumb" id="thumb" class="ms-5" accept="image/*">
                                                     </div>
                                                 </div>
                                             </div>
@@ -208,7 +210,7 @@
                                                     <label class="mb-2" for="Debut-year">Debut Year</label>
                                                     <div class="position-relative">
                                                         <input required value="{{ request('name') }}" type="text" class="form-control"
-                                                            placeholder="Debut" name="debut" id="first-name-icon">
+                                                            placeholder="Debut Year" maxlength="4" name="debut" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-calendar-date"></i>
                                                         </div>
@@ -255,7 +257,6 @@
                 width: '100%',
                 placeholder: 'Choose anything',
                 closeOnSelect: false,
-                dropdownParent: $('.form-body'), // Adjust dropdown behavior
                 language: {
                     noResults: function() {
                         return modal;
@@ -344,7 +345,6 @@
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 placeholder: $( this ).data( 'placeholder' ),
                 allowClear: true,
-                dropdownParent: $('.form-body'),
                 language: {
                     noResults: function() {
                         return modal1;
@@ -390,6 +390,36 @@
                 audio.addEventListener('loadedmetadata', function() {
                     document.getElementById('track').setAttribute('value',audio.duration)
                 });
+            }
+        });
+    </script>
+    <script>
+        const inputFile = document.getElementById('thumb');
+        const previewContainer = document.getElementById('preview-container');
+        const imageIcon = document.getElementById('image-icon');
+
+        inputFile.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Create a new image element
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%'; // Set image width to fill the container
+                    img.style.height = '100%'; // Set image height to fill the container
+                    img.className = 'rounded'; // Add Bootstrap rounded class
+
+                    // Clear the preview container and append the image
+                    previewContainer.innerHTML = '';
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+                // Hide the icon when image is uploaded
+                imageIcon.style.display = 'none';
             }
         });
     </script>

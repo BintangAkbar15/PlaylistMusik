@@ -1,10 +1,17 @@
 <x-layout>
     <div id="app">
         <x-sidebar></x-sidebar>
+        @if ($errors->any())
+            @foreach ($errors->all() as $item)
+                <div class="alert alert-danger">
+                    {{ $item }}
+                </div>
+            @endforeach
+        @endif
         <div id="main" class='layout-navbar navbar-fixed'>
             <x-header></x-header>
             <div class="col-12 d-flex flex-column align-items-center">
-                <div class="col-md-6 col-12">
+                <div class="col-md-10 col-12">
                     <div class="card">
                         <div class="card-header d-flex align-items-center justify-content-between col-auto">
                             <div>
@@ -26,7 +33,6 @@
                             <div class="card-body">
                                 <form class="form form-vertical" action="{{ route('penyanyi.editNew',$id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -68,11 +74,18 @@
                                             <div class="col-12">
                                                 <div class="form-group has-icon-left ">
                                                     <label class="mb-2" for="Slug-id-icon">Photo</label>
-                                                    <div class="position-relative d-flex align-items-center">
-                                                        <div style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
-                                                            <i class="fa-regular fa-image" style="font-size: 40px"></i>
+                                                    <div class="form-group has-icon-left">
+                                                        <label class="mb-2" for="Slug-id-icon">Photo</label>
+                                                        <div class="position-relative d-flex align-items-center">
+                                                            <div id="preview-container" style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
+                                                                @if($data->thumb) <!-- Periksa apakah ada gambar yang diunggah -->
+                                                                    <img src="{{ url('storage/' . $data->thumb) }}" style="width: 100%; height: 100%; object-fit: cover;" class="rounded" alt="Uploaded Photo">
+                                                                @else
+                                                                    <i class="fa-regular fa-image" style="font-size: 40px"></i>
+                                                                @endif
+                                                            </div>
+                                                            <input type="file" name="thumb" id="thumb" class="ms-5" accept="image/*">
                                                         </div>
-                                                        <input type="file" name="thumb" id="thumb" value="{{ $data->thumb }}" class="ms-5">
                                                     </div>
                                                 </div>
                                             </div>
@@ -91,4 +104,35 @@
             </div>
         </div>
     </div>
+    <script>
+        const inputFile = document.getElementById('thumb');
+        const previewContainer = document.getElementById('preview-container');
+        const imageIcon = document.getElementById('image-icon');
+
+        inputFile.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Create a new image element
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%'; // Set image width to fill the container
+                    img.style.height = '100%'; // Set image height to fill the container
+                    img.style.objectFit = 'cover';
+                    img.className = 'rounded'; // Add Bootstrap rounded class
+
+                    // Clear the preview container and append the image
+                    previewContainer.innerHTML = '';
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+                // Hide the icon when image is uploaded
+                imageIcon.style.display = 'none';
+            }
+        });
+    </script>
 </x-layout>

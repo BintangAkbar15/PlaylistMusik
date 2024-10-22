@@ -30,7 +30,6 @@
                             <div class="card-body">
                                 <form class="form form-vertical" action="{{ route('genre.addNew') }}" method="POST">
                                     @csrf
-                                    <x-info></x-info>
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -38,7 +37,7 @@
                                                     <label class="mb-2" for="genre-name">Genre Name</label>
                                                     <div class="position-relative">
                                                         <input required type="text" class="form-control"
-                                                            placeholder="Genre" name="name" value="{{ old('name') }}" id="first-name-icon">
+                                                            placeholder="Genre" name="name" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="fa-solid fa-record-vinyl"></i>
                                                         </div>
@@ -49,7 +48,7 @@
                                                 <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Color-id-icon">Color</label>
                                                     <div class="position-relative">
-                                                        <input required type="color" name="color" value="{{ $color }}" id="">
+                                                        <input required type="color" name="color" id="" value="{{ $color }}">
                                                     </div>
                                                 </div>
                                             </div>

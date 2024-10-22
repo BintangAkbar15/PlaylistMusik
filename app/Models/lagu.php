@@ -12,6 +12,10 @@ class lagu extends Model
     /** @use HasFactory<\Database\Factories\LaguFactory> */
     use HasFactory;
 
+    public function getRouteKeyName()
+    {
+        return 'slug'; // Menggunakan kolom slug untuk binding
+    }
     protected $table = 'lagu';
     protected $fillable = [
         'name',
@@ -20,7 +24,6 @@ class lagu extends Model
         'thumb',
         'slug',
     ];
-
     
     public function plagu()
     {
@@ -32,10 +35,10 @@ class lagu extends Model
     }
     public function playlagu()
     {
-        return $this->belongsToMany(playlist::class, 'playlsit_lagu', 'lagu_id','playlist_id');
+        return $this->belongsToMany(Playlist::class, 'playlsit_lagu', 'lagu_id','playlist_id');
     }
-    public function user()
+    public function lagu()
     {
-        return $this->belongsToMany(playlist::class, 'liked_songs', 'lagu_id','user_id');
+        return $this->belongsToMany(likedSong::class, 'users', 'lagu_id', 'user_id');
     }
 }

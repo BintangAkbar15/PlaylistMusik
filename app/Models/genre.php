@@ -14,8 +14,8 @@ class genre extends Model
         'name',
         'slug',
         'color',
+        'j_lagu'
     ];
-
     
     public function lgenre()
     {

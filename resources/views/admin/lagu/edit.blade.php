@@ -32,7 +32,6 @@
                                 @endif
                                 <form class="form form-vertical" action="{{ route('lagu.editNew',$lagu->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <x-info></x-info>
                                     <input required type="hidden" name='track' id="track">
                                     <div class="form-body">
                                         <div class="row">
@@ -87,13 +86,17 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <div class="form-group has-icon-left ">
+                                                <div class="form-group has-icon-left">
                                                     <label class="mb-2" for="Slug-id-icon">Photo</label>
                                                     <div class="position-relative d-flex align-items-center">
-                                                        <div style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
-                                                            <i class="fa-regular fa-image" style="font-size: 40px"></i>
+                                                        <div id="preview-container" style="width: 20vh; height: 20vh;" class="bg-secondary rounded d-flex align-items-center justify-content-center">
+                                                            @if($lagu->thumb) <!-- Periksa apakah ada gambar yang diunggah -->
+                                                                <img src="{{ url('storage/' . $lagu->thumb) }}" style="width: 100%; height: 100%; object-fit: cover;" class="rounded" alt="Uploaded Photo">
+                                                            @else
+                                                                <i class="fa-regular fa-image" style="font-size: 40px"></i>
+                                                            @endif
                                                         </div>
-                                                        <input type="file" name="thumb" value="{{ $lagu->thumb }}" id="thumb" class="ms-5">
+                                                        <input type="file" name="thumb" id="thumb" class="ms-5" accept="image/*">
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,7 +221,7 @@
                                                     <label class="mb-2" for="Debut-year">Debut Year</label>
                                                     <div class="position-relative">
                                                         <input required value="{{ request('name') }}" type="text" class="form-control"
-                                                            placeholder="Debut" name="debut" id="first-name-icon">
+                                                            placeholder="Debut Year" maxlength="4" name="debut" id="first-name-icon">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-calendar-date"></i>
                                                         </div>
@@ -401,5 +404,35 @@
             }
         });
     </script>
-    
+    <script>
+        const inputFile = document.getElementById('thumb');
+        const previewContainer = document.getElementById('preview-container');
+        const imageIcon = document.getElementById('image-icon');
+
+        inputFile.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Create a new image element
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%'; // Set image width to fill the container
+                    img.style.height = '100%'; // Set image height to fill the container
+                    img.className = 'rounded'; // Add Bootstrap rounded class
+
+                    // Clear the preview container and append the image
+                    previewContainer.innerHTML = '';
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+                // Hide the icon when image is uploaded
+                imageIcon.style.display = 'none';
+            }
+        });
+
+    </script>
 </x-layout>

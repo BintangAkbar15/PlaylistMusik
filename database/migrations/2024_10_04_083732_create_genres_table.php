@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',20);
             $table->string('slug',20);
+            $table->string('j_lagu',20)->default(0);
             $table->string('color',20);
             $table->timestamps(); 
         });

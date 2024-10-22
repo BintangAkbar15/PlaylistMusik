@@ -13,18 +13,14 @@ class lagu_genre extends Model
         'genre_id',
     ];
 
-    protected $with =[
-        'lagu',
-        'genre'
-    ];
     protected $table = 'lagu_genres';
 
     public function lagu()
     {
-        return $this->belongsToMany(Lagu::class, 'lagu', 'lagu_id', 'genre_id');
+        return $this->belongsToMany(lagu::class, 'lagu_genres', 'lagu_id', 'genre_id');
     }
     public function genre()
     {
-        return $this->belongsToMany(Genre::class, 'genres', 'genre_id', 'lagu_id');
+        return $this->belongsToMany(genre::class, 'lagu_genres', 'genre_id', 'lagu_id');
     }
 }

@@ -13,12 +13,13 @@ class penyanyi_lagu extends Model
         'penyanyi_id',
         'lagu_id',
     ];
-    public function penyanyi()
+
+    public function penyanyis()
     {
-        return $this->belongsToMany(Penyanyi::class, 'penyanyi', 'penyanyi_id', 'lagu_id');
+        return $this->belongsToMany(penyanyi::class, 'penyanyi', 'penyanyi_id', 'lagu_id');
     }
-    public function lagu()
+    public function lagus()
     {
-        return $this->belongsToMany(Lagu::class, 'lagu', 'lagu_id', 'penyanyi_id');
+        return $this->belongsToMany(lagu::class, 'lagu', 'lagu_id', 'penyanyi_id');
     }
 }
