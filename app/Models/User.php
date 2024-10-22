@@ -54,6 +54,6 @@ class User extends Authenticatable
     }
     public function user()
     {
-        return $this->belongsToMany(playlist::class, 'liked_songs', 'user_id','lagu_id');
+        return $this->belongsToMany(lagu::class, 'liked_songs', 'user_id','lagu_id');
     }
 }

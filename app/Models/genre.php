@@ -16,9 +16,6 @@ class genre extends Model
         'color',
     ];
 
-    protected $with =[
-        'lgenre'
-    ];
     
     public function lgenre()
     {
